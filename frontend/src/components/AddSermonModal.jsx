@@ -1,0 +1,171 @@
+import React, { useState } from 'react';
+
+const AddSermonModal = ({ onClose, onAdd }) => {
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+    });
+    const [audioFile, setAudioFile] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleFileChange = (e) => {
+        setAudioFile(e.target.files[0]);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!formData.title.trim() || !formData.description.trim() || !audioFile) {
+            setError('Title, description, and audio file are required');
+            return;
+        }
+
+        try {
+            setLoading(true);
+            setError(null);
+
+            const form = new FormData();
+            form.append('title', formData.title);
+            form.append('description', formData.description);
+            form.append('audio', audioFile);
+
+            const token = localStorage.getItem('admin_token');
+            const response = await fetch(
+                'http://localhost:8000/api/v1/sermons/post',
+                {
+                    method: 'POST',
+                    headers: token ? { Authorization: `Bearer ${token}` } : {},
+                    body: form
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to add sermon');
+            }
+
+            const data = await response.json();
+
+            // Create the new sermon object to pass back
+            const newSermon = {
+                _id: data.data?._id || Date.now().toString(),
+                title: formData.title,
+                description: formData.description,
+                sermon_url: data.data?.sermon_url || '',
+                sermon_public_id: data.data?.sermon_public_id || ''
+            };
+
+            onAdd(newSermon);
+        } catch (err) {
+            setError(err.message || 'Failed to add sermon');
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-gray-100 border-b px-6 py-4 flex justify-between items-center">
+                    <h2 className="text-2xl font-bold text-gray-800">Add New Sermon</h2>
+                    <button
+                        onClick={onClose}
+                        className="text-gray-600 hover:text-gray-800 text-2xl font-bold"
+                    >
+                        ×
+                    </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                    {error && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                            {error}
+                        </div>
+                    )}
+
+                    {/* Title */}
+                    <div>
+                        <label className="block text-sm font-semibold text-black mb-2">
+                            Title *
+                        </label>
+                        <input
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            placeholder="Sermon title"
+                            required
+                        />
+                    </div>
+
+                    {/* Description */}
+                    <div>
+                        <label className="block text-sm font-semibold text-black mb-2">
+                            Description *
+                        </label>
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            rows="4"
+                            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            placeholder="Sermon description"
+                            required
+                        ></textarea>
+                    </div>
+
+                    {/* Audio File */}
+                    <div>
+                        <label className="block text-sm font-semibold text-black mb-2">
+                            Sermon Audio *
+                        </label>
+                        <input
+                            type="file"
+                            accept="audio/*"
+                            onChange={handleFileChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            required
+                        />
+                        {audioFile && (
+                            <p className="text-sm text-green-600 mt-2">
+                                File selected: {audioFile.name}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex justify-end space-x-4 pt-4 border-t">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded transition"
+                            disabled={loading}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition disabled:bg-green-300"
+                            disabled={loading}
+                        >
+                            {loading ? 'Adding...' : 'Add Sermon'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default AddSermonModal;
