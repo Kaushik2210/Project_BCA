@@ -141,7 +141,7 @@ const ChoirPage = () => {
 
         // Empty slots
         for (let i = 0; i < firstDay; i++) {
-            days.push(<div key={`empty-${i}`} className="h-24 md:h-32 border border-[#c5a059]/10 bg-white/5 opacity-50"></div>);
+            days.push(<div key={`empty-${i}`} className="h-24 md:h-32 border border-brand-red/10 bg-white/5 opacity-50"></div>);
         }
 
         // Days
@@ -154,18 +154,18 @@ const ChoirPage = () => {
                 <div 
                     key={day} 
                     onClick={() => setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day))}
-                    className={`calendar-cell h-24 md:h-32 border border-[#c5a059]/20 p-2 relative transition-all duration-300 hover:z-10 cursor-pointer group hover:bg-[#c5a059]/20
-                        ${isSelected ? 'bg-[#c5a059]/20 shadow-[inset_0_0_20px_rgba(197,160,89,0.2)]' : 'bg-transparent'}
-                        ${isToday ? 'border-[#c5a059]' : ''}
+                    className={`calendar-cell h-24 md:h-32 border border-brand-red/20 p-2 relative transition-all duration-300 hover:z-10 cursor-pointer group hover:bg-brand-red/20
+                        ${isSelected ? 'bg-brand-red/20 shadow-[inset_0_0_20px_rgba(197,160,89,0.2)]' : 'bg-transparent'}
+                        ${isToday ? 'border-brand-red' : ''}
                     `}
                 >
-                    <span className={`text-sm font-bold font-mono ${isToday ? 'text-[#c5a059]' : 'text-[#f0e6d2]/50'}`}>{day}</span>
+                    <span className={`text-sm font-bold font-mono ${isToday ? 'text-brand-red' : 'text-brand-dark/50'}`}>{day}</span>
                     
                     {hasEvent && (
                         <div className={`mt-2 text-xs md:text-sm p-1 md:p-2 rounded-lg font-bold truncate transition-transform group-hover:scale-110 group-hover:-rotate-2
                             ${hasEvent.type === 'event' 
-                                ? 'bg-[#c5a059] text-[#1a1614] shadow-[0_0_15px_#c5a059]' 
-                                : 'bg-[#f0e6d2] text-[#1a1614] opacity-80'
+                                ? 'bg-brand-red text-brand-beige shadow-[0_0_15px_#c5a059]' 
+                                : 'bg-brand-dark text-brand-beige opacity-80'
                             }
                         `}>
                             {hasEvent.title}
@@ -182,7 +182,7 @@ const ChoirPage = () => {
     return (
         <>
             <Navbar />
-            <div ref={container} className="bg-[#1a1614] text-[#f0e6d2] min-h-screen relative overflow-hidden perspective-[2000px]">
+            <div ref={container} className="bg-brand-beige text-brand-dark min-h-screen relative overflow-hidden perspective-[2000px]">
                 
                 {/* Background Decor */}
                 <div 
@@ -193,68 +193,68 @@ const ChoirPage = () => {
                 <div className="pt-32 pb-12 px-4 md:px-12 max-w-7xl mx-auto relative z-10">
                     
                     {/* Header */}
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-[#c5a059]/30 pb-8 select-none">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-brand-red/30 pb-8 select-none">
                         <div onClick={triggerEasterEgg} className="cursor-pointer">
-                            <h1 className="header-title text-5xl md:text-7xl font-serif text-[#c5a059] mb-4 transition-colors">Choir Schedule</h1>
-                            <p className="text-xl text-[#f0e6d2]/70 italic">
+                            <h1 className="header-title text-5xl md:text-7xl font-serif text-brand-red mb-4 transition-colors">Choir Schedule</h1>
+                            <p className="text-xl text-brand-dark/70 italic">
                                 "Sing to the Lord a new song." {easterEggCount > 0 && <span className="text-xs text-red-500 ml-2">({5 - easterEggCount} clicks...)</span>}
                             </p>
                         </div>
                     </div>
 
                     {/* Calendar Interface with 3D Tilt */}
-                    <div ref={calendarCard} className="bg-[#1a1614]/50 backdrop-blur-xl border border-[#c5a059]/20 rounded-3xl overflow-hidden shadow-2xl will-change-transform">
+                    <div ref={calendarCard} className="bg-brand-beige/50 backdrop-blur-xl border border-brand-red/20 rounded-3xl overflow-hidden shadow-2xl will-change-transform">
                         
                         {/* Calendar Header Controls */}
                         <div 
-                            className="flex justify-between items-center p-8 bg-[#c5a059]/5 border-b border-[#c5a059]/20 relative z-50"
+                            className="flex justify-between items-center p-8 bg-brand-red/5 border-b border-brand-red/20 relative z-50"
                             onMouseMove={(e) => e.stopPropagation()}
                         >
                             <button 
                                 onClick={(e) => changeMonth(-1, e)}
-                                className="w-12 h-12 rounded-full border border-[#c5a059]/30 flex items-center justify-center hover:bg-[#c5a059] hover:text-[#1a1614] transition-all active:scale-90 cursor-pointer text-xl pb-1"
+                                className="w-12 h-12 rounded-full border border-brand-red/30 flex items-center justify-center hover:bg-brand-red hover:text-brand-beige transition-all active:scale-90 cursor-pointer text-xl pb-1"
                             >
                                 &larr;
                             </button>
-                            <h2 className="text-3xl font-serif font-bold text-[#f0e6d2]">
-                                {monthNames[currentDate.getMonth()]} <span className="text-[#c5a059]">{currentDate.getFullYear()}</span>
+                            <h2 className="text-3xl font-serif font-bold text-brand-dark">
+                                {monthNames[currentDate.getMonth()]} <span className="text-brand-red">{currentDate.getFullYear()}</span>
                             </h2>
                             <button 
                                 onClick={(e) => changeMonth(1, e)}
-                                className="w-12 h-12 rounded-full border border-[#c5a059]/30 flex items-center justify-center hover:bg-[#c5a059] hover:text-[#1a1614] transition-all active:scale-90 cursor-pointer text-xl pb-1"
+                                className="w-12 h-12 rounded-full border border-brand-red/30 flex items-center justify-center hover:bg-brand-red hover:text-brand-beige transition-all active:scale-90 cursor-pointer text-xl pb-1"
                             >
                                 &rarr;
                             </button>
                         </div>
 
                         {/* Weekday Headers */}
-                        <div className="grid grid-cols-7 border-b border-[#c5a059]/20 bg-[#1a1614]">
+                        <div className="grid grid-cols-7 border-b border-brand-red/20 bg-brand-beige">
                             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                                <div key={day} className="p-4 text-center font-bold uppercase tracking-widest text-[#c5a059] text-xs md:text-sm">
+                                <div key={day} className="p-4 text-center font-bold uppercase tracking-widest text-brand-red text-xs md:text-sm">
                                     {day}
                                 </div>
                             ))}
                         </div>
 
                         {/* Calendar Grid */}
-                        <div className="grid grid-cols-7 bg-[#1a1614] overflow-hidden">
+                        <div className="grid grid-cols-7 bg-brand-beige overflow-hidden">
                             {renderCalendarDays()}
                         </div>
 
                     </div>
 
                     {/* Selected Day Details Panel */}
-                    <div className="mt-12 p-8 border-t border-[#c5a059]/20">
-                         <h3 className="text-2xl font-serif text-[#c5a059] mb-4">
+                    <div className="mt-12 p-8 border-t border-brand-red/20">
+                         <h3 className="text-2xl font-serif text-brand-red mb-4">
                              {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                          </h3>
                          {events.find(e => e.day === selectedDate.getDate()) ? (
-                             <div className="bg-[#c5a059]/10 p-6 rounded-xl border-l-4 border-[#c5a059] animate-pulse">
-                                 <h4 className="text-xl font-bold text-[#f0e6d2] mb-2">{events.find(e => e.day === selectedDate.getDate()).title}</h4>
-                                 <p className="text-[#c5a059] font-mono">{events.find(e => e.day === selectedDate.getDate()).time}</p>
+                             <div className="bg-brand-red/10 p-6 rounded-xl border-l-4 text-brand-red animate-pulse">
+                                 <h4 className="text-xl font-bold text-brand-dark mb-2">{events.find(e => e.day === selectedDate.getDate()).title}</h4>
+                                 <p className="text-brand-red font-mono">{events.find(e => e.day === selectedDate.getDate()).time}</p>
                              </div>
                          ) : (
-                             <p className="text-[#f0e6d2]/40 italic">No events scheduled for this day.</p>
+                             <p className="text-brand-dark/40 italic">No events scheduled for this day.</p>
                          )}
                     </div>
 
