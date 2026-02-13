@@ -101,43 +101,78 @@ const Sermons = () => {
 
   return (
     <div ref={container} id="sermons" className="relative w-full py-20 overflow-hidden">
-        {/* Background */}
-        <div 
+      {/* Background */}
+      <div 
           className="absolute inset-0 bg-cover bg-center fixed-bg-hack" // Fixed bg hack if needed
           style={{ backgroundImage: `url(${sermonsBg})`, backgroundAttachment: 'fixed' }}
         >
-            <div className="absolute inset-0 bg-black/40"></div>
-        </div>
+          <div className="absolute inset-0 bg-black/40"></div>
+      </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8">
-            <h2 className="sermon-header text-[#F5E6D3] text-6xl md:text-8xl font-serif text-center mb-16 drop-shadow-lg">
-                Sermons
-            </h2>
+      <div className="relative z-10 max-w-7xl mx-auto px-8">
+          <h2 className="sermon-header text-[#F5E6D3] text-6xl md:text-8xl font-serif text-center mb-16 drop-shadow-lg">
+            Sermons
+          </h2>
 
-            <div className="sermon-grid grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
-                {/* Column 1 Wrapper */}
-                <div className="sermon-col-1 flex flex-col gap-8">
-                  {loading && <div className="text-center text-white">Loading...</div>}
-                  {error && <div className="text-center text-red-400">{error}</div>}
-                  {!loading && !error && sermons.slice(0,2).map((s) => (
-                   <SermonCard key={s._id} sermon={s} className="sermon-card" />
-                  ))}
+          <div className="sermon-grid grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20 min-h-75">
+              {loading && (
+                  <div className="col-span-full flex items-center justify-center text-white">
+                    Loading...
+                  </div>
+              )}
+              
+              {error && (
+                <div className="col-span-full flex items-center justify-center">
+                  <div className="bg-[#F5F5DC] border border-red-300 text-[#3E2F26] p-8 rounded-3xl shadow-2xl max-w-md w-full text-center animate-fade-in">
+                    <div className="bg-red-100 text-red-600 rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                      !
+                    </div>
+                    
+                    <h4 className="text-xl font-serif font-bold mb-2">
+                      Unable to Load Sermons
+                    </h4>
+
+                    <p className="text-sm text-gray-700 mb-4">
+                      Please check your connection and try again.
+                    </p>
+
+                    <p className="text-xs text-gray-500 mb-6">
+                      {error}
+                    </p>
+
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="bg-[#3E2F26] text-white px-6 py-2 rounded-full text-sm hover:bg-[#2c211b] transition-colors duration-300"
+                    >
+                      Try Again
+                    </button>
+                  </div>
                 </div>
-
-                {/* Column 2 Wrapper */}
-                <div className="sermon-col-2 flex flex-col gap-8 pt-12 md:pt-0"> 
-                  {!loading && !error && sermons.slice(2,4).map((s) => (
-                   <SermonCard key={s._id} sermon={s} className="sermon-card" />
-                  ))}
-                </div>
-            </div>  
-
-            <div className="text-center mt-12 relative z-20">
-                 <h3 className="text-[#F5E6D3] text-3xl md:text-4xl font-sans font-bold uppercase tracking-wide drop-shadow-md">
-                     GROW IN FAITH, ENGAGE WITH OUR COMMUNITY!
-                 </h3>
-            </div>
-        </div>
+              )}
+              
+              {!loading && !error && (
+                <>
+                  <div className="sermon-col-1 flex flex-col gap-8">
+                    {sermons.slice(0,2).map((s) => (
+                      <SermonCard key={s._id} sermon={s} />
+                    ))}
+                  </div>
+                  
+                  <div className="sermon-col-2 flex flex-col gap-8 pt-12 md:pt-0">
+                    {sermons.slice(2,4).map((s) => (
+                      <SermonCard key={s._id} sermon={s} />
+                    ))}
+                  </div>
+                </>
+              )}
+          </div>
+  
+          <div className="text-center mt-12 relative z-20">
+              <h3 className="text-[#F5E6D3] text-3xl md:text-4xl font-sans font-bold uppercase tracking-wide drop-shadow-md">
+                GROW IN FAITH, ENGAGE WITH OUR COMMUNITY!
+              </h3>
+          </div>
+      </div>
     </div>
   );
 };
