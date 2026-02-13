@@ -11,9 +11,10 @@ gsap.registerPlugin(ScrollTrigger);
 const SermonsPage = () => {
     const container = useRef();
     
-    // Real data state
     const [sermons, setSermons] = useState([]);
     const [playingId, setPlayingId] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [totalPages, setTotalPages] = useState(1);
@@ -30,17 +31,25 @@ const SermonsPage = () => {
 
     // Fetch sermons from backend (paginated)
     const fetchSermons = async (page = 1) => {
+        setLoading(true);
+        setError(null);
+        
         try {
             const res = await fetch(`http://localhost:8000/api/v1/sermons?page=${page}&limit=${itemsPerPage}`);
-            if (!res.ok) throw new Error('Failed to load sermons');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            
             const json = await res.json();
             const data = json.data || {};
+            
             setSermons(data.sermons || []);
             setTotalPages(data.pagination?.totalPages || 1);
         } catch (err) {
-            console.error('Error fetching sermons:', err);
+            setError(err.message || 'Failed to load sermons');
+        } finally {
+            setLoading(false);
         }
     };
+
 
     useEffect(() => {
         fetchSermons(currentPage);
@@ -81,8 +90,42 @@ const SermonsPage = () => {
                     </div>
 
                     {/* Audio Grid */}
-                    <div className="sermons-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-                        {sermons.map((sermon) => {
+
+                    <div className="sermons-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24 min-h-100">
+                        {loading && (
+                            <div className="col-span-full flex justify-center items-center">
+                                <div className="text-brand-red font-serif text-xl animate-pulse">
+                                    Loading sermons...
+                                </div>
+                            </div>
+                        )}
+                        
+                        {error && (
+                            <div className="col-span-full flex justify-center items-center">
+                                <div className="bg-brand-beige border border-brand-red/30 rounded-3xl p-10 shadow-xl text-center max-w-md w-full">
+                                    <div className="w-14 h-14 rounded-full bg-brand-red/10 flex items-center justify-center mx-auto mb-5">
+                                        <span className="text-brand-red text-2xl font-bold">!</span>
+                                    </div>
+
+                                    <h3 className="text-2xl font-serif text-brand-red mb-3">
+                                        Unable to Load Sermons
+                                    </h3>
+
+                                    <p className="text-brand-dark/70 text-sm mb-6">
+                                        Something went wrong while fetching the sermons.
+                                    </p>
+
+                                    <button
+                                        onClick={() => fetchSermons(currentPage)}
+                                        className="px-6 py-2 rounded-full font-serif font-bold text-brand-beige bg-brand-red hover:opacity-90 transition-opacity"
+                                    >
+                                        Try Again
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {!loading && !error && sermons.map((sermon) => {
                             const isPlaying = playingId === sermon._id;
                             return (
                                 <div key={sermon._id} className={`sermon-card group bg-brand-beige/80 backdrop-blur-md border rounded-3xl p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(197,160,89,0.15)] flex flex-col h-full min-h-87.5 ${isPlaying ? 'border-brand-red ring-1 ring-brand-red/50' : 'border-brand-red/20 hover:border-brand-red/50'}`}>
@@ -140,13 +183,12 @@ const SermonsPage = () => {
                                             />
                                         </div>
                                     </div>
-
-                                    {/* audio element is rendered above with controls */}
-
                                 </div>
                             );
                         })}
                     </div>
+
+
 
                     {/* Pagination */}
                     <div className="flex justify-center items-center gap-4 relative z-20 select-none">
