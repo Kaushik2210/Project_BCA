@@ -44,12 +44,11 @@ const Footer = () => {
              <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                  <h2 className="footer-title text-brand-light text-4xl md:text-5xl lg:text-6xl font-sans uppercase leading-tight max-w-3xl drop-shadow-lg">
                      <SplitText>Stay Connected</SplitText> <br/> 
-                     <SplitText>For Updates &</SplitText> <br/>
-                     <SplitText>Devotionals</SplitText>
+                     <SplitText>For Updates </SplitText> <br/>
                  </h2>
                  <div className="mt-8 md:mt-0 max-w-sm text-brand-red">
                      <p className="font-serif text-lg leading-relaxed">
-                         Stay connected with Resurrection Baptist Church for uplifting updates and devotionals delivered right to your inbox!
+                         Stay connected with Resurrection Baptist Church for updates!
                      </p>
                  </div>
              </div>
@@ -60,9 +59,9 @@ const Footer = () => {
             <h3 className="access-quote text-brand-red text-3xl md:text-5xl font-serif leading-tight drop-shadow-md">
                 <span className="access-line block">Our church is fully</span>
                 <span className="access-line block">accessible, providing</span>
-                <span className="access-line block">services for individuals</span>
-                <span className="access-line block">with disabilities to ensure</span>
-                <span className="access-line block">everyone can participate.</span>
+                <span className="access-line block">services for all individuals</span>
+                <span className="access-line block">to ensure everyone</span>
+                <span className="access-line block">can participate.</span>
             </h3>
         </div>
 
@@ -70,17 +69,17 @@ const Footer = () => {
         <div className="px-8 flex flex-col md:flex-row justify-between items-start border-t border-brand-red/30 pt-12">
             <div className="mb-8 md:mb-0">
                 <h4 className="text-brand-dark text-xl font-sans uppercase tracking-widest mb-4">Email</h4>
-                <p className="text-brand-red font-serif hover:text-brand-dark transition-colors cursor-pointer">dummy@gmail.com</p>
+                <p className="text-brand-red font-serif hover:text-brand-dark transition-colors cursor-pointer">jonahchowri95@gmail.com</p>
             </div>
             
             <div className="mb-8 md:mb-0">
                 <h4 className="text-brand-dark text-xl font-sans uppercase tracking-widest mb-4">Phone</h4>
-                <p className="text-brand-red font-serif">+91-1234567890</p>
+                <p className="text-brand-red font-serif">+91-90084 69800</p>
             </div>
 
             <div className="max-w-xs text-right">
                  <p className="text-brand-dark/60 font-serif text-sm">
-                     For assistance, please call our support line at +91-1234567890, available 24/7.
+                     For assistance, please call our support line at +91-90084 69800, available 24/7.
                  </p>
             </div>
         </div>
