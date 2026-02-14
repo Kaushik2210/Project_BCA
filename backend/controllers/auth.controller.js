@@ -9,8 +9,8 @@ export const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   const adminUser = process.env.ADMIN_USER;
-  const adminPass = process.env.ADMIN_PASS;
-
+  const adminPass = process.env.ADMIN_PASSWORD;
+ 
   if (!username || !password) {
     return res.status(400).json({ message: 'username and password required' });
   }

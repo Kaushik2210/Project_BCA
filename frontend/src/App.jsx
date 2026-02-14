@@ -8,6 +8,7 @@ import ChoirPage from './pages/ChoirPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 import Lenis from 'lenis';
 
 function App() {
@@ -45,8 +46,21 @@ function App() {
           <Route path="/ministries" element={<MinistriesPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/choir" element={<ChoirPage />} />
-          <Route path="/admin/login" element={<LoginPage />} />
-          <Route path="/admin/dashboard" element={<PrivateRoute><AdminPage /></PrivateRoute>} />
+
+          <Route path="/admin/login" element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+
+          <Route path="/admin/dashboard"
+            element={
+              <PrivateRoute>
+                <AdminPage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </div>
