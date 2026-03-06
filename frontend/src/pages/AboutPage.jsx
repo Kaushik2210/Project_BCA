@@ -14,10 +14,10 @@ const AboutPage = () => {
     const timelineRef = useRef();
 
     const historyEvents = [
-        { year: "1985", title: "The Foundation", desc: "Started in a small living room with just 12 families dedicated to prayer." },
-        { year: "1998", title: "Growing Community", desc: "Moved to our first permanent building as membership exceeded 200 congregants." },
-        { year: "2010", title: "New Horizons", desc: "launched our global outreach program, partnering with missions in 5 continents." },
-        { year: "2024", title: "A Legacy Continues", desc: "Celebrating nearly 40 years of grace, we continue to build for the next generation." },
+        { year: "2025", title: "The Foundation", desc: "Started in a small living room with just 3 families dedicated to prayer." },
+        { year: "2025", title: "Growing Community", desc: "Gathered in various believers homes as the early church did" },
+        { year: "2026", title: "New Horizons", desc: "launching forward with the truth of God's word to reach out to lost souls" },
+        { year: "2026", title: "A Legacy Continues", desc: "Celebrating as we grow in grace striving to follow our higher calling" },
     ];
 
     useGSAP(() => {
@@ -148,13 +148,13 @@ const AboutPage = () => {
                         </p>
                         <div className="prose prose-lg prose-stone text-[#1a1614]/80 font-serif">
                             <p className="mb-6">
-                                Reverend Michael Johnson has served as the Senior Pastor of Resurrection Baptist Church since 2012. With a heart for expository preaching and community outreach, he has led the church through a decade of transformative growth.
+                                Pastor Jonah Chowri has served as the Pastor of Resurrection Baptist Church since 2025. With a heart for expository preaching and community outreach, he has led the church for transformative growth.
                             </p>
                             <p className="mb-6">
-                                Before arriving here, Michael served in mission fields across South America, an experience that deeply shaped his understanding of the global church. He holds a Masters of Divinity from Grace Theological Seminary.
+                                Before arriving here, Pastor Jonah served in Heritage Baptist Church, Bengaluru where he learnt the truth of God's word and the need for a local church. He holds a Bachelors in Theology from HBBC.
                             </p>
                             <p>
-                                He and his wife, Sarah, have been married for 25 years and are proud parents to three children. When not in the pulpit, you can find Michael hiking the local trails or enjoying a good cup of coffee with new friends.
+                                He and his wife, Priya, have been married for 2 years. When not in the pulpit, you can find Jonah travelling and enjoying a good cup of coffee with family and friends.
                             </p>
                         </div>
                         
