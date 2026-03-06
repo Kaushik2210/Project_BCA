@@ -1,6 +1,4 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import { connecttoDB } from "./config/database.js";
 import { sermonsRouter } from "./routes/sermon.router.js";
 //import { scheduleRouter } from "./routes/schedule.router.js";
 import { authRouter } from "./routes/auth.router.js";
@@ -8,9 +6,7 @@ import { choirRouter } from "./routes/choir.router.js";
 import cors from 'cors';
 
 
-dotenv.config();
 
-const PORT=process.env.PORT;
 const app=express();
 
 app.use(cors());
