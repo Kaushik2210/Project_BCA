@@ -2,11 +2,10 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import {ApiError} from "../utils/apiError.js"
 import {ApiResponse} from "../utils/apiResponse.js"
 import Sermon from "../models/sermon.model.js"
-import cloudinaryConfig from "../utils/cloudinary.js"
+import cloudinaryConfig from "../config/cloudinary.js"
 import streamifier from "streamifier";
 
 export const getSermons=asyncHandler(async (req,res) => {
-    // support pagination: ?page=1&limit=6
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 6);
 

@@ -22,9 +22,8 @@ app.use("/api/v1/auth", authRouter);
 //app.use("/api/v1/schedule", scheduleRouter);
 app.use("/api/v1/choir", choirRouter);
 
-connecttoDB().then(
-    ()=>{
-        const server=app.listen(PORT,()=>{
-            console.log(`The server is running on localhost:${PORT}`)
-        })
+connecttoDB().then(()=>{
+    app.listen(PORT,()=>{
+         console.log(`The server is running on localhost:${PORT}`)
     })
+})

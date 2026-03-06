@@ -1,16 +1,12 @@
 import { Router } from 'express';
-const router = Router();
 import { getEvents, createEvent, updateEvent, deleteEvent } from '../controllers/choir.controller.js';
-import authMiddleware from '../middleware/authMiddleware.js'; // Optional: protect routes
+import requireAuth from "../middleware/authMiddleware.js";
 
 
 const choirRouter=Router();
-// Public: get all events (optionally by month)
 choirRouter.get('/', getEvents);
-
-// Protected CRUD routes for admin
-choirRouter.post('/', authMiddleware, createEvent);
-choirRouter.put('/:id', authMiddleware, updateEvent);
-choirRouter.delete('/:id', authMiddleware, deleteEvent);
+choirRouter.post('/', requireAuth, createEvent);
+choirRouter.put('/:id', requireAuth, updateEvent);
+choirRouter.delete('/:id', requireAuth, deleteEvent);
 
 export {choirRouter};
