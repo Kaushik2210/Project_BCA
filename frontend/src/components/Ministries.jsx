@@ -14,9 +14,9 @@ const Ministries = () => {
   const slider = useRef();
   
   const people = [
-    { name: 'EMILY JOHNSON', role: 'Youth Ministry Leader, Resurrection Baptist Church', img: img1 },
-    { name: 'MICHAEL SMITH', role: 'Outreach Coordinator, Resurrection Baptist Church', img: img2 },
-    { name: 'SARAH BROWN', role: 'Education Program Director, Resurrection Baptist Church', img: img3 },
+    { name: 'JUDE CHOWRI', role: 'Youth Ministry Leader, Resurrection Baptist Church', img: img1 },
+    { name: 'JONAH CHOWRI', role: 'Outreach Coordinator, Resurrection Baptist Church', img: img2 },
+    { name: 'JONAH CHOWRI', role: 'Sunday School Director, Resurrection Baptist Church', img: img3 },
   ];
 
   useGSAP(() => {
