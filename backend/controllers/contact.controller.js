@@ -9,13 +9,20 @@ const postContact=asyncHandler(async(req,res)=>{
     const { error } = contactSchema.safeParse({ name, email, message });
 
     if (error) {
-        return res.status(400).json(new ApiError(400, error.issues[0].message));
+        return res.status(400).json(new ApiError(400, error.issues[0].message).toJSON());
     }
-    const contact=await Contact.create({name,email,message});
+    let contact=await Contact.create({name,email,message});
 
     if(!contact){
-        return res.status(500).json(new ApiError(500,"Failed to submit contact form"));
+        return res.status(500).json(new ApiError(500,"Failed to submit contact form").toJSON());
     }
+
+    contact=contact.toObject();
+    delete contact.__v;
+    delete contact._id;
+    delete contact.replied;
+
+    
 
     return res.status(201).json(new ApiResponse(201,contact,"Contact form submitted successfully"));
 })
@@ -31,7 +38,7 @@ const markAsReplied=asyncHandler(async(req,res)=>{
     const contact=await Contact.findById(contactId);
 
     if(!contact){
-        return res.status(404).json(new ApiError(404,"Contact not found"));
+        return res.status(404).json(new ApiError(404,"Contact not found").toJSON());
     }
     contact.replied=true;
     await contact.save();
