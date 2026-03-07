@@ -61,7 +61,7 @@ const Footer = () => {
                 className="hover:text-brand-dark transition-colors"
                 
               >
-                Ressurection Baptist Church
+                Resurrection Baptist Church
               </a>
             </p>
           </div>
@@ -87,10 +87,14 @@ const Footer = () => {
         </div>
 
         <div className="max-w-xs text-right">
-          <p className="text-brand-dark/60 font-serif text-sm">
-            For assistance, please call our support line at +91-90084 69800,
-            available 24/7.
-          </p>
+          <a
+            href="https://www.instagram.com/resurrection_baptist?igsh=MWQ2OTc1ZXNnMnNtdw=="
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-brand-dark transition-colors"    
+          >
+            Resurrection Baptist Church
+          </a>
         </div>
       </div>
     </div>
