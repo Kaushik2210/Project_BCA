@@ -193,8 +193,7 @@ const ContactPage = () => {
                 <div className="contact-reveal h-64 md:h-96 w-full bg-[#0d0b0a] mt-12 flex items-center justify-center opacity-80">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.8391726900445!2d77.65111089250834!3d12.91805625002827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae148233bb53d1%3A0x6c7efe0d29ccd384!2s839%2C%2010th%20Cross%20Rd%2C%201st%20Sector%2C%20HSR%20Layout%2C%20Bengaluru%2C%20Karnataka%20560102!5e0!3m2!1sen!2sin!4v1772863528854!5m2!1sen!2sin"
-                        width="600"
-                        height="350"
+                        className="w-full h-full p-2 rounded-2xl border border-brand-red/30"
                         style={{ border: 0 }}
                         allowFullScreen=""
                         loading="lazy"
