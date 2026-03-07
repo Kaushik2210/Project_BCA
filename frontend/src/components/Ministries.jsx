@@ -26,18 +26,7 @@ const Ministries = () => {
         return slider.current.scrollWidth - window.innerWidth;
     };
 
-    const tween = gsap.to(slider.current, {
-      x: () => -getScrollAmount(), // Move left dynamically
-      ease: "none",
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top top",
-        end: () => `+=${getScrollAmount() + 500}`, // Dynamic end
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-      }
-    });
+  
 
     // Inner Parallax for Images
     gsap.utils.toArray(".ministry-img").forEach((img) => {
@@ -99,7 +88,7 @@ const Ministries = () => {
            </div>
 
           {people.map((person, index) => (
-            <div key={index} className="ministry-card border border-brand-red/30 bg-black/20 backdrop-blur-md rounded-4xl p-8 flex flex-col items-center text-center w-[85vw] md:w-[450px] shrink-0 hover:bg-black/40 hover:border-[#c5a059] hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-500 group relative overflow-hidden">
+            <div key={index} className="ministry-card border border-brand-red/30 bg-black/20 backdrop-blur-md rounded-4xl p-8 flex flex-col items-center text-center w-[85vw] md:w-112.5 shrink-0 hover:bg-black/40 hover:border-brand-red hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-500 group relative overflow-hidden">
               
               {/* Inner Glow Gradient */}
               <div className="absolute inset-0 bg-linear-to-b from-brand-red/0 to-brand-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>

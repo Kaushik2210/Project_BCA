@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import choirBg from '../assets/schedule-church-atmosphere.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import process from 'process';
 
 const ChoirPage = () => {
   const container = useRef();
@@ -14,15 +15,13 @@ const ChoirPage = () => {
   const [direction, setDirection] = useState(1);
   const [easterEggCount, setEasterEggCount] = useState(0);
 
-  const [events, setEvents] = useState([]); // now dynamic
-  const token = localStorage.getItem('admin_token');
+  const [events, setEvents] = useState([]);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   // -------------------- FETCH EVENTS FROM BACKEND --------------------
   const fetchEvents = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/v1/choir', {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-      });
+      const res = await fetch(`${backendUrl}/api/v1/choir`);
       if (!res.ok) throw new Error('Failed to fetch choir events');
       const data = await res.json();
       setEvents(data.data || []);

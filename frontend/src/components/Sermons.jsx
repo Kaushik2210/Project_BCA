@@ -3,12 +3,14 @@ import sermonsBg from '../assets/sermons-bg.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import process from "process";
 
 const Sermons = () => {
   const container = useRef();
   const [sermons, setSermons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   const SermonCard = ({ sermon, className }) => {
     const date = sermon?.createdAt ? new Date(sermon.createdAt).toLocaleDateString() : '';
@@ -39,7 +41,7 @@ const Sermons = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch('http://localhost:8000/api/v1/sermons?limit=4&page=1');
+        const res = await fetch(`${backendUrl}/api/v1/sermons?limit=4&page=1`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const body = await res.json();
         const data = body?.data?.sermons || body?.sermons || [];

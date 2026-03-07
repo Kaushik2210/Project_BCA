@@ -5,6 +5,7 @@ import sermonsBg from '../assets/sermons-bg.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import process from "process";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,8 @@ const SermonsPage = () => {
     const itemsPerPage = 6;
     const [totalPages, setTotalPages] = useState(1);
     const audioRefs = useRef({});
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+
 
    
 
@@ -35,7 +38,7 @@ const SermonsPage = () => {
         setError(null);
         
         try {
-            const res = await fetch(`http://localhost:8000/api/v1/sermons?page=${page}&limit=${itemsPerPage}`);
+            const res = await fetch(`${backendUrl}/api/v1/sermons?page=${page}&limit=${itemsPerPage}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             
             const json = await res.json();
