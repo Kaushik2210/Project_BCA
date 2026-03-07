@@ -11,7 +11,7 @@ export const getSermons=asyncHandler(async (req,res) => {
 
     const totalSermons = await Sermon.countDocuments();
     if (totalSermons === 0) {
-        return res.status(200).json(new ApiResponse(200, { sermons: [], pagination: { total: 0, page, limit, totalPages: 0 } }, "Sermons fetched successfully"));
+        return res.status(200).json(new ApiResponse(200, { sermons: [], pagination: { total: 0, page, limit, totalPages: 0 } }, "Sermons fetched successfully").toJSON());
     }
 
     const totalPages = Math.ceil(totalSermons / limit);
@@ -23,12 +23,12 @@ export const getSermons=asyncHandler(async (req,res) => {
         .limit(limit);
 
     if(!sermons){
-        return res.status(404).json(new ApiError(404,"No sermons found"));
+        return res.status(404).json(new ApiError(404,"No sermons found").toJSON());
     }
 
     return res
         .status(200)
-        .json(new ApiResponse(200, { sermons, pagination: { total: totalSermons, page, limit, totalPages } }, "Sermons fetched successfully"));
+        .json(new ApiResponse(200, { sermons, pagination: { total: totalSermons, page, limit, totalPages } }, "Sermons fetched successfully").toJSON());
 
 })
 
@@ -37,7 +37,7 @@ export const postSermon=asyncHandler(async(req,res)=>{
     const file=req.file;
 
     if(!file || !title || !description){
-        return res.status(400).json(new ApiError(400,"All fields are required"));
+        return res.status(400).json(new ApiError(400,"All fields are required").toJSON());
     }
 
     //uploading audio to Cloudinary
@@ -66,12 +66,12 @@ export const postSermon=asyncHandler(async(req,res)=>{
 
     //db failed to save the sermon
     if(!sermon){
-        throw new ApiError(503,"Failed to save sermon to database");
+        return res.status(503).json(new ApiError(503,"Failed to update sermon to database").toJSON());
     }
 
     return res
         .status(201)
-        .json(new ApiResponse(201,sermon,"Sermon details uploaded successfully"))
+        .json(new ApiResponse(201,sermon,"Sermon details uploaded successfully").toJSON())
 
 })
 
@@ -81,13 +81,13 @@ export const editSermon=asyncHandler(async (req,res) => {
     const id=req.params.id;
 
     if(!file && !title && !description){
-        return res.status(400).json(new ApiError(400,"All fields are required"));
+        return res.status(400).json(new ApiError(400,"All fields are required").toJSON());
     }
 
     const sermon=await Sermon.findById(id);
 
     if(!sermon){
-        return res.status(404).json(new ApiError(404,"Sermon not found"));
+        return res.status(404).json(new ApiError(404,"Sermon not found").toJSON());
     }
 
     //uploading audio to Cloudinary
@@ -118,12 +118,12 @@ export const editSermon=asyncHandler(async (req,res) => {
 
     //db failed to save the sermon
     if(!updateSermon){
-        throw new ApiError(503,"Failed to update sermon to database");
+        return res.status(503).json(new ApiError(503,"Failed to update sermon to database").toJSON());
     }
 
     return res
         .status(200)
-        .json(new ApiResponse(200,updateSermon,"Sermon details updated successfully"))
+        .json(new ApiResponse(200,updateSermon,"Sermon details updated successfully").toJSON());
 
 })
 
@@ -131,7 +131,7 @@ export const deleteSermon=asyncHandler(async(req,res)=>{
     const id=req.params.id;
     const sermon=await Sermon.findById(id);
     if(!sermon){
-        return res.status(404).json(new ApiError(404,"Sermon not found"));
+        return res.status(404).json(new ApiError(404,"Sermon not found").toJSON());
     }
 
 
@@ -141,10 +141,10 @@ export const deleteSermon=asyncHandler(async(req,res)=>{
     });
 
     if(sermonDelete.result==="not found"){
-        return res.status(404).json(new ApiResponse(404,"","Sermon not found in Cloudinary"))
+        return res.status(404).json(new ApiResponse(404,"","Sermon not found in Cloudinary").toJSON())
     }else if(sermonDelete.result==="ok"){
         await Sermon.findByIdAndDelete(id);
-        return res.status(200).json(new ApiResponse(200,"","Sermon deleted successfully"))
+        return res.status(200).json(new ApiResponse(200,"","Sermon deleted successfully").toJSON())
     }
 
 })

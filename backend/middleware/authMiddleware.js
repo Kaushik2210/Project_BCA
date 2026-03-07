@@ -8,11 +8,13 @@ export const requireAuth = (req, res, next) => {
     token = authHeader.split(' ')[1];
   } else if (authHeader) {
     token = authHeader;
+  }else{
+    return res.status(401).json(new ApiError(401, "Unauthorized").toJSON());
   }
 
   const payload = token ? authController.verifyToken(token) : null;
   if (!payload) {
-    return res.status(401).json(new ApiError(401, 'Unauthorized'));
+    return res.status(401).json(new ApiError(401, 'Unauthorized').toJSON());
   }
 
   // attach decoded token payload to request for handlers to use if needed

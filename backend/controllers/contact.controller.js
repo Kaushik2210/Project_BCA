@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { contactSchema } from "../schema/contact.schema.js";
+import omitFields from "../utils/omitFields.js";
 
 const postContact=asyncHandler(async(req,res)=>{
     const {name,email,message}=req.body;
@@ -17,20 +18,15 @@ const postContact=asyncHandler(async(req,res)=>{
         return res.status(500).json(new ApiError(500,"Failed to submit contact form").toJSON());
     }
 
-    contact=contact.toObject();
-    delete contact.__v;
-    delete contact._id;
-    delete contact.replied;
+    contact=omitFields(contact.toObject(),["__v","replied"]);
 
-    
-
-    return res.status(201).json(new ApiResponse(201,contact,"Contact form submitted successfully"));
+    return res.status(201).json(new ApiResponse(201,contact,"Contact form submitted successfully").toJSON());
 })
 
 const getContact=asyncHandler(async(req,res)=>{
     const contacts=await Contact.find().sort({createdAt:-1});
 
-    return res.status(200).json(new ApiResponse(200,contacts,"Contacts fetched successfully"));
+    return res.status(200).json(new ApiResponse(200,contacts,"Contacts fetched successfully").toJSON());
 })
 
 const markAsReplied=asyncHandler(async(req,res)=>{
@@ -42,7 +38,7 @@ const markAsReplied=asyncHandler(async(req,res)=>{
     }
     contact.replied=true;
     await contact.save();
-    return res.status(200).json(new ApiResponse(200,contact,"Contact marked as replied successfully"));
+    return res.status(200).json(new ApiResponse(200,contact,"Contact marked as replied successfully").toJSON());
 })
 
 export {postContact,getContact,markAsReplied};

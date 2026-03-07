@@ -5,7 +5,7 @@ import { contactRateLimiter } from "../middleware/rateLimiter.js";
 
 const contactRouter=express.Router();
 
-contactRouter.get("/",getContact);
+contactRouter.get("/",requireAuth,getContact);
 contactRouter.post("/",contactRateLimiter,postContact);
 contactRouter.put("/:id/reply",requireAuth,markAsReplied);
 
