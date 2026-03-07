@@ -118,7 +118,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Our Location</h3>
-                                        <p className="text-[#f0e6d2]/70">123 Faith Avenue<br/>Graceville, ST 12345</p>
+                                        <p className="text-[#f0e6d2]/70">#839 HSR Layout<br/>Bengaluru, Karnataka</p>
                                     </div>
                                 </div>
                                 
@@ -128,7 +128,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Phone Number</h3>
-                                        <p className="text-[#f0e6d2]/70">(555) 123-4567</p>
+                                        <p className="text-[#f0e6d2]/70">90084 69800</p>
                                     </div>
                                 </div>
 
@@ -138,7 +138,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Email Address</h3>
-                                        <p className="text-[#f0e6d2]/70">info@resurrectionbaptist.org</p>
+                                        <p className="text-[#f0e6d2]/70">jonahchowri95@gmail.com</p>
                                     </div>
                                 </div>
                             </div>
