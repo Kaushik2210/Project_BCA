@@ -60,23 +60,7 @@ const ContactPage = () => {
         }, 1500);
     };
 
-    const MapEmbed = () => {
-        return (
-            <iframe
-                src="https://www.google.com"
-                width="600"
-                height="450"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Google Maps Location"
-            />
-        );
-    };
-
-
-
+ 
     return (
         <>
             <Navbar />
@@ -117,8 +101,8 @@ const ContactPage = () => {
                                         <FiMapPin className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Our Location</h3>
-                                        <p className="text-[#f0e6d2]/70">#839 HSR Layout<br/>Bengaluru, Karnataka</p>
+                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Our Location</h3>
+                                        <p className="text-brand-dark/70">#839 HSR Layout<br/>Bengaluru, Karnataka</p>
                                     </div>
                                 </div>
                                 
@@ -127,8 +111,8 @@ const ContactPage = () => {
                                         <FiPhone className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Phone Number</h3>
-                                        <p className="text-[#f0e6d2]/70">90084 69800</p>
+                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Phone Number</h3>
+                                        <p className="text-brand-dark/70">90084 69800</p>
                                     </div>
                                 </div>
 
@@ -137,8 +121,8 @@ const ContactPage = () => {
                                         <FiMail className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Email Address</h3>
-                                        <p className="text-[#f0e6d2]/70">jonahchowri95@gmail.com</p>
+                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Email Address</h3>
+                                        <p className="text-brand-dark/70">jonahchowri95@gmail.com</p>
                                     </div>
                                 </div>
                             </div>
