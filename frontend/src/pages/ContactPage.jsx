@@ -17,6 +17,7 @@ const ContactPage = () => {
         message: ''
     });
     const [status, setStatus] = useState('');
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
     useGSAP(() => {
         // Hero Section Animation
@@ -48,15 +49,39 @@ const ContactPage = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Simulate form submission
+
+        const { name, email, message } = formData;
+        if (!name.trim() || !email.trim() || !message.trim()) {
+            setStatus('Please fill in all fields.');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setStatus('Please enter a valid email address.');
+            return;
+        }
+
+        const response=await fetch(`${backendUrl}/api/v1/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
         setStatus('Sending...');
+
+        if(!response.ok){
+            const errorData=await response.json();
+            setStatus(errorData.message || 'Failed to submit. Please try again.');
+            return;
+        }
+
+        setStatus('Submitted successfully!');
         setTimeout(() => {
-            setStatus('Thank you for reaching out. We will get back to you soon.');
             setFormData({ name: '', email: '', message: '' });
-            setTimeout(() => setStatus(''), 5000);
-        }, 1500);
+            setStatus('');
+        }, 2000);
     };
 
  
