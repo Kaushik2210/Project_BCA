@@ -123,84 +123,71 @@ const AboutPage = () => {
               <div className="timeline-line w-full bg-[#c5a059] shadow-[0_0_10px_#c5a059]"></div>
             </div>
 
-            {historyEvents.map((event, i) => (
-              <div
-                key={i}
-                className={`milestone-card md:flex items-center justify-between mb-24 relative ${i % 2 === 0 ? "md:flex-row-reverse" : ""}`}
-              >
-                {/* Center Dot */}
-                <div className="absolute left-[-2.35rem] md:left-1/2 top-0 md:top-1/2 md:-translate-y-1/2 md:-translate-x-1/2 w-4 h-4 bg-[#c5a059] rounded-full border-4 border-[#1a1614] z-10"></div>
-                <div className="hidden md:block w-5/12"></div> {/* Spacer */}
-                <div className="w-full md:w-5/12 bg-[#c5a059]/10 border border-[#c5a059]/20 p-8 rounded-2xl backdrop-blur-sm hover:bg-[#c5a059]/20 transition-all duration-500">
-                  <span className="text-[#c5a059] font-bold text-5xl font-serif opacity-30 absolute top-4 right-6 pointer-events-none">
-                    {event.year}
-                  </span>
-                  <h3 className="text-2xl font-serif text-[#f0e6d2] mb-4 relative z-10">
-                    {event.title}
-                  </h3>
-                  <p className="text-[#f0e6d2]/70 leading-relaxed relative z-10">
-                    {event.desc}
-                  </p>
+                        {historyEvents.map((event, i) => (
+                            <div key={i} className={`milestone-card md:flex items-center justify-between mb-24 relative ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                                
+                                {/* Center Dot */}
+                                <div className="absolute left-[-2.35rem] md:left-1/2 top-0 md:top-1/2 md:-translate-y-1/2 md:-translate-x-1/2 w-4 h-4 bg-[#c5a059] rounded-full border-4 border-[#1a1614] z-10"></div>
+
+                                <div className="hidden md:block w-5/12"></div> {/* Spacer */}
+
+                                <div className="w-full md:w-5/12 bg-brand-red/10 border border-brand-red/20 p-8 rounded-2xl backdrop-blur-sm hover:bg-brand-red/20 transition-all duration-500">
+                                    <span className="text-[#c5a059] font-bold text-5xl font-serif opacity-30 absolute top-4 right-6 pointer-events-none">
+                                        {event.year}
+                                    </span>
+                                    <h3 className="text-2xl font-serif text-[#f0e6d2] mb-4 relative z-10">{event.title}</h3>
+                                    <p className="text-brand-dark/70 leading-relaxed relative z-10">
+                                        {event.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Pastor & Family Section */}
-        <div className="pastor-section min-h-screen flex flex-col md:flex-row bg-[#f0e6d2] text-[#1a1614] relative">
-          {/* Sticky Image Side */}
-          <div className="pastor-image-container w-full md:w-1/2 h-[50vh] md:h-screen md:sticky md:top-0 overflow-hidden relative">
-            <img
-              src={pastorImg}
-              alt="Pastor"
-              className="w-fit h-fit object-cover grayscale contrast-125 sepia-[.2]"
-            />
-            <div className="absolute inset-0 bg-[#c5a059] mix-blend-multiply opacity-20"></div>
-            <div className="absolute bottom-12 left-12">
-              <h2 className="text-5xl md:text-7xl font-serif text-white leading-none mb-2">
-                Pastor Jonah Chowri
-              </h2>
-              <p className="text-xl font-serif italic text-white/70">
-                Senior Pastor
-              </p>
-            </div>
-          </div>
+                {/* Pastor & Family Section */}
+                <div className="pastor-section min-h-screen flex flex-col md:flex-row bg-brand-dark text-[#1a1614] relative">
+                    
+                    {/* Sticky Image Side */}
+                    <div className="pastor-image-container w-full md:w-1/2 h-[50vh] md:h-screen md:sticky md:top-0 overflow-hidden relative">
+                        <img 
+                            src={pastorImg} 
+                            alt="Pastor" 
+                            className="w-full h-full object-scale-down grayscale contrast-125 sepia-[.2]"
+                        />
+                        <div className="absolute inset-0 bg-brand-red mix-blend-multiply opacity-20"></div>
+                        <div className="absolute bottom-12 left-12">
+                            <h2 className="text-5xl md:text-7xl font-serif text-white leading-none mb-2">
+                                Pastor Jonah Chowri
+                            </h2>
+                            <p className="text-xl font-serif italic text-white/70">Senior Pastor</p>
+                        </div>
+                    </div>
 
-          {/* Scrolling Content Side */}
-          <div className="w-full md:w-1/2 p-12 md:p-32 flex flex-col justify-center">
-            <h3 className="text-[#c5a059] font-bold uppercase tracking-widest mb-8 text-sm">
-              Shepherd & Leader
-            </h3>
-            <p className="text-2xl md:text-3xl font-serif leading-relaxed mb-8">
-              "It is my greatest privilege to walk alongside this community as
-              we seek God's face together."
-            </p>
-            <div className="prose prose-lg prose-stone text-[#1a1614]/80 font-serif">
-              <p className="mb-6">
-                Pastor Jonah Chowri has served as the Pastor of Resurrection
-                Baptist Church since 2025. With a heart for expository preaching
-                and community outreach, he has led the church for transformative
-                growth.
-              </p>
-              <p className="mb-6">
-                Before arriving here, Pastor Jonah served in Heritage Baptist
-                Church, Bengaluru where he learnt the truth of God's word and
-                the need for a local church. He holds a Bachelors in Theology
-                from HBBC.
-              </p>
-              <p>
-                He and his wife, Priya, have been married for 2 years. When not
-                in the pulpit, you can find Jonah travelling and enjoying a good
-                cup of coffee with family and friends.
-              </p>
+                    {/* Scrolling Content Side */}
+                    <div className="w-full md:w-1/2 p-12 md:p-32 flex flex-col justify-center">
+                        <h3 className="text-brand-red font-bold uppercase tracking-widest mb-8 text-sm">Shepherd & Leader</h3>
+                        <p className="text-2xl md:text-3xl font-serif leading-relaxed mb-8">
+                            "It is my greatest privilege to walk alongside this community as we seek God's face together."
+                        </p>
+                        <div className="prose prose-lg prose-stone text-brand-beige/80 font-serif">
+                            <p className="mb-6">
+                                Pastor Jonah Chowri has served as the Pastor of Resurrection Baptist Church since 2025. With a heart for expository preaching and community outreach, he has led the church for transformative growth.
+                            </p>
+                            <p className="mb-6">
+                                Before arriving here, Pastor Jonah served in Heritage Baptist Church, Bengaluru where he learnt the truth of God's word and the need for a local church. He holds a Bachelors in Theology from HBBC.
+                            </p>
+                            <p>
+                                He and his wife, Priya, have been married for 2 years. When not in the pulpit, you can find Jonah travelling and enjoying a good cup of coffee with family and friends.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
+            <Footer />
+        </>
+    );
 };
 
 export default AboutPage;

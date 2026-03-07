@@ -107,7 +107,7 @@ const MinistriesPage = () => {
                 {/* Ministry Sections */}
                 <div className="px-4 md:px-12 pb-24 relative z-10">
                     {ministries.map((min, i) => (
-                        <div key={min.id} className="ministry-section min-h-screen py-24 flex flex-col md:flex-row items-center gap-12 md:gap-24 sticky top-0 bg-brand-beige/95 backdrop-blur-sm border-t border-[#c5a059]/20">
+                        <div key={min.id} className="ministry-section min-h-screen py-24 flex flex-col md:flex-row items-center gap-12 md:gap-24 sticky top-0 bg-brand-beige/95 backdrop-blur-sm border-t border-brand-red/20">
                             
                             {/* Image Side - Alternating */}
                             <div className={`w-full md:w-1/2 h-[50vh] md:h-[70vh] overflow-hidden rounded-4xl border border-brand-red/30 relative group ${i % 2 === 1 ? 'md:order-last' : ''}`}>
