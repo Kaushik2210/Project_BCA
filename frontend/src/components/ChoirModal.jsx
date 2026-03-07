@@ -128,8 +128,8 @@ const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
               onChange={(e) => setDate(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand-red"
               required
-              min="2020-01-01"   // optional: prevent unreasonably old dates
-              // max="2035-12-31" // optional: limit far future
+              min={new Date().toISOString().split('T')[0]}
+              max={new Date().getFullYear() + 1 + '-12-31'}
             />
           </div>
 
