@@ -68,19 +68,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Accessibility Section */}
-      <div className="px-8 max-w-5xl mb-24">
-        <h3 className="access-quote text-brand-red text-3xl md:text-5xl font-serif leading-tight drop-shadow-md">
-          <span className="access-line block">Our church is fully</span>
-          <span className="access-line block">accessible, providing</span>
-          <span className="access-line block">
-            services for all individuals
-          </span>
-          <span className="access-line block">to ensure everyone</span>
-          <span className="access-line block">can participate.</span>
-        </h3>
-      </div>
-
       {/* Bottom Contacts */}
       <div className="px-8 flex flex-col md:flex-row justify-between items-start border-t border-brand-red/30 pt-12">
         <div className="mb-8 md:mb-0">
