@@ -14,7 +14,6 @@ const ContactPage = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        subject: '',
         message: ''
     });
     const [status, setStatus] = useState('');
@@ -55,7 +54,7 @@ const ContactPage = () => {
         setStatus('Sending...');
         setTimeout(() => {
             setStatus('Thank you for reaching out. We will get back to you soon.');
-            setFormData({ name: '', email: '', subject: '', message: '' });
+            setFormData({ name: '', email: '', message: '' });
             setTimeout(() => setStatus(''), 5000);
         }, 1500);
     };
@@ -122,7 +121,9 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-serif text-brand-dark mb-1">Email Address</h3>
-                                        <p className="text-brand-dark/70">jonahchowri95@gmail.com</p>
+                                        <a href="mailto:jonahchowri95@gmail.com" className="text-brand-dark/70">
+                                            jonahchowri95@gmail.com
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -158,19 +159,6 @@ const ContactPage = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="subject" className="block text-sm font-serif text-brand-red mb-2 uppercase tracking-wide">Subject</label>
-                                    <input 
-                                        type="text" 
-                                        id="subject" 
-                                        name="subject" 
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        required 
-                                        className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300"
-                                        placeholder="How can we help?"
-                                    />
-                                </div>
-                                <div>
                                     <label htmlFor="message" className="block text-sm font-serif text-brand-red mb-2 uppercase tracking-wide">Message</label>
                                     <textarea 
                                         id="message" 
@@ -180,7 +168,7 @@ const ContactPage = () => {
                                         required 
                                         rows="4"
                                         className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300 resize-none"
-                                        placeholder="Type your message here..."
+                                        placeholder="How can we help you?"
                                     ></textarea>
                                 </div>
                                 
