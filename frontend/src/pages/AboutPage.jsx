@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import historyBg from '../assets/hero-church-epic.png';
-import pastorImg from '../assets/ministry-1.png'; // Placeholder
+import pastorImg from '../assets/ministry-3.jpeg'; // Placeholder
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -133,10 +133,10 @@ const AboutPage = () => {
                         />
                         <div className="absolute inset-0 bg-[#c5a059] mix-blend-multiply opacity-20"></div>
                         <div className="absolute bottom-12 left-12">
-                            <h2 className="text-5xl md:text-7xl font-serif text-[#1a1614] leading-none mb-2">
-                                Rev. Michael <br/> Johnson
+                            <h2 className="text-5xl md:text-7xl font-serif text-white leading-none mb-2">
+                                Pastor Jonah Chowri
                             </h2>
-                            <p className="text-xl font-serif italic text-[#1a1614]/70">Senior Pastor</p>
+                            <p className="text-xl font-serif italic text-white/70">Senior Pastor</p>
                         </div>
                     </div>
 
@@ -157,13 +157,7 @@ const AboutPage = () => {
                                 He and his wife, Priya, have been married for 2 years. When not in the pulpit, you can find Jonah travelling and enjoying a good cup of coffee with family and friends.
                             </p>
                         </div>
-                        
-                        <div className="mt-16 pt-8 border-t border-[#1a1614]/10">
-                            <img src={historyBg} alt="Family Signature" className="h-16 w-auto opacity-50 mix-blend-multiply" /> 
-                            {/* Ideally a signature image, reusing background as placeholder for texture */}
-                        </div>
                     </div>
-
                 </div>
 
             </div>
