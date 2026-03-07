@@ -87,14 +87,10 @@ const Footer = () => {
         </div>
 
         <div className="max-w-xs text-right">
-          <a
-            href="https://www.instagram.com/resurrection_baptist?igsh=MWQ2OTc1ZXNnMnNtdw=="
-            target="_blank"
-            rel="noreferrer"
-            className="hover:text-brand-dark transition-colors"    
-          >
-            Resurrection Baptist Church
-          </a>
+          <h4 className="text-brand-dark text-xl font-sans uppercase tracking-widest mb-4">
+            Our Location
+          </h4>
+          <p className="text-brand-red font-serif">#839 HSR Layout Bengaluru, Karnataka</p>
         </div>
       </div>
     </div>
