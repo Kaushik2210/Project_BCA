@@ -3,14 +3,13 @@ import sermonsBg from '../assets/sermons-bg.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import process from "process";
 
 const Sermons = () => {
   const container = useRef();
   const [sermons, setSermons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
   const SermonCard = ({ sermon, className }) => {
     const date = sermon?.createdAt ? new Date(sermon.createdAt).toLocaleDateString() : '';

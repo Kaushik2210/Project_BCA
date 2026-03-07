@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
-import process from "process";
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -10,7 +9,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

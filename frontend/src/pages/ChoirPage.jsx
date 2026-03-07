@@ -16,7 +16,7 @@ const ChoirPage = () => {
   const [easterEggCount, setEasterEggCount] = useState(0);
 
   const [events, setEvents] = useState([]);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
   // -------------------- FETCH EVENTS FROM BACKEND --------------------
   const fetchEvents = async () => {

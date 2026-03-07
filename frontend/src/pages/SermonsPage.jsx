@@ -5,7 +5,6 @@ import sermonsBg from '../assets/sermons-bg.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import process from "process";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +19,7 @@ const SermonsPage = () => {
     const itemsPerPage = 6;
     const [totalPages, setTotalPages] = useState(1);
     const audioRefs = useRef({});
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 
    
