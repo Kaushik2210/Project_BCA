@@ -1,4 +1,4 @@
-import {Schema} from "mongoose";
+import {Schema,model} from "mongoose";
 
 const ContactSchema=new Schema({
     name: {
@@ -19,6 +19,6 @@ const ContactSchema=new Schema({
     }
 });
 
-const Contact=mongoose.model("Contact",ContactSchema);
+const Contact=model("Contact",ContactSchema);
 export {Contact};
 

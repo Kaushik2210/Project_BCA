@@ -1,8 +1,8 @@
-import { Contact } from "../models/contact.model";
-import { asyncHandler } from "../utils/asyncHandler";
-import { ApiError } from "../utils/apiError";
-import { ApiResponse } from "../utils/apiResponse";
-import { contactSchema } from "../schema/contact.schema";
+import { Contact } from "../models/contact.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { contactSchema } from "../schema/contact.schema.js";
 
 const postContact=asyncHandler(async(req,res)=>{
     const {name,email,message}=req.body;
