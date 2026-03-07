@@ -99,13 +99,6 @@ const Hero = () => {
       }
     };
 
-    return () => {
-      if (btn) {
-        btn.removeEventListener("mousemove", moveBtn);
-        btn.removeEventListener("mouseleave", resetBtn);
-      }
-    };
-
   }, { scope: wrapperRef });
 
   return (

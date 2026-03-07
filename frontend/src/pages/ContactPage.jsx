@@ -80,7 +80,7 @@ const ContactPage = () => {
     return (
         <>
             <Navbar />
-            <div ref={container} className="bg-[#1a1614] text-[#f0e6d2] overflow-hidden min-h-screen">
+            <div ref={container} className="bg-brand-beige text-brand-dark overflow-hidden min-h-screen">
                 
                 {/* Hero Section */}
                 <div className="h-[50vh] relative flex items-center justify-center overflow-hidden">
@@ -88,10 +88,10 @@ const ContactPage = () => {
                         className="absolute inset-0 bg-cover bg-center opacity-30 parallax-bg"
                         style={{ backgroundImage: `url(${historyBg})` }}
                     ></div>
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#1a1614]/20 via-transparent to-[#1a1614]"></div>
+                    <div className="absolute inset-0 bg-linear-to-b from-brand-beige/20 via-transparent to-brand-beige"></div>
                     
                     <div className="relative z-10 text-center px-4 mt-16">
-                        <h1 className="hero-text text-5xl md:text-8xl font-serif text-[#c5a059] opacity-90 drop-shadow-2xl mb-4 uppercase tracking-wider">
+                        <h1 className="hero-text text-5xl md:text-8xl font-serif text-brand-red opacity-90 drop-shadow-2xl mb-4 uppercase tracking-wider">
                             Contact Us
                         </h1>
                         <p className="hero-text text-lg md:text-2xl font-serif max-w-2xl mx-auto italic opacity-80">
@@ -106,49 +106,49 @@ const ContactPage = () => {
                         
                         {/* Contact Information */}
                         <div className="flex flex-col justify-center">
-                            <h2 className="contact-reveal text-3xl md:text-5xl font-serif text-[#c5a059] mb-8">Get In Touch</h2>
-                            <p className="contact-reveal text-lg text-[#f0e6d2]/80 leading-relaxed mb-12 font-serif">
+                            <h2 className="contact-reveal text-3xl md:text-5xl font-serif text-brand-red mb-8">Get In Touch</h2>
+                            <p className="contact-reveal text-lg text-brand-dark/80 leading-relaxed mb-12 font-serif">
                                 Whether you have a question about our ministries, need prayer, or simply want to learn more about our church, we welcome you to reach out. Our doors and hearts are open.
                             </p>
 
                             <div className="space-y-8">
                                 <div className="contact-reveal flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-[#c5a059]/10 border border-[#c5a059]/30 flex items-center justify-center shrink-0">
-                                        <FiMapPin className="text-[#c5a059] text-xl" />
+                                    <div className="w-12 h-12 rounded-full bg-brand-red/10 border border-brand-red/30 flex items-center justify-center shrink-0">
+                                        <FiMapPin className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Our Location</h3>
-                                        <p className="text-[#f0e6d2]/70">123 Faith Avenue<br/>Graceville, ST 12345</p>
+                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Our Location</h3>
+                                        <p className="text-brand-dark/70">123 Faith Avenue<br/>Graceville, ST 12345</p>
                                     </div>
                                 </div>
                                 
                                 <div className="contact-reveal flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-[#c5a059]/10 border border-[#c5a059]/30 flex items-center justify-center shrink-0">
-                                        <FiPhone className="text-[#c5a059] text-xl" />
+                                    <div className="w-12 h-12 rounded-full bg-brand-red/10 border border-brand-red/30 flex items-center justify-center shrink-0">
+                                        <FiPhone className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Phone Number</h3>
-                                        <p className="text-[#f0e6d2]/70">(555) 123-4567</p>
+                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Phone Number</h3>
+                                        <p className="text-brand-dark/70">(555) 123-4567</p>
                                     </div>
                                 </div>
 
                                 <div className="contact-reveal flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-[#c5a059]/10 border border-[#c5a059]/30 flex items-center justify-center shrink-0">
-                                        <FiMail className="text-[#c5a059] text-xl" />
+                                    <div className="w-12 h-12 rounded-full bg-brand-red/10 border border-brand-red/30 flex items-center justify-center shrink-0">
+                                        <FiMail className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Email Address</h3>
-                                        <p className="text-[#f0e6d2]/70">info@resurrectionbaptist.org</p>
+                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Email Address</h3>
+                                        <p className="text-brand-dark/70">info@resurrectionbaptist.org</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Contact Form */}
-                        <div className="contact-reveal bg-[#f0e6d2]/5 border border-[#c5a059]/20 p-8 md:p-12 rounded-3xl backdrop-blur-sm">
+                        <div className="contact-reveal bg-brand-dark/5 border border-brand-red/20 p-8 md:p-12 rounded-3xl backdrop-blur-sm">
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-serif text-[#c5a059] mb-2 uppercase tracking-wide">Your Name</label>
+                                    <label htmlFor="name" className="block text-sm font-serif text-brand-red mb-2 uppercase tracking-wide">Your Name</label>
                                     <input 
                                         type="text" 
                                         id="name" 
@@ -156,12 +156,12 @@ const ContactPage = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required 
-                                        className="w-full bg-transparent border-b border-[#c5a059]/30 py-3 text-[#f0e6d2] placeholder-[#f0e6d2]/30 focus:outline-none focus:border-[#c5a059] transition-colors duration-300"
+                                        className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300"
                                         placeholder="John Doe"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-serif text-[#c5a059] mb-2 uppercase tracking-wide">Email Address</label>
+                                    <label htmlFor="email" className="block text-sm font-serif text-brand-red mb-2 uppercase tracking-wide">Email Address</label>
                                     <input 
                                         type="email" 
                                         id="email" 
@@ -169,12 +169,12 @@ const ContactPage = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required 
-                                        className="w-full bg-transparent border-b border-[#c5a059]/30 py-3 text-[#f0e6d2] placeholder-[#f0e6d2]/30 focus:outline-none focus:border-[#c5a059] transition-colors duration-300"
+                                        className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="subject" className="block text-sm font-serif text-[#c5a059] mb-2 uppercase tracking-wide">Subject</label>
+                                    <label htmlFor="subject" className="block text-sm font-serif text-brand-red mb-2 uppercase tracking-wide">Subject</label>
                                     <input 
                                         type="text" 
                                         id="subject" 
@@ -182,12 +182,12 @@ const ContactPage = () => {
                                         value={formData.subject}
                                         onChange={handleChange}
                                         required 
-                                        className="w-full bg-transparent border-b border-[#c5a059]/30 py-3 text-[#f0e6d2] placeholder-[#f0e6d2]/30 focus:outline-none focus:border-[#c5a059] transition-colors duration-300"
+                                        className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300"
                                         placeholder="How can we help?"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-serif text-[#c5a059] mb-2 uppercase tracking-wide">Message</label>
+                                    <label htmlFor="message" className="block text-sm font-serif text-brand-red mb-2 uppercase tracking-wide">Message</label>
                                     <textarea 
                                         id="message" 
                                         name="message" 
@@ -195,20 +195,20 @@ const ContactPage = () => {
                                         onChange={handleChange}
                                         required 
                                         rows="4"
-                                        className="w-full bg-transparent border-b border-[#c5a059]/30 py-3 text-[#f0e6d2] placeholder-[#f0e6d2]/30 focus:outline-none focus:border-[#c5a059] transition-colors duration-300 resize-none"
+                                        className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300 resize-none"
                                         placeholder="Type your message here..."
                                     ></textarea>
                                 </div>
                                 
                                 <button 
                                     type="submit" 
-                                    className="w-full bg-[#c5a059] text-[#1a1614] font-serif font-bold py-4 rounded-xl hover:bg-[#d8b571] transition-colors duration-300 mt-4 active:scale-[0.98]"
+                                    className="w-full bg-brand-red text-brand-beige font-serif font-bold py-4 rounded-xl hover:bg-[#d8b571] transition-colors duration-300 mt-4 active:scale-[0.98]"
                                 >
                                     SEND MESSAGE
                                 </button>
                                 
                                 {status && (
-                                    <p className={`text-center font-serif mt-4 ${status.includes('Thank') ? 'text-green-400' : 'text-[#c5a059]'}`}>
+                                    <p className={`text-center font-serif mt-4 ${status.includes('Thank') ? 'text-green-400' : 'text-brand-red'}`}>
                                         {status}
                                     </p>
                                 )}

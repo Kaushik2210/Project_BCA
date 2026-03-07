@@ -42,7 +42,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-beige via-brand-beige to-[#f5e8d9] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-brand-beige via-brand-beige to-[#f5e8d9] p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:shadow-3xl">
         {/* Header / Branding */}
         <div className="bg-brand-red px-8 py-10 text-center">
