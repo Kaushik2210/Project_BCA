@@ -1,4 +1,5 @@
 import authController from '../controllers/auth.controller.js';
+import { ApiError } from "../utils/apiError.js";
 
 export const requireAuth = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers['x-auth-token'];
@@ -11,7 +12,7 @@ export const requireAuth = (req, res, next) => {
 
   const payload = token ? authController.verifyToken(token) : null;
   if (!payload) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    return res.status(401).json(new ApiError(401, 'Unauthorized'));
   }
 
   // attach decoded token payload to request for handlers to use if needed

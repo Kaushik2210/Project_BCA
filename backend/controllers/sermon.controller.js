@@ -71,7 +71,7 @@ export const postSermon=asyncHandler(async(req,res)=>{
 
     return res
         .status(201)
-        .json(new ApiResponse(201,"","Sermon details uploaded successfully"))
+        .json(new ApiResponse(201,sermon,"Sermon details uploaded successfully"))
 
 })
 
@@ -123,7 +123,7 @@ export const editSermon=asyncHandler(async (req,res) => {
 
     return res
         .status(200)
-        .json(new ApiResponse(200,"","Sermon details updated successfully"))
+        .json(new ApiResponse(200,updateSermon,"Sermon details updated successfully"))
 
 })
 

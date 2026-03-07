@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import img1 from '../assets/ministry-1.png';
-import img2 from '../assets/ministry-2.png';
+import img1 from '../assets/ministry-1.jpeg';
+import img2 from '../assets/ministry-2.jpeg';
 import img3 from '../assets/ministry-3.png';
 import glassBg from '../assets/ministries-stained-glass.png';
 import gsap from 'gsap';
@@ -106,7 +106,7 @@ const Ministries = () => {
               
               <div className="w-full aspect-[4/5] mb-8 overflow-hidden rounded-2xl border border-[#c5a059]/20 relative">
                  <div className="absolute inset-0 bg-[#c5a059] mix-blend-color opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
-                 <img src={person.img} alt={person.name} className="ministry-img w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
+                 <img src={person.img} alt={person.name} className="ministry-img  w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
               </div>
 
               <h3 className="text-[#c5a059] text-3xl font-serif mb-4 uppercase tracking-widest group-hover:text-[#f0e6d2] transition-colors">{person.name}</h3>
