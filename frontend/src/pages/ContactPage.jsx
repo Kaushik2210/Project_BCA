@@ -117,8 +117,8 @@ const ContactPage = () => {
                                         <FiMapPin className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Our Location</h3>
-                                        <p className="text-brand-dark/70">123 Faith Avenue<br/>Graceville, ST 12345</p>
+                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Our Location</h3>
+                                        <p className="text-[#f0e6d2]/70">123 Faith Avenue<br/>Graceville, ST 12345</p>
                                     </div>
                                 </div>
                                 
@@ -127,8 +127,8 @@ const ContactPage = () => {
                                         <FiPhone className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Phone Number</h3>
-                                        <p className="text-brand-dark/70">(555) 123-4567</p>
+                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Phone Number</h3>
+                                        <p className="text-[#f0e6d2]/70">(555) 123-4567</p>
                                     </div>
                                 </div>
 
@@ -137,8 +137,8 @@ const ContactPage = () => {
                                         <FiMail className="text-brand-red text-xl" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-brand-dark mb-1">Email Address</h3>
-                                        <p className="text-brand-dark/70">info@resurrectionbaptist.org</p>
+                                        <h3 className="text-xl font-serif text-[#f0e6d2] mb-1">Email Address</h3>
+                                        <p className="text-[#f0e6d2]/70">info@resurrectionbaptist.org</p>
                                     </div>
                                 </div>
                             </div>
