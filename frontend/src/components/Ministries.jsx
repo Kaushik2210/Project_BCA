@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import img1 from '../assets/ministry-1.jpeg';
 import img2 from '../assets/ministry-2.jpeg';
-import img3 from '../assets/ministry-3.png';
+import img3 from "../assets/ministry-3.jpeg"
 import glassBg from '../assets/ministries-stained-glass.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -16,7 +16,7 @@ const Ministries = () => {
   const people = [
     { name: 'JUDE CHOWRI', role: 'Youth Ministry Leader, Resurrection Baptist Church', img: img1 },
     { name: 'JONAH CHOWRI', role: 'Outreach Coordinator, Resurrection Baptist Church', img: img2 },
-    { name: 'JONAH CHOWRI', role: 'Sunday School Director, Resurrection Baptist Church', img: img2 },
+    { name: 'JONAH CHOWRI', role: 'Sunday School Director, Resurrection Baptist Church', img: img3 },
   ];
 
   useGSAP(() => {
