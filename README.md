@@ -1,6 +1,6 @@
 # Modern Church Website
 
-<img src="https://raw.githubusercontent.com/Kaushik2210/Project_BCA/main/frontend/src/assets/hero-bg.png" alt="Project Hero" />
+
 
 A modern church website consisting of:
 - A Node.js + Express backend that exposes a REST API for sermons (with Cloudinary audio uploads).
