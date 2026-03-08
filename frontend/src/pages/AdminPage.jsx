@@ -22,12 +22,13 @@ const AdminPage = () => {
   const [showChoirModal, setShowChoirModal] = useState(false);
 
   const token = localStorage.getItem('admin_token');
+  const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
   // Fetch functions
   const fetchSermons = async () => {
     try {
       setLoadingSermons(true);
-      const res = await fetch('http://localhost:8000/api/v1/sermons', {
+      const res = await fetch(`${backendURL}/api/v1/sermons`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       if (!res.ok) throw new Error('Failed to fetch sermons');
@@ -45,7 +46,7 @@ const AdminPage = () => {
   const fetchChoirEvents = async () => {
     try {
       setLoadingChoir(true);
-      const res = await fetch('http://localhost:8000/api/v1/choir', {
+      const res = await fetch(`${backendURL}/api/v1/choir`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       if (!res.ok) throw new Error('Failed to fetch choir events');
@@ -84,7 +85,7 @@ const AdminPage = () => {
   const handleDeleteSermon = async (id) => {
     if (window.confirm('Are you sure you want to delete this sermon?')) {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/sermons/delete/${id}`, {
+        const res = await fetch(`${backendURL}/api/v1/sermons/delete/${id}`, {
           method: 'DELETE',
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
@@ -123,7 +124,7 @@ const AdminPage = () => {
   const handleDeleteChoir = async (id) => {
     if (window.confirm('Are you sure you want to delete this choir event?')) {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/choir/${id}`, {
+        const res = await fetch(`${backendURL}/api/v1/choir/${id}`, {
           method: 'DELETE',
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
