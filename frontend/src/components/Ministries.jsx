@@ -6,12 +6,15 @@ import glassBg from '../assets/ministries-stained-glass.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useNavigate } from "react-router";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Ministries = () => {
   const container = useRef();
   const slider = useRef();
+  const navigate = useNavigate();
+
   
   const people = [
     { name: 'JUDE CHOWRI', role: 'Youth Ministry Leader, Resurrection Baptist Church', img: img1 },
@@ -79,7 +82,7 @@ const Ministries = () => {
               </p>
               <div className="text-left mt-12 pl-6">
                 <button 
-                  onClick={() => window.location.href = '/ministries'}
+                  onClick={() => navigate('/ministries')}
                   className="text-brand-red text-xl font-bold uppercase tracking-[0.2em] hover:text-white transition-colors border-b border-brand-red pb-2 hover:border-white"
                 >
                   View All Ministries &rarr;
