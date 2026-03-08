@@ -16,7 +16,7 @@ const Sermons = () => {
     return (
       <div className={`bg-[#F5F5DC] p-6 rounded-4xl shadow-xl w-full max-w-sm mx-auto z-10 relative group hover:-translate-y-2 transition-transform duration-300 ${className}`}>
         <h4 className="text-[#3E2F26] text-xl font-serif font-bold mb-1">{sermon?.title || 'Untitled'}</h4>
-        <p className="text-gray-600 text-sm mb-4">{sermon?.duration || ''} • {date}</p>
+        {/* <p className="text-gray-600 text-sm mb-4">{sermon?.duration || ''} • {date}</p> */}
         <p className="text-gray-700 text-xs leading-relaxed mb-6">
           {sermon?.description || ''}
         </p>
