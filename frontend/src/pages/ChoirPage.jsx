@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 import choirBg from '../assets/schedule-church-atmosphere.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import process from 'process';
 
 const ChoirPage = () => {
   const container = useRef();
