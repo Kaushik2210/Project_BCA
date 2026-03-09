@@ -18,6 +18,7 @@ app.use(express.json());
 // self pinging to prevent downtime
 setInterval(()=>{
     fetch(process.env.BACKEND_URL + '/ping')
+    console.log('Self-ping sent to prevent downtime');
 }, 840000); // 14 minutes
 
 
