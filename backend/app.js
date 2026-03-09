@@ -4,6 +4,7 @@ import { sermonsRouter } from "./routes/sermon.router.js";
 import { authRouter } from "./routes/auth.router.js";
 import { choirRouter } from "./routes/choir.router.js";
 import { contactRouter } from "./routes/contact.router.js";
+import { ApiResponse } from "./utils/apiResponse.js";
 import cors from 'cors';
 
 
@@ -13,6 +14,17 @@ const app=express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// self pinging to prevent downtime
+setInterval(()=>{
+    fetch(process.env.BACKEND_URL + '/ping')
+}, 840000); // 14 minutes
+
+
+
+app.get('/ping',(req,res)=>{
+    return res.status(200).json(new ApiResponse(200,null,"Ping successful").toJSON());
+})
 
 app.use("/api/v1/sermons",sermonsRouter);
 app.use("/api/v1/auth", authRouter);
