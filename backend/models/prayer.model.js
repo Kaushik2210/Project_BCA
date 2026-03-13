@@ -16,7 +16,7 @@ const prayerSchema=new Schema({
         required:false,
         default:false
     }
-})
+},{timestamps:true})
 
 const Prayer=model("Prayer",prayerSchema)
 export default Prayer
