@@ -5,6 +5,8 @@ import ManageAppointments   from './ManageAppointments';
 import ManageBlogPosts from "./ManageBlogPosts.jsx";
 import ManagePrayers from "./ManagePrayers.jsx";
 import ManageSchedule from "./ManageSchedule.jsx";
+import ManageContacts from "./ManageContacts.jsx";
+import ManageNewsletter from "./ManageNewsletter.jsx";
 
 const NAV_ITEMS = [
   { key: 'sermons',      label: '📖 Sermons'        },
@@ -13,6 +15,9 @@ const NAV_ITEMS = [
   { key: 'blog',         label: '📝 Blog Posts'      },
   {key:'prayer', label:'🙏 Prayer Requests'},
   {key:'event schedule',label:'📅 Event Schedule'},
+  {key:'contacts',label:'📞 Contacts'},
+    { key: 'newsletter',   label: '📧 Newsletter'        },
+
 ];
 
 const AdminPage = () => {
@@ -81,6 +86,8 @@ const AdminPage = () => {
           {activeSection==='blog' && <ManageBlogPosts/>}
           {activeSection==='prayer' && <ManagePrayers/>}
           {activeSection==='event schedule' && <ManageSchedule/>}
+          {activeSection==='contacts' && <ManageContacts/>}
+          {activeSection==='newsletter' && <ManageNewsletter/>}
         </main>
       </div>
     </div>

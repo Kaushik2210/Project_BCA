@@ -28,4 +28,10 @@ const collectEmail=asyncHandler(async(req,res)=>{
     return res.status(201).json(new ApiResponse(201,null,"Subscribed successfully"));
 })
 
-export {collectEmail};
+const getSubscribers = asyncHandler(async (req, res) => {
+  const subscribers = await Newsletter.find().sort({ createdAt: -1 });
+  return res.status(200).json(new ApiResponse(200, subscribers, "Subscribers fetched successfully"));
+});
+
+
+export {collectEmail,getSubscribers};
