@@ -7,7 +7,10 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useNavigate } from "react-router-dom";
 
+
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 gsap.registerPlugin(ScrollTrigger);
+
 
 const AnnouncementsPage = () => {
   const container = useRef();
@@ -26,7 +29,7 @@ const AnnouncementsPage = () => {
       setLoading(true);
       setError("");
       const response = await fetch(
-        `http://localhost:8000/api/v1/blogs?page=${page}&limit=${pagination.limit}`
+        `${backendURL}/api/v1/blogs?page=${page}&limit=${pagination.limit}`
       );
       const data = await response.json();
 
@@ -193,7 +196,7 @@ const AnnouncementsPage = () => {
                       </h2>
                       <div className="w-12 h-0.5 bg-[#c5a059]/40 mb-4 transition-all duration-300 group-hover:w-full"></div>
                       <p className="text-[#f0e6d2]/80 leading-relaxed flex-grow line-clamp-4">
-                        {blog.content}
+                        {blog.content.replace(/<[^>]*>/g, '')}
                       </p>
                       
                       <div className="mt-8 pt-4 border-t border-[#c5a059]/10 flex items-center text-[#c5a059] font-medium group-hover:text-white transition-colors">

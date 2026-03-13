@@ -20,11 +20,11 @@ const SkeletonRow = () => (
 
 /* ─── MAIN COMPONENT ──────────────────────────────────────────────────────── */
 const ManageNewsletter = () => {
-  const [subscribers, setSubscribers] = useState([]);
-  const [loading, setLoading]         = useState(true);
-  const [error, setError]             = useState(null);
-  const [search, setSearch]           = useState('');
-  const [copied, setCopied]           = useState(false);
+  const [subscribers, setSubscribers]=useState([]);
+  const [loading, setLoading]=useState(true);
+  const [error, setError]=useState(null);
+  const [search, setSearch]=useState('');
+  const [copied, setCopied]=useState(false);
 
   const token = localStorage.getItem('admin_token');
   const authHeaders = {
@@ -74,7 +74,7 @@ const ManageNewsletter = () => {
 
   const stats = [
     { label: 'Total Subscribers', value: subscribers.length, cls: 'text-gray-800'  },
-    { label: 'Joined This Month',  value: thisMonth,           cls: 'text-green-600' },
+    { label: 'Joined This Month',  value: thisMonth,            cls: 'text-green-600' },
     { label: 'Showing',            value: visible.length,      cls: 'text-blue-600'  },
   ];
 

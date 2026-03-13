@@ -117,7 +117,7 @@ const ManageBlogPosts = () => {
     try {
       setLoading(true);
       setError(null);
-      const res  = await fetch(`${backendURL}/api/v1/blogs`, { headers: authHeaders });
+      const res  = await fetch(`${backendURL}/api/v1/blogs/admin/all`, { headers: authHeaders });
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.message ?? 'Failed to load posts');
       setPosts(data.data?.blogs ?? []);

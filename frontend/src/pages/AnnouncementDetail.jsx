@@ -8,6 +8,8 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+console.log("Backend URL being used:", import.meta.env.VITE_BACKEND_URL);
 
 const AnnouncementDetail = () => {
   const { slug } = useParams();
@@ -17,8 +19,6 @@ const AnnouncementDetail = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
   useEffect(() => {
     const fetchBlogDetail = async () => {
@@ -149,9 +149,10 @@ const AnnouncementDetail = () => {
 
             <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <article className="content-article bg-[#14110f]/60 p-8 md:p-12 rounded-2xl shadow-2xl border border-[#c5a059]/10">
-                 <div className="prose prose-lg prose-invert max-w-none text-[#f0e6d2]/90 leading-relaxed font-sans whitespace-pre-wrap">
-                    {blog.content}
-                 </div>
+                 <div
+                  className="prose prose-lg prose-invert max-w-none text-[#f0e6d2]/90 leading-relaxed font-sans"
+                  dangerouslySetInnerHTML={{ __html: blog.content }}
+                  />
               </article>
             </div>
           </div>
