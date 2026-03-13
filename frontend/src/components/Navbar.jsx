@@ -82,6 +82,16 @@ const Navbar = () => {
         return;
     }
 
+    if (item === 'Prayer Request') {
+        navigate('/prayer');
+        return;
+    }
+
+    if (item === 'Announcements') {
+        navigate('/announcements');
+        return;
+    }
+
     if (item === 'Home') {
         if (location.pathname !== '/') {
             navigate('/');
@@ -113,9 +123,9 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div className={`hidden md:flex px-8 py-3 rounded-full transition-all duration-300 ${isScrolled ? 'bg-white/10' : 'bg-white/20 backdrop-blur-sm border border-white/30'}`}>
-          <ul className="flex gap-8 text-white font-serif text-lg font-medium">
-            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Contact', 'Appointment'].map((item) => (
+        <div className={`hidden md:flex flex-wrap items-center justify-center gap-4 px-8 py-3 rounded-full transition-all duration-300 ${isScrolled ? 'bg-white/10' : 'bg-white/20 backdrop-blur-sm border border-white/30'}`}>
+          <ul className="flex flex-wrap gap-4 lg:gap-8 text-white font-serif text-sm lg:text-lg font-medium justify-center">
+            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Announcements', 'Contact', 'Appointment', 'Prayer Request'].map((item) => (
               <li key={item}>
                 <a 
                   href={`#${item.toLowerCase()}`} 
@@ -149,9 +159,9 @@ const Navbar = () => {
         className={`fixed inset-0 z-40 bg-[#3E2F26] transition-all duration-300 ease-in-out md:hidden ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black/10 pointer-events-none"></div>
-        <div className={`flex flex-col items-center justify-center h-full w-full transform transition-transform duration-500 ease-out ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-8'}`}>
-          <ul className="flex flex-col gap-8 text-white font-serif text-2xl font-medium text-center w-full px-6">
-            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Contact', 'Appointment'].map((item, index) => (
+        <div className={`flex flex-col items-center justify-center h-full w-full transform transition-transform duration-500 ease-out overflow-y-auto ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-8'}`}>
+          <ul className="flex flex-col gap-6 text-white font-serif text-xl sm:text-2xl font-medium text-center w-full px-6 py-10 mt-10">
+            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Announcements', 'Contact', 'Appointment', 'Prayer Request'].map((item, index) => (
               <li 
                 key={item} 
                 className={`transform transition-all duration-500 ease-out ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}

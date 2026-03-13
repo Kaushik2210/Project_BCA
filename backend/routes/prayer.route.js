@@ -4,11 +4,9 @@ import requireAuth from "../middleware/authMiddleware.js";
 
 const prayerRouter=express.Router();
 
-prayerRouter.use(requireAuth);
-
-prayerRouter.get("/",getPrayers);
+prayerRouter.get("/",requireAuth,getPrayers);
 prayerRouter.post("/",createPrayer);
-prayerRouter.delete("/",deletePrayer);
-prayerRouter.put("/:id/pray",markAsPrayed);
+prayerRouter.delete("/",requireAuth,deletePrayer);
+prayerRouter.put("/:id/pray",requireAuth,markAsPrayed);
 
 export {prayerRouter};

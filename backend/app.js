@@ -9,6 +9,7 @@ import { blogRouter } from "./routes/blog.route.js";
 import { newsletterRouter } from "./routes/newsletter.route.js";
 import {appointmentRouter} from "./routes/appointment.route.js"
 import { scheduleRouter } from "./routes/schedule.route.js";
+import { slotRouter } from "./routes/slot.route.js";
 import cors from 'cors';
 
 
@@ -40,6 +41,7 @@ app.use("/api/v1/prayers",prayerRouter);
 app.use("/api/v1/blogs",blogRouter);
 app.use("/api/v1/newsletter",newsletterRouter);
 app.use("/api/v1/appointments",appointmentRouter);
+app.use("/api/v1/slots", slotRouter);
 
 
 export default app;
