@@ -59,30 +59,7 @@ const ChoirPage = () => {
   }, { scope: container, dependencies: [currentDate, events] });
 
   // -------------------- 3D TILT --------------------
-  useEffect(() => {
-    const card = calendarCard.current;
-    if (!card) return;
-
-    const handleMouseMove = (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -10;
-      const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
-
-      gsap.to(card, { rotateX, rotateY, duration: 0.5, ease: 'power2.out', transformPerspective: 1000 });
-    };
-
-    const handleMouseLeave = () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.5, ease: 'power2.out' });
-
-    card.addEventListener('mousemove', handleMouseMove);
-    card.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove);
-      card.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
+  // Removed tilt effect as per user request to make it more stable and clickable
 
   // -------------------- EASTER EGG --------------------
   const triggerEasterEgg = () => {
@@ -180,13 +157,25 @@ const ChoirPage = () => {
           </div>
 
           {/* Calendar Interface */}
-          <div ref={calendarCard} className="bg-brand-beige/50 backdrop-blur-xl border border-brand-red/20 rounded-3xl overflow-hidden shadow-2xl will-change-transform">
-            <div className="flex justify-between items-center p-8 bg-brand-red/5 border-b border-brand-red/20 relative z-50">
-              <button onClick={(e) => changeMonth(-1, e)} className="w-12 h-12 rounded-full border border-brand-red/30 flex items-center justify-center hover:bg-brand-red hover:text-brand-beige transition-all active:scale-90 cursor-pointer text-xl pb-1">&larr;</button>
-              <h2 className="text-3xl font-serif font-bold text-brand-dark">
+          <div ref={calendarCard} className="bg-brand-beige/50 backdrop-blur-xl border border-brand-red/20 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="flex justify-between items-center p-6 md:p-8 bg-brand-red/5 border-b border-brand-red/20 relative z-50">
+              <button 
+                onClick={(e) => changeMonth(-1, e)} 
+                className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-brand-beige/50 hover:bg-brand-red text-brand-red hover:text-brand-beige transition-all active:scale-90 cursor-pointer text-2xl md:text-3xl shadow-sm hover:shadow-md"
+              >
+                &larr;
+              </button>
+              
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-brand-dark text-center select-none">
                 {monthNames[currentDate.getMonth()]} <span className="text-brand-red">{currentDate.getFullYear()}</span>
               </h2>
-              <button onClick={(e) => changeMonth(1, e)} className="w-12 h-12 rounded-full border border-brand-red/30 flex items-center justify-center hover:bg-brand-red hover:text-brand-beige transition-all active:scale-90 cursor-pointer text-xl pb-1">&rarr;</button>
+              
+              <button 
+                onClick={(e) => changeMonth(1, e)} 
+                className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-brand-beige/50 hover:bg-brand-red text-brand-red hover:text-brand-beige transition-all active:scale-90 cursor-pointer text-2xl md:text-3xl shadow-sm hover:shadow-md"
+              >
+                &rarr;
+              </button>
             </div>
 
             <div className="grid grid-cols-7 border-b border-brand-red/20 bg-brand-beige">

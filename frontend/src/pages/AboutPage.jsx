@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AboutPage = () => {
   const container = useRef();
+  // eslint-disable-next-line no-unused-vars
   const timelineRef = useRef();
 
   const historyEvents = [
