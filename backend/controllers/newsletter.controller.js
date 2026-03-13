@@ -13,7 +13,7 @@ const collectEmail=asyncHandler(async(req,res)=>{
         return res.status(400).json(new ApiError(400,validateEmail.error.errors[0].message).toJSON());
     }
 
-    const existing=await Newsletter.find({email});
+    const existing=await Newsletter.findOne({email});
 
     if(existing){
         return res.status(400).json(new ApiError(400,"Email already subscribed").toJSON());
