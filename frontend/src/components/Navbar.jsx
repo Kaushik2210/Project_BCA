@@ -77,6 +77,11 @@ const Navbar = () => {
         return;
     }
 
+    if (item === 'Appointment') {
+        navigate('/appointment');
+        return;
+    }
+
     if (item === 'Home') {
         if (location.pathname !== '/') {
             navigate('/');
@@ -110,7 +115,7 @@ const Navbar = () => {
         {/* Desktop Navigation Links */}
         <div className={`hidden md:flex px-8 py-3 rounded-full transition-all duration-300 ${isScrolled ? 'bg-white/10' : 'bg-white/20 backdrop-blur-sm border border-white/30'}`}>
           <ul className="flex gap-8 text-white font-serif text-lg font-medium">
-            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Contact'].map((item) => (
+            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Contact', 'Appointment'].map((item) => (
               <li key={item}>
                 <a 
                   href={`#${item.toLowerCase()}`} 
@@ -146,7 +151,7 @@ const Navbar = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-black/10 pointer-events-none"></div>
         <div className={`flex flex-col items-center justify-center h-full w-full transform transition-transform duration-500 ease-out ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-8'}`}>
           <ul className="flex flex-col gap-8 text-white font-serif text-2xl font-medium text-center w-full px-6">
-            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Contact'].map((item, index) => (
+            {['Home', 'About', 'Ministries', 'Sermons', 'Choir', 'Contact', 'Appointment'].map((item, index) => (
               <li 
                 key={item} 
                 className={`transform transition-all duration-500 ease-out ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
