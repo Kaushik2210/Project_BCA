@@ -1,8 +1,7 @@
 class ApiError extends Error{
-    constructor(statusCode,message="Error occured",errors=[],stack=""){
+    constructor(statusCode,message="Error occurred",errors=null,stack=""){
         super(message);
         this.statusCode=statusCode;
-        this.data=null;
         this.success=false;
         this.errors=errors;
         if(stack){
@@ -12,12 +11,12 @@ class ApiError extends Error{
         }
     }
 
+    //toJSON method to convert the ApiError instance to a JSON object since Error class fields are not enumerable by default
     toJSON() {
         return {
             statusCode: this.statusCode,
             success: this.success,
             message: this.message,
-            data: this.data,
             errors: this.errors,
         };
     }
