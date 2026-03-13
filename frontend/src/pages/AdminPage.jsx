@@ -167,7 +167,7 @@ const AdminPage = () => {
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
       {/* Sidebar */}
-      <aside className="hidden md:flex md:flex-col md:w-72 bg-gradient-to-b from-brand-red to-red-800 text-white shadow-xl">
+      <aside className="hidden md:flex md:flex-col md:w-72 bg-linear-to-b from-brand-red to-red-800 text-white shadow-xl">
         <div className="p-6 border-b border-red-700">
           <h2 className="text-2xl font-bold tracking-tight">Resurrection Admin</h2>
           <p className="text-sm text-red-200 mt-1">Church Dashboard</p>
