@@ -30,11 +30,11 @@ const createSlot=asyncHandler(async(req,res)=>{
         const currentSlot=slots[i];
         const conflict = await Slot.findOne({date,startTime: { $lt: currentSlot.endTime },endTime: { $gt: currentSlot.startTime }});
 
-        if(conflict.length!==0){
-            errorSlot.push([conflict]);
+        if(conflict){
+            errorSlot.push(conflict);
         }else{
-            const newSlot=new Slot(date,currentSlot.startTime,currentSlot.endTime);
-            newSlot.save();
+            const newSlot=new Slot({date, startTime: currentSlot.startTime, endTime: currentSlot.endTime});
+            await newSlot.save();
         }
     }
 
@@ -44,3 +44,5 @@ const createSlot=asyncHandler(async(req,res)=>{
 
     return res.status(201).json(new ApiResponse(201,"Slots created successfully"));
 })
+
+export { getSlotsByDate, createSlot };
