@@ -3,12 +3,14 @@ import ManageSermons        from './ManageSermons';
 import ManageChoirSchedule  from './ManageChoirSchedule';
 import ManageAppointments   from './ManageAppointments';
 import ManageBlogPosts from "./ManageBlogPosts.jsx";
+import ManagePrayers from "./ManagePrayers.jsx";
 
 const NAV_ITEMS = [
   { key: 'sermons',      label: '📖 Sermons'        },
   { key: 'choir',        label: '🎤 Choir Schedule'  },
   { key: 'appointments', label: '📅 Appointments'    },
   { key: 'blog',         label: '📝 Blog Posts'      },
+  {key:'prayer', label:'🙏 Prayer Requests'},
 ];
 
 const AdminPage = () => {
@@ -75,6 +77,7 @@ const AdminPage = () => {
           {activeSection === 'choir'        && <ManageChoirSchedule />}
           {activeSection === 'appointments' && <ManageAppointments />}
           {activeSection==='blog' && <ManageBlogPosts/>}
+          {activeSection==='prayer' && <ManagePrayers/>}
         </main>
       </div>
     </div>

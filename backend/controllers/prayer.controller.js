@@ -35,7 +35,8 @@ const getPrayers=asyncHandler(async(req,res)=>{
 
 const markAsPrayed=asyncHandler(async(req,res)=>{
     const {id}=req.params;
-    const prayer=await Prayer.findById(id);
+    const objectId=new mongoose.Types.objectId(id);
+    const prayer=await Prayer.findById(objectId);
 
     if(!prayer){
         return res.status(404).json(new ApiError(404,"Prayer not found").toJSON());
