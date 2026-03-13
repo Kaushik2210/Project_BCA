@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiError.js";
 import { blogSchema } from "../schema/blog.schema.js";
+import mongoose from "mongoose";
 
 
 //pagination
@@ -55,8 +56,9 @@ const postBlog=asyncHandler(async(req,res)=>{
 
 const getBlogsBySlug=asyncHandler(async(req,res)=>{
     const {slug}=req.params;
+    const objectId=new mongoose.Types.objectId(slug);
 
-    const blog=await Blog.findOne({slug});
+    const blog=await Blog.findOne({objectId});
     if(!blog){
         return res.status(404).json(new ApiError(404,"Blog not found").toJSON());
     }
@@ -67,8 +69,10 @@ const getBlogsBySlug=asyncHandler(async(req,res)=>{
 const editBlog=asyncHandler(async(req,res)=>{
     const {slug}=req.params;
     const {title,content}=req.body;
+    const objectId=new mongoose.Types.objectId(slug);
 
-    const blog=await Blog.findOne({slug});
+
+    const blog=await Blog.findOne({objectId});
     if(!blog){
         return res.status(404).json(new ApiError(404,"Blog not found").toJSON());
     }
@@ -82,8 +86,9 @@ const editBlog=asyncHandler(async(req,res)=>{
 
 const deleteBlog=asyncHandler(async(req,res)=>{
     const {slug}=req.params;
+    const objectId=new mongoose.Types.objectId(slug);
 
-    const deleted=await Blog.findOneAndDelete({slug});
+    const deleted=await Blog.findOneAndDelete({objectId});
 
     if(!deleted){
         return res.status(404).json(new ApiError(404,"Blog not found").toJSON());
