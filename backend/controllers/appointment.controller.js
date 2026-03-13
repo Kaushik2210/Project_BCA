@@ -45,7 +45,7 @@ const getAppointments=asyncHandler(async(req,res)=>{
     const appointments=await Appointment.find().populate('slotId',"date startTime endTime");
 
     if(appointments.length === 0){
-        return res.status(404).json(new ApiResponse(false,"No appointments found").toJSON());
+        return res.status(404).json(new ApiResponse(404,appointments,"No appointments found").toJSON());
     }
 
     return res.status(200).json(new ApiResponse(true,"Appointments retrieved successfully",appointments).toJSON());
