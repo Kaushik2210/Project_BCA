@@ -143,9 +143,7 @@ const MinistriesPage = () => {
                                     ))}
                                 </div> */}
 
-                                <button className="px-8 py-4 border border-brand-red text-brand-red font-bold uppercase tracking-widest hover:bg-brand-red hover:text-brand-beige transition-all duration-300 rounded-full">
-                                    Get Involved
-                                </button>
+
                             </div>
 
                         </div>
