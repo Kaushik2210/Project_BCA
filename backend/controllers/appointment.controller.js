@@ -1,7 +1,7 @@
 import {ApiError} from "../utils/apiError.js";
 import {ApiResponse} from "../utils/apiResponse.js";
 import { Appointment } from "../models/appointment.model.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import {asyncHandler} from "../utils/asyncHandler.js";
 import { Slot } from "../models/slot.model.js";
 import { bookAppointmentSchema } from "../schema/appointment.schema.js";
 

@@ -1,10 +1,10 @@
 import Prayer from "../models/prayer.model.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import {asyncHandler} from "../utils/asyncHandler.js";
 import { prayerSchema } from "../schema/prayer.schema.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 
-export const createPrayer=asyncHandler(async(req,res)=>{
+const createPrayer=asyncHandler(async(req,res)=>{
     const {name,description}=req.body;
 
     const {error}=prayerSchema.safeParse({name,description});
@@ -23,7 +23,7 @@ export const createPrayer=asyncHandler(async(req,res)=>{
 
 })
 
-export const getPrayers=asyncHandler(async(req,res)=>{
+const getPrayers=asyncHandler(async(req,res)=>{
     const prayers=await Prayer.find().sort({createdAt:-1});
 
     if(!prayers){
@@ -33,7 +33,7 @@ export const getPrayers=asyncHandler(async(req,res)=>{
     return res.status(200).json(new ApiResponse(200,prayers,"Prayers fetched successfully").toJSON());
 })
 
-export const markAsPrayed=asyncHandler(async(req,res)=>{
+const markAsPrayed=asyncHandler(async(req,res)=>{
     const {id}=req.params;
     const prayer=await Prayer.findById(id);
 
@@ -46,7 +46,7 @@ export const markAsPrayed=asyncHandler(async(req,res)=>{
     return res.status(200).json(new ApiResponse(200,prayer,"Prayer marked as prayed").toJSON());
 })
 
-export const deletePrayer=asyncHandler(async(req,res)=>{
+const deletePrayer=asyncHandler(async(req,res)=>{
     const ArrayOfIds=req.body.ids;
     const result=await Prayer.deleteMany({_id:{$in:ArrayOfIds}});
 

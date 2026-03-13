@@ -9,4 +9,4 @@ scheduleRouter.post('/', requireAuth, createSchedule);
 scheduleRouter.put('/:id', requireAuth, updateSchedule);
 scheduleRouter.delete('/:id', requireAuth, deleteSchedule);
 
-export  {scheduleRouter};
+export {scheduleRouter};

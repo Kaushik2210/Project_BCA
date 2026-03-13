@@ -1,6 +1,5 @@
 import express from 'express';
 import { sermonsRouter } from "./routes/sermon.route.js";
-import { scheduleRouter } from "./routes/schedule.router.js";
 import { authRouter } from "./routes/auth.route.js";
 import { choirRouter } from "./routes/choir.route.js";
 import { contactRouter } from "./routes/contact.route.js";
@@ -8,6 +7,8 @@ import { prayerRouter } from "./routes/prayer.route.js";
 import { ApiResponse } from "./utils/apiResponse.js";
 import { blogRouter } from "./routes/blog.route.js";
 import { newsletterRouter } from "./routes/newsletter.route.js";
+import {appointmentRouter} from "./routes/appointment.route.js"
+import { scheduleRouter } from "./routes/schedule.route.js";
 import cors from 'cors';
 
 
@@ -38,6 +39,7 @@ app.use("/api/v1/contact", contactRouter);
 app.use("/api/v1/prayers",prayerRouter);
 app.use("/api/v1/blogs",blogRouter);
 app.use("/api/v1/newsletter",newsletterRouter);
+app.use("api/v1/appointment",appointmentRouter);
 
 
 export default app;

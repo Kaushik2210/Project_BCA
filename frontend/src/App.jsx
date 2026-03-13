@@ -49,7 +49,7 @@ function App() {
           <Route path="/choir" element={<ChoirPage />} />
           <Route path="/contact" element={<ContactPage />} />
 
-          <Route path="/admin/login" element={
+          <Route path="/admin" element={
               <PublicRoute>
                 <LoginPage />
               </PublicRoute>

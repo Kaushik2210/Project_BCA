@@ -1,7 +1,7 @@
-import Blog from "../models/blog.model";
-import { asyncHandler } from "../utils/asyncHandler";
-import { ApiResponse } from "../utils/apiResponse";
-import { ApiError } from "../utils/apiError";
+import Blog from "../models/blog.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { ApiError } from "../utils/apiError.js";
 import { blogSchema } from "../schema/blog.schema.js";
 
 
