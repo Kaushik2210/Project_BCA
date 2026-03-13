@@ -107,7 +107,7 @@ const ManagePrayers = () => {
   const handleMarkPrayed = async (id) => {
     setMarking(id);
     try {
-      const res  = await fetch(`${backendURL}/api/v1/prayers/${id}/prayed`, {
+      const res  = await fetch(`${backendURL}/api/v1/prayers/${id}/pray`, {
         method: 'PUT',
         headers: authHeaders,
       });

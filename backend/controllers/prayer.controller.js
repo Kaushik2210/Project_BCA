@@ -3,6 +3,7 @@ import {asyncHandler} from "../utils/asyncHandler.js";
 import { prayerSchema } from "../schema/prayer.schema.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
+import mongoose from "mongoose";
 
 const createPrayer=asyncHandler(async(req,res)=>{
     const {name,description}=req.body;
