@@ -6,6 +6,7 @@ import MinistriesPage from './pages/MinistriesPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ChoirPage from './pages/ChoirPage.jsx';
 import ContactPage from './pages/ContactPage';
+import AppointmentPage from './pages/AppointmentPage';
 import LoginPage from './pages/LoginPage.jsx';
 import AdminPage from './admin/AdminPage.jsx';
 import ManageSermons from './admin/ManageSermons.jsx';
@@ -52,6 +53,7 @@ function App() {
           <Route path="/about"       element={<AboutPage />} />
           <Route path="/choir"       element={<ChoirPage />} />
           <Route path="/contact"     element={<ContactPage />} />
+          <Route path="/appointment" element={<AppointmentPage />} />
 
           {/* ── Admin login ── */}
           <Route
