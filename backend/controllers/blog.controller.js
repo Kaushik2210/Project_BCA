@@ -110,15 +110,21 @@ const editBlog = asyncHandler(async (req, res) => {
 });
 
 
-const deleteBlog=asyncHandler(async(req,res)=>{
-    const {id}=req.params;
-    const deleted=await Blog.findOneAndDelete({id});
+const deleteBlog = asyncHandler(async (req, res) => {
+    const { id } = req.params;
 
-    if(!deleted){
-        return res.status(404).json(new ApiError(404,"Blog not found").toJSON());
+    if (!id || id === "undefined") {
+        return res.status(400).json(new ApiError(400, "Valid Blog ID is required"));
     }
-    return res.status(200).json(new ApiResponse(200,null,"Blog deleted successfully"));
-})
+
+    const deleted = await Blog.findByIdAndDelete(id);
+
+    if (!deleted) {
+        return res.status(404).json(new ApiError(404, "Blog not found").toJSON());
+    }
+
+    return res.status(200).json(new ApiResponse(200, null, "Blog deleted successfully"));
+});
 
 
 
