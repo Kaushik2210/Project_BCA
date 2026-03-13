@@ -39,7 +39,7 @@ app.use("/api/v1/contact", contactRouter);
 app.use("/api/v1/prayers",prayerRouter);
 app.use("/api/v1/blogs",blogRouter);
 app.use("/api/v1/newsletter",newsletterRouter);
-app.use("api/v1/appointment",appointmentRouter);
+app.use("/api/v1/appointments",appointmentRouter);
 
 
 export default app;
