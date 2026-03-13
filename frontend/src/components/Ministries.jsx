@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import img1 from '../assets/ministry-1.jpeg';
-import img2 from '../assets/ministry-2.jpeg';
 import img3 from "../assets/ministry-3.jpeg"
 import glassBg from '../assets/ministries-stained-glass.png';
 import gsap from 'gsap';
@@ -17,9 +16,8 @@ const Ministries = () => {
 
   
   const people = [
-    { name: 'JUDE CHOWRI', role: 'Youth Ministry Leader, Resurrection Baptist Church', img: img1 },
-    { name: 'JONAH CHOWRI', role: 'Outreach Coordinator, Resurrection Baptist Church', img: img2 },
-    { name: 'JONAH CHOWRI', role: 'Sunday School Director, Resurrection Baptist Church', img: img3 },
+    { name: 'Joshua Aravind', role: 'Youth Ministry Leader, Resurrection Baptist Church', img: img1 },
+    { name: 'JONAH CHOWRI', role: 'Outreach Coordinator & Sunday School Director, Resurrection Baptist Church', img: img3 },
   ];
 
   useGSAP(() => {
@@ -86,7 +84,7 @@ const Ministries = () => {
          style={{ backgroundImage: `url(${glassBg})` }}
       ></div>
 
-      <div className="min-h-[100vh] md:h-screen w-full flex flex-col justify-center px-4 md:px-8 relative py-20 md:py-0">
+      <div className="min-h-screen md:h-screen w-full flex flex-col justify-center px-4 md:px-8 relative py-20 md:py-0">
         
         {/* Massive Editorial Header */}
         <h2 className="text-transparent text-[15vw] md:text-[12vw] font-serif font-black text-left mb-8 uppercase tracking-tighter absolute top-0 md:top-0 left-0 z-0 opacity-10 select-none pointer-events-none"
@@ -101,7 +99,7 @@ const Ministries = () => {
            </h2>
            
            {/* Intro text moved below header on desktop */}
-           <div className="hidden md:flex flex-col mt-6 max-w-[400px] pointer-events-auto">
+           <div className="hidden md:flex flex-col mt-6 max-w-100 pointer-events-auto">
               <p className="text-brand-dark text-xl md:text-2xl font-serif leading-relaxed italic border-l-4 border-brand-red pl-4">
                   "Discover the vibrant community and the dedicated individuals serving at Resurrection Baptist Church."
               </p>
@@ -120,7 +118,7 @@ const Ministries = () => {
         <div ref={slider} className="flex flex-col md:flex-row items-center md:items-start gap-12 md:gap-12 w-full md:w-fit px-4 md:pl-[50vw] relative z-20 mt-28 md:mt-0">
           
           {/* Intro Card (Mobile Only now) */}
-           <div className="md:hidden flex flex-col justify-center w-full max-w-[400px] shrink-0 text-center self-center">
+           <div className="md:hidden flex flex-col justify-center w-full max-w-100 shrink-0 text-center self-center">
               <p className="text-brand-dark text-xl font-serif leading-relaxed italic px-4">
                   "Discover the vibrant community and the dedicated individuals serving at Resurrection Baptist Church."
               </p>
@@ -135,17 +133,17 @@ const Ministries = () => {
            </div>
 
           {people.map((person, index) => (
-            <div key={index} className="ministry-card border border-brand-red/30 bg-black/20 backdrop-blur-md rounded-4xl p-6 md:p-8 flex flex-col items-center text-center w-full max-w-[400px] md:max-w-none md:w-112.5 shrink-0 hover:bg-black/40 hover:border-brand-red hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-500 group relative overflow-hidden">
+            <div key={index} className="ministry-card border border-brand-red/30 bg-black/20 backdrop-blur-md rounded-4xl p-6 md:p-8 flex flex-col items-center text-center w-full max-w-100 md:max-w-none md:w-112.5 shrink-0 hover:bg-black/40 hover:border-brand-red hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-500 group relative overflow-hidden">
               
               {/* Inner Glow Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-b from-brand-red/0 to-brand-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-linear-to-b from-brand-red/0 to-brand-red/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               
-              <div className="w-full aspect-[4/5] mb-6 md:mb-8 overflow-hidden rounded-3xl md:rounded-2xl border border-brand-red/20 relative">
+              <div className="w-full aspect-4/5 mb-6 md:mb-8 overflow-hidden rounded-3xl md:rounded-2xl border border-brand-red/20 relative">
                  <div className="absolute inset-0 bg-brand-red mix-blend-color opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
                  <img src={person.img} alt={person.name} className="ministry-img w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-1000" />
               </div>
 
-              <h3 className="text-brand-red text-2xl md:text-3xl font-serif mb-2 md:mb-4 uppercase tracking-widest group-hover:text-brand-dark transition-colors">{person.name}</h3>
+              <h3 className="text-brand-red text-2xl md:text-3xl font-serif mb-2 md:mb-4 uppercase tracking-widest group-hover:text-brand-dark transition-colors">{person.name.toUpperCase()}</h3>
               
               <p className="text-brand-dark/80 font-sans text-xs md:text-sm tracking-wide uppercase border-t border-brand-red/30 pt-4 w-full">
                 {person.role}
