@@ -111,9 +111,8 @@ const editBlog = asyncHandler(async (req, res) => {
 
 
 const deleteBlog=asyncHandler(async(req,res)=>{
-    const {slug}=req.params;
-
-    const deleted=await Blog.findOneAndDelete({slug});
+    const {id}=req.params;
+    const deleted=await Blog.findOneAndDelete({id});
 
     if(!deleted){
         return res.status(404).json(new ApiError(404,"Blog not found").toJSON());

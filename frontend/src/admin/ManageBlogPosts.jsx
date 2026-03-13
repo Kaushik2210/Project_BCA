@@ -204,7 +204,7 @@ const ManageBlogPosts = () => {
   /* ── delete ── */
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`${backendURL}/api/v1/blog/${id}`, {
+      const res = await fetch(`${backendURL}/api/v1/blogs/${id}`, {
         method: 'DELETE', headers: authHeaders,
       });
       const data = await res.json();
