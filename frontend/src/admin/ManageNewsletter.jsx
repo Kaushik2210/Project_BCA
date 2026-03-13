@@ -178,7 +178,7 @@ const ManageNewsletter = () => {
                         {/* Avatar initial */}
                         <div className="w-8 h-8 rounded-full bg-red-100 border border-red-200 flex items-center
                                         justify-center text-red-600 text-xs font-bold flex-shrink-0 uppercase">
-                          {s.email[0]}
+                          {s?.email[0]}
                         </div>
                         <span className="text-sm font-mono text-gray-800">{s.email}</span>
                       </div>

@@ -18,12 +18,14 @@ const AnnouncementDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
   useEffect(() => {
     const fetchBlogDetail = async () => {
       try {
         setLoading(true);
         setError("");
-        const response = await fetch(`http://localhost:8000/api/v1/blogs/${slug}`);
+        const response = await fetch(`${backendURL}/api/v1/blogs/${slug}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
