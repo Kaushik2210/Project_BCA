@@ -15,7 +15,7 @@ export const getSchedule =asyncHandler(async (req,res)=>{
     return res.status(404).json(new ApiError(404,"No schedule found").toJSON());
   }
 
-  res.status(200).json(new ApiResponse(200,schedule,"Schedule retrieved successfully").toJSON());
+  res.status(200).json(new ApiResponse(200,schedule,"Schedule retrieved successfully"));
 
 });
 
@@ -33,7 +33,7 @@ export const createSchedule =asyncHandler( async (req, res) => {
     return res.status(500).json(new ApiError(500,"Failed to create schedule").toJSON());
   }
 
-  return res.status(201).json(new ApiResponse(201,newDay,"Schedule created successfully").toJSON());
+  return res.status(201).json(new ApiResponse(201,newDay,"Schedule created successfully"));
 });
 
 //
@@ -53,7 +53,7 @@ export const updateSchedule = asyncHandler(async (req, res) => {
     return res.status(404).json(new ApiError(404,"Schedule not found").toJSON());
   }
 
-  return res.status(200).json(new ApiResponse(200,updated,"Schedule updated successfully").toJSON());
+  return res.status(200).json(new ApiResponse(200,updated,"Schedule updated successfully"));
 
 });
 
@@ -70,5 +70,5 @@ export const deleteSchedule = asyncHandler(async (req, res) => {
     return res.status(404).json(new ApiError(404,"Schedule not found").toJSON());
   }
 
-  return res.status(200).json(new ApiResponse(200,null,"Schedule deleted successfully").toJSON());
+  return res.status(200).json(new ApiResponse(200,null,"Schedule deleted successfully"));
 });

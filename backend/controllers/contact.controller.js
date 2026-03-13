@@ -20,13 +20,13 @@ const postContact=asyncHandler(async(req,res)=>{
 
     contact=omitFields(contact.toObject(),["__v","replied"]);
 
-    return res.status(201).json(new ApiResponse(201,contact,"Contact form submitted successfully").toJSON());
+    return res.status(201).json(new ApiResponse(201,contact,"Contact form submitted successfully"));
 })
 
 const getContact=asyncHandler(async(req,res)=>{
     const contacts=await Contact.find().sort({createdAt:-1});
 
-    return res.status(200).json(new ApiResponse(200,contacts,"Contacts fetched successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,contacts,"Contacts fetched successfully"));
 })
 
 const markAsReplied=asyncHandler(async(req,res)=>{
@@ -38,7 +38,7 @@ const markAsReplied=asyncHandler(async(req,res)=>{
     }
     contact.replied=true;
     await contact.save();
-    return res.status(200).json(new ApiResponse(200,contact,"Contact marked as replied successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,contact,"Contact marked as replied successfully"));
 })
 
 export {postContact,getContact,markAsReplied};

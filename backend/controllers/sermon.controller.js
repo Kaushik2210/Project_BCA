@@ -11,7 +11,7 @@ export const getSermons=asyncHandler(async (req,res) => {
 
     const totalSermons = await Sermon.countDocuments();
     if (totalSermons === 0) {
-        return res.status(200).json(new ApiResponse(200, { sermons: [], pagination: { total: 0, page, limit, totalPages: 0 } }, "Sermons fetched successfully").toJSON());
+        return res.status(200).json(new ApiResponse(200, { sermons: [], pagination: { total: 0, page, limit, totalPages: 0 } }, "Sermons fetched successfully"));
     }
 
     const totalPages = Math.ceil(totalSermons / limit);
@@ -28,7 +28,7 @@ export const getSermons=asyncHandler(async (req,res) => {
 
     return res
         .status(200)
-        .json(new ApiResponse(200, { sermons, pagination: { total: totalSermons, page, limit, totalPages } }, "Sermons fetched successfully").toJSON());
+        .json(new ApiResponse(200, { sermons, pagination: { total: totalSermons, page, limit, totalPages } }, "Sermons fetched successfully"));
 
 })
 
@@ -71,7 +71,7 @@ export const postSermon=asyncHandler(async(req,res)=>{
 
     return res
         .status(201)
-        .json(new ApiResponse(201,sermon,"Sermon details uploaded successfully").toJSON())
+        .json(new ApiResponse(201,sermon,"Sermon details uploaded successfully"));
 
 })
 
@@ -123,7 +123,7 @@ export const editSermon=asyncHandler(async (req,res) => {
 
     return res
         .status(200)
-        .json(new ApiResponse(200,updateSermon,"Sermon details updated successfully").toJSON());
+        .json(new ApiResponse(200,updateSermon,"Sermon details updated successfully"));
 
 })
 
@@ -141,10 +141,10 @@ export const deleteSermon=asyncHandler(async(req,res)=>{
     });
 
     if(sermonDelete.result==="not found"){
-        return res.status(404).json(new ApiResponse(404,"","Sermon not found in Cloudinary").toJSON())
+        return res.status(404).json(new ApiResponse(404,"","Sermon not found in Cloudinary"))
     }else if(sermonDelete.result==="ok"){
         await Sermon.findByIdAndDelete(id);
-        return res.status(200).json(new ApiResponse(200,"","Sermon deleted successfully").toJSON())
+        return res.status(200).json(new ApiResponse(200,"","Sermon deleted successfully"))
     }
 
 })

@@ -19,7 +19,7 @@ const createPrayer=asyncHandler(async(req,res)=>{
         return res.status(500).json(new ApiError(500,"Failed to create prayer").toJSON());
     }
 
-    return res.status(201).json(new ApiResponse(201,prayer,"Prayer created successfully").toJSON());
+    return res.status(201).json(new ApiResponse(201,prayer,"Prayer created successfully"));
 
 })
 
@@ -30,7 +30,7 @@ const getPrayers=asyncHandler(async(req,res)=>{
         return res.status(500).json(new ApiError(500,"Failed to fetch prayers").toJSON());
     }
 
-    return res.status(200).json(new ApiResponse(200,prayers,"Prayers fetched successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,prayers,"Prayers fetched successfully"));
 })
 
 const markAsPrayed=asyncHandler(async(req,res)=>{
@@ -43,7 +43,7 @@ const markAsPrayed=asyncHandler(async(req,res)=>{
 
     prayer.prayed=true;
     await prayer.save();
-    return res.status(200).json(new ApiResponse(200,prayer,"Prayer marked as prayed").toJSON());
+    return res.status(200).json(new ApiResponse(200,prayer,"Prayer marked as prayed"));
 })
 
 const deletePrayer=asyncHandler(async(req,res)=>{
@@ -54,7 +54,7 @@ const deletePrayer=asyncHandler(async(req,res)=>{
         return res.status(404).json(new ApiError(404,"No prayers found to delete").toJSON());
     }
 
-    return res.status(200).json(new ApiResponse(200,null,`${result.deletedCount} prayers deleted successfully`).toJSON());
+    return res.status(200).json(new ApiResponse(200,null,`${result.deletedCount} prayers deleted successfully`));
 })
 
 export {createPrayer,getPrayers,markAsPrayed,deletePrayer}

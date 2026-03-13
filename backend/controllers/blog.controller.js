@@ -12,7 +12,7 @@ const getBlogs=asyncHandler(async(req,res)=>{
 
     const totalBlogs=await Blog.countDocuments();
     if(totalBlogs===0){
-        return res.status(200).json(new ApiResponse(200,{blogs:[],pagination:{total:0,page,limit,totalPages:0}},"Blogs fetched successfully").toJSON());
+        return res.status(200).json(new ApiResponse(200,{blogs:[],pagination:{total:0,page,limit,totalPages:0}},"Blogs fetched successfully"));
     }
 
     const totalPages=Math.ceil(totalBlogs/limit);
@@ -24,7 +24,7 @@ const getBlogs=asyncHandler(async(req,res)=>{
     if(!blogs){
         return res.status(404).json(new ApiError(404,"No blogs found").toJSON());
     }
-    return res.status(200).json(new ApiResponse(200,{blogs,pagination:{total:totleBlogs,page,limit,totalPages}}, "Blogs fetched successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,{blogs,pagination:{total:totleBlogs,page,limit,totalPages}}, "Blogs fetched successfully"));
 })
 
 const postBlog=asyncHandler(async(req,res)=>{
@@ -53,7 +53,7 @@ const postBlog=asyncHandler(async(req,res)=>{
     if(!newBlog){
         return res.status(500).json(new ApiError(500,"Failed to create blog").toJSON());
     }
-    return res.status(201).json(new ApiResponse(201,newBlog,"Blog created successfully").toJSON());
+    return res.status(201).json(new ApiResponse(201,newBlog,"Blog created successfully"));
 })
 
 const getBlogsBySlug=asyncHandler(async(req,res)=>{
@@ -64,7 +64,7 @@ const getBlogsBySlug=asyncHandler(async(req,res)=>{
         return res.status(404).json(new ApiError(404,"Blog not found").toJSON());
     }
 
-    return res.status(200).json(new ApiResponse(200,blog,"Blog fetched successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,blog,"Blog fetched successfully"));
 })
 
 const editBlog=asyncHandler(async(req,res)=>{
@@ -80,7 +80,7 @@ const editBlog=asyncHandler(async(req,res)=>{
     if(content) blog.content=content;
 
     const updatedBlog=await blog.save();
-    return res.status(200).json(new ApiResponse(200,updatedBlog,"Blog updated successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,updatedBlog,"Blog updated successfully"));
 })
 
 const deleteBlog=asyncHandler(async(req,res)=>{
@@ -91,7 +91,7 @@ const deleteBlog=asyncHandler(async(req,res)=>{
     if(!deleted){
         return res.status(404).json(new ApiError(404,"Blog not found").toJSON());
     }
-    return res.status(200).json(new ApiResponse(200,null,"Blog deleted successfully").toJSON());
+    return res.status(200).json(new ApiResponse(200,null,"Blog deleted successfully"));
 })
 
 

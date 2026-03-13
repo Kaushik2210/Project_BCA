@@ -28,7 +28,7 @@ setInterval(()=>{
 
 
 app.get('/ping',(req,res)=>{
-    return res.status(200).json(new ApiResponse(200,null,"Ping successful").toJSON());
+    return res.status(200).json(new ApiResponse(200,null,"Ping successful"));
 })
 
 app.use("/api/v1/sermons",sermonsRouter);

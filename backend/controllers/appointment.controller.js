@@ -38,7 +38,7 @@ const bookAppointment = asyncHandler(async (req, res) => {
     slot.appointmentId = appointment._id;
     await slot.save();
 
-    return res.status(201).json(new ApiResponse(true, "Appointment created successfully", appointment).toJSON());
+    return res.status(201).json(new ApiResponse(true, "Appointment created successfully", appointment));
 });
 
 const getAppointments = asyncHandler(async (req, res) => {
@@ -74,7 +74,7 @@ const updateAppointmentStatus=asyncHandler(async(req,res)=>{
     appointment.status=status;
     await appointment.save();
 
-    return res.status(200).json(new ApiResponse(true,"Appointment status updated successfully",appointment).toJSON());
+    return res.status(200).json(new ApiResponse(true,"Appointment status updated successfully",appointment));
 })
 
 export {bookAppointment,getAppointments,updateAppointmentStatus};

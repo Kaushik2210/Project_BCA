@@ -25,7 +25,7 @@ const collectEmail=asyncHandler(async(req,res)=>{
         return res.status(500).json(new ApiError(500,"Failed to subscribe").toJSON());
     }
 
-    return res.status(201).json(new ApiResponse(201,null,"Subscribed successfully").toJSON());
+    return res.status(201).json(new ApiResponse(201,null,"Subscribed successfully"));
 })
 
 export {collectEmail};
