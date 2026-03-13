@@ -36,7 +36,7 @@ const getPrayers=asyncHandler(async(req,res)=>{
 
 const markAsPrayed=asyncHandler(async(req,res)=>{
     const {id}=req.params;
-    const objectId=new mongoose.Types.objectId(id);
+    const objectId=new mongoose.Types.ObjectId(id);
     const prayer=await Prayer.findById(objectId);
 
     if(!prayer){
