@@ -21,15 +21,12 @@ const getBlogs=asyncHandler(async(req,res)=>{
     
     const blogs=await Blog.find().sort({createdAt:-1}).skip(skip).limit(limit);
 
-    if(!blogs){
-        return res.status(404).json(new ApiError(404,"No blogs found").toJSON());
-    }
-    return res.status(200).json(new ApiResponse(200,{blogs,pagination:{total:totleBlogs,page,limit,totalPages}}, "Blogs fetched successfully"));
+    return res.status(200).json(new ApiResponse(200,{blogs,pagination:{total:totalBlogs,page,limit,totalPages}}, "Blogs fetched successfully"));
 })
 
 const postBlog=asyncHandler(async(req,res)=>{
     const {title,content}=req.body;
-    const counter=1;
+    let counter=1;
 
     if(!title || !content){
         return res.status(400).json(new ApiError(400,"Title and content are required").toJSON());
@@ -42,7 +39,7 @@ const postBlog=asyncHandler(async(req,res)=>{
         return res.status(400).json(new ApiError(400,errors).toJSON());
     }
 
-    const slug=title.toLowerCase().replace(/[^a-z0-9\s-]+/g,"").replace("\s+/g","-");
+    let slug=title.toLowerCase().replace(/[^a-z0-9\s-]+/g,"").replace(/\s+/g,"-");
 
     while(await Blog.findOne({slug})){
         counter++;

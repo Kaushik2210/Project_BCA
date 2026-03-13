@@ -11,6 +11,7 @@ import AdminPage from './admin/AdminPage.jsx';
 import ManageSermons from './admin/ManageSermons.jsx';
 import ManageChoirSchedule from './admin/ManageChoirSchedule.jsx';
 import ManageAppointments from './admin/ManageAppointments.jsx';
+import ManageBlogPosts from "./admin/ManageBlogPosts.jsx";
 import PrivateRoute from './components/PrivateRoute.jsx';
 import PublicRoute from './components/PublicRoute.jsx';
 import Lenis from 'lenis';
@@ -96,7 +97,16 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/admin/blog"
+            element={
+              <PrivateRoute>
+                <ManageBlogPosts />
+              </PrivateRoute>
+            }
+          />
         </Routes>
+        
       </Router>
     </div>
   );

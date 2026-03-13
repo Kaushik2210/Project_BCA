@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import ManageSermons        from './ManageSermons';
 import ManageChoirSchedule  from './ManageChoirSchedule';
 import ManageAppointments   from './ManageAppointments';
+import ManageBlogPosts from "./ManageBlogPosts.jsx";
 
 const NAV_ITEMS = [
   { key: 'sermons',      label: '📖 Sermons'        },
   { key: 'choir',        label: '🎤 Choir Schedule'  },
   { key: 'appointments', label: '📅 Appointments'    },
+  { key: 'blog',         label: '📝 Blog Posts'      },
 ];
 
 const AdminPage = () => {
@@ -72,6 +74,7 @@ const AdminPage = () => {
           {activeSection === 'sermons'      && <ManageSermons />}
           {activeSection === 'choir'        && <ManageChoirSchedule />}
           {activeSection === 'appointments' && <ManageAppointments />}
+          {activeSection==='blog' && <ManageBlogPosts/>}
         </main>
       </div>
     </div>
