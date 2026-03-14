@@ -21,7 +21,7 @@ const getBlogs=asyncHandler(async(req,res)=>{
     const skip=(page-1)*limit;
 
     
-    const blogs=await Blog.find().sort({createdAt:-1}).skip(skip).limit(limit);
+    const blogs=await Blog.find(filter).sort({createdAt:-1}).skip(skip).limit(limit);
 
     if(!blogs){
         return res.status(404).json(new ApiError(404,"No blogs found").toJSON());
