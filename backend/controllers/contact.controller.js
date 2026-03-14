@@ -31,7 +31,8 @@ const getContact=asyncHandler(async(req,res)=>{
 
 const markAsReplied=asyncHandler(async(req,res)=>{
     const contactId=req.params.id;
-    const contact=await Contact.findById(contactId);
+    const objectId=new mongoose.Types.ObjectId(contactId);
+    const contact=await Contact.findById(objectId);
 
     if(!contact){
         return res.status(404).json(new ApiError(404,"Contact not found").toJSON());
