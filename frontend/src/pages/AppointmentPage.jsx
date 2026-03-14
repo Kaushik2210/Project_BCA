@@ -6,6 +6,7 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const AppointmentPage = () => {
   const container = useRef();
@@ -37,7 +38,7 @@ const AppointmentPage = () => {
     setSlots([]);
     setSelectedSlotId('');
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/slots?date=${date}`);
+      const response = await fetch(`${backendURL}/api/v1/slots?date=${date}`);
       
       if (!response.ok) {
         if (response.status === 404) {
@@ -106,7 +107,7 @@ const AppointmentPage = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/appointments/book', {
+      const response = await fetch(`${backendURL}/api/v1/appointments/book`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

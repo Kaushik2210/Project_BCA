@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const PrayerPage = () => {
   const container = useRef();
@@ -35,7 +36,7 @@ const PrayerPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/prayers", {
+      const response = await fetch(`${backendURL}/api/v1/prayers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

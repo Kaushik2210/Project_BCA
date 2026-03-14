@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const Footer = () => {
   const container = useRef();
@@ -23,7 +24,7 @@ const Footer = () => {
     setMessage("");
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/newsletter/subscribe", {
+      const response = await fetch(`${backendURL}/api/v1/newsletter/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

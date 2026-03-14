@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const SermonModal = ({sermon = null,onClose,onSuccess}) => {
   const isEdit = !!sermon;
@@ -65,7 +66,7 @@ const SermonModal = ({sermon = null,onClose,onSuccess}) => {
       if (isEdit) {
         // Edit / Update
         response = await fetch(
-          `http://localhost:8000/api/v1/sermons/edit/${sermon._id}`,
+          `${backendURL}/api/v1/sermons/edit/${sermon._id}`,
           {
             method: 'PUT',
             headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -74,7 +75,7 @@ const SermonModal = ({sermon = null,onClose,onSuccess}) => {
         );
       } else {
         // Add / Create
-        response = await fetch('http://localhost:8000/api/v1/sermons/post', {
+        response = await fetch(`${backendURL}/api/v1/sermons/post`, {
           method: 'POST',
           headers: token ? { Authorization: `Bearer ${token}` } : {},
           body: form,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
   const token = localStorage.getItem('admin_token');
 
@@ -41,7 +41,7 @@ const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
       let res;
       if (event) {
         // Edit
-        res = await fetch(`http://localhost:8000/api/v1/choir/${event._id}`, {
+        res = await fetch(`${backendURL}/api/v1/choir/${event._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
         });
       } else {
         // Add
-        res = await fetch('http://localhost:8000/api/v1/choir', {
+        res = await fetch(`${backendURL}/api/v1/choir`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
