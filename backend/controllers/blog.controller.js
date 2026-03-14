@@ -22,8 +22,10 @@ const getBlogs=asyncHandler(async(req,res)=>{
 
     
     const blogs=await Blog.find(filter).sort({createdAt:-1}).skip(skip).limit(limit);
+    console.log("Returned statuses:", blogs.map(b => b.status)); 
 
-    if(!blogs){
+
+    if(blogs.length === 0){
         return res.status(404).json(new ApiError(404,"No blogs found").toJSON());
     }
     return res.status(200).json(new ApiResponse(200,{blogs,pagination:{total:totalBlogs,page,limit,totalPages}}, "Blogs fetched successfully"));
