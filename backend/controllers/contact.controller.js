@@ -4,6 +4,7 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { contactSchema } from "../schema/contact.schema.js";
 import omitFields from "../utils/omitFields.js";
+import mongoose from "mongoose";
 
 const postContact=asyncHandler(async(req,res)=>{
     const {name,email,message}=req.body;

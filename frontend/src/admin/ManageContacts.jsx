@@ -66,7 +66,7 @@ const ManageContacts = () => {
   const handleMarkReplied = async (id) => {
     setMarking(id);
     try {
-      const res  = await fetch(`${backendURL}/api/v1/contact/${id}/replied`, {
+      const res  = await fetch(`${backendURL}/api/v1/contact/${id}/reply`, {
         method: 'PUT',
         headers: authHeaders,
       });
