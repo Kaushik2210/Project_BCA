@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -161,6 +162,12 @@ const Footer = () => {
           </h4>
           <p className="text-brand-red font-serif">#839 HSR Layout Bengaluru, Karnataka</p>
         </div>
+      </div>
+
+      <div className="mt-12 text-center pb-8 border-t border-brand-red/10 pt-8">
+        <Link to="/admin" className="text-brand-red/60 hover:text-brand-red text-sm font-sans transition-colors cursor-pointer tracking-widest">
+          ADMIN LOGIN
+        </Link>
       </div>
     </div>
   );
