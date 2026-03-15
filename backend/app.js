@@ -10,6 +10,7 @@ import { newsletterRouter } from "./routes/newsletter.route.js";
 import {appointmentRouter} from "./routes/appointment.route.js"
 import { scheduleRouter } from "./routes/schedule.route.js";
 import { slotRouter } from "./routes/slot.route.js";
+import { adminRouter } from "./routes/admin.route.js";
 import cors from 'cors';
 
 
@@ -32,8 +33,8 @@ app.get('/ping',(req,res)=>{
     return res.status(200).json(new ApiResponse(200,null,"Ping successful"));
 })
 
-app.use("/api/v1/sermons",sermonsRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/sermons",sermonsRouter);
 app.use("/api/v1/schedule", scheduleRouter);
 app.use("/api/v1/choir", choirRouter);
 app.use("/api/v1/contact", contactRouter);
@@ -42,6 +43,7 @@ app.use("/api/v1/blogs",blogRouter);
 app.use("/api/v1/newsletter",newsletterRouter);
 app.use("/api/v1/appointments",appointmentRouter);
 app.use("/api/v1/slots", slotRouter);
+app.use("/api/v1/admin",adminRouter);
 
 
 export default app;

@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import Schedule from '../components/Schedule';
-import Ministries from '../components/Ministries';
-import Sermons from '../components/Sermons';
-import Footer from '../components/Footer';
+import Navbar from '../components/Navbar.jsx';
+import Hero from '../components/Hero.jsx';
+import Schedule from '../components/Schedule.jsx';
+import Ministries from '../components/Ministries.jsx';
+import Sermons from '../components/Sermons.jsx';
+import Footer from '../components/Footer.jsx';
 
 function Home() {
   return (

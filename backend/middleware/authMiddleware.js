@@ -1,7 +1,7 @@
 import authController from '../controllers/auth.controller.js';
 import { ApiError } from "../utils/apiError.js";
 
-export const requireAuth = (req, res, next) => {
+const requireAuth = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers['x-auth-token'];
   let token = null;
   if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -22,4 +22,14 @@ export const requireAuth = (req, res, next) => {
   next();
 };
 
-export default requireAuth;
+const authorize = (roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json(new ApiError(403,"Access denied"));
+    }
+    next();
+  };
+};
+
+
+export {requireAuth,authorize};

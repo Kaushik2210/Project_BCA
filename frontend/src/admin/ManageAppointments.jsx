@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getToken } from "../utils/auth.js";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -106,7 +107,7 @@ const SlotGenerator = () => {
   const [result, setResult]   = useState(null); // { ok, message }
   const [formErr, setFormErr] = useState('');
 
-  const token = localStorage.getItem('admin_token');
+  const token = getToken();
   const authHeaders = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     'Content-Type': 'application/json',

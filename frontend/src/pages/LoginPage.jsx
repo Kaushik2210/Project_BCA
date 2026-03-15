@@ -29,7 +29,8 @@ const LoginPage = () => {
       }
 
       const data = await res.json();
-      localStorage.setItem('admin_token', data.token);
+      console.log(data);
+      localStorage.setItem('admin_token', data.data.token);
       navigate('/admin/dashboard');
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
