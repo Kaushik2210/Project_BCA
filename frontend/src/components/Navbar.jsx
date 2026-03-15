@@ -162,7 +162,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div className={`hidden md:flex flex-wrap items-center justify-center gap-4 px-8 py-3 rounded-full transition-all duration-300 ${isScrolled ? 'bg-white/10' : 'bg-white/20 backdrop-blur-sm border border-white/30'}`}>
+        <div className={`hidden lg:flex flex-wrap items-center justify-center gap-4 px-8 py-3 rounded-full transition-all duration-300 ${isScrolled ? 'bg-white/10' : 'bg-white/20 backdrop-blur-sm border border-white/30'}`}>
           <ul className="flex flex-wrap gap-4 lg:gap-8 text-white font-serif text-sm lg:text-lg font-medium justify-center items-center">
             {['Home', 'About', 'Ministries', 'Sermons', 'Choir'].map((item) => (
               <li key={item}>
@@ -225,7 +225,7 @@ const Navbar = () => {
         </div>
         
         {/* Mobile Menu Trigger */}
-        <div className="md:hidden flex items-center z-50 relative">
+        <div className="lg:hidden flex items-center z-50 relative">
            <button 
              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
              className="text-white text-3xl focus:outline-none transition-transform duration-300 active:scale-90"
@@ -240,7 +240,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 z-40 bg-[#3E2F26] transition-all duration-300 ease-in-out md:hidden ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}
+        className={`fixed inset-0 z-40 bg-[#3E2F26] transition-all duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black/10 pointer-events-none"></div>
         <div className={`flex flex-col items-center justify-start h-full w-full transform transition-transform duration-500 ease-out overflow-y-auto pt-24 pb-8 px-6 ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-8'}`}>
