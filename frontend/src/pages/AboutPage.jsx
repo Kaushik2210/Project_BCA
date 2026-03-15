@@ -7,14 +7,14 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);    //gsap.registerPlugin(ScrollTrigger) → tells GSAP that we want to use the ScrollTrigger plugin (very important — without this line ScrollTrigger does nothing)
 
 const AboutPage = () => {
-  const container = useRef();
+  const container = useRef();        //container = useRef() → we will attach this ref to the main wrapper <div> → GSAP will use this as scope (very important for cleanup)
   // eslint-disable-next-line no-unused-vars
   const timelineRef = useRef();
 
-  const historyEvents = [
+  const historyEvents = [     //historyEvents — static array of objects that will be mapped into timeline cards
     {
       year: "2025",
       title: "The Foundation",
@@ -39,9 +39,9 @@ const AboutPage = () => {
 
   useGSAP(
     () => {
-      // Line Drawing Animation
+      // Line Drawing Animation   ──────────────── 1. Growing vertical line (desktop)
       gsap.fromTo(
-        ".timeline-line",
+        ".timeline-line",           //class .timeline-line starts with height 0% → grows to 100%
         { height: "0%" },
         {
           height: "100%",
@@ -50,37 +50,38 @@ const AboutPage = () => {
             trigger: ".history-section",
             start: "top center",
             end: "bottom center",
-            scrub: 1,
-          },
+            scrub: 1,       //scrub: 1 = animation follows scroll position exactly (feels like you're "drawing" the line)
+          },    
+                
         },
       );
 
-      // Milestone Reveal
+      // Milestone Reveal    2. Fade-in + slide each milestone card
       const milestones = gsap.utils.toArray(".milestone-card");
       milestones.forEach((milestone) => {
         gsap.fromTo(
           milestone,
-          { opacity: 0, x: -50 },
+          { opacity: 0, x: -50 },     //starts invisible and 50px left (opacity:0, x:-50)
           {
             opacity: 1,
             x: 0,
             duration: 1,
             scrollTrigger: {
               trigger: milestone,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
+              start: "top 80%",     //when top of card reaches 80% of viewport height → plays fade + slide in
+              toggleActions: "play none none reverse",    //toggleActions: "play none none reverse" → when scrolling back up → reverses the animation
             },
           },
         );
       });
 
-      // Pastor Section Pinning
+      // Pastor Section Pinning       Pin the pastor photo while scrolling the text
       ScrollTrigger.create({
-        trigger: ".pastor-section",
+        trigger: ".pastor-section",     //when .pastor-section reaches top of viewport → photo container gets position: sticky
         start: "top top",
         end: "bottom bottom",
-        pin: ".pastor-image-container",
-        scrub: true,
+        pin: ".pastor-image-container",   //stays pinned until bottom of .pastor-section leaves viewport
+        scrub: true,        //text scrolls normally while photo stays in place
         // markers: true // for debugging
       });
     },

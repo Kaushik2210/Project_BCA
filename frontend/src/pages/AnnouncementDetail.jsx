@@ -1,24 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";  //useParams → reads dynamic parts from the URL (we'll use :slug)     useNavigate → programmatic navigation (go back button)
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import bgImage from "../assets/ministries-community.png";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";   //useGSAP + ScrollTrigger → modern & React-friendly way to do scroll-based animations
 
 gsap.registerPlugin(ScrollTrigger);
-const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-console.log("Backend URL being used:", import.meta.env.VITE_BACKEND_URL);
+const backendURL=import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'; //Reads environment variable from .env file (Vite style)
+console.log("Backend URL being used:", import.meta.env.VITE_BACKEND_URL);   //The console.log helps debugging (you can see which backend is really used)
 
 const AnnouncementDetail = () => {
-  const { slug } = useParams();
+  const { slug } = useParams();  // e.g. /announcements/my-first-post → slug = "my-first-post"
   const navigate = useNavigate();
   const container = useRef();
 
-  const [blog, setBlog] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [blog, setBlog] = useState(null); //blog = the fetched data (null → object)
+  const [loading, setLoading] = useState(true);  //loading = true until fetch finishes
+  const [error, setError] = useState("");  //error = empty string → error message if something fails
 
   useEffect(() => {
     const fetchBlogDetail = async () => {
