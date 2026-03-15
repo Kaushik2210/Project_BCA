@@ -21,3 +21,20 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
 }
+
+/* Hard override for schedule text and background, bypassing Tailwind JIT generation bugs */
+.schedule-card {
+  background-color: rgba(23, 23, 23, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+.schedule-card h3 {
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+.schedule-card p.schedule-time {
+  color: #fbbf24 !important;
+}
+.schedule-card p.schedule-title {
+  color: #ffffff !important;
+}

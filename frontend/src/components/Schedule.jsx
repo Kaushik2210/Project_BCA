@@ -95,8 +95,8 @@ const Schedule = () => {
                 <div className="space-y-6">
                   {day.events && day.events.map((event, i) => (
                     <div key={event._id || i} className="group">
-                      <p className="text-amber-400 text-sm font-bold tracking-widest mb-1 shadow-black group-hover:drop-shadow-md transition-all">{event.time}</p>
-                      <p className="text-white text-xl font-serif">{event.title}</p>
+                      <p className="schedule-time text-amber-400 text-sm font-bold tracking-widest mb-1 shadow-black group-hover:drop-shadow-md transition-all">{event.time}</p>
+                      <p className="schedule-title text-white text-xl font-serif">{event.title}</p>
                     </div>
                   ))}
                 </div>
