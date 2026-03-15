@@ -45,14 +45,16 @@ const Schedule = () => {
 
     if (!loading && days.length > 0) {
       gsap.from(".schedule-card", {
-        y: 100,
+        y: 80,
         opacity: 0,
-        duration: 1,
-        stagger: 0.2,
+        duration: 1.2,
+        stagger: 0.15,
         ease: "power3.out",
         scrollTrigger: {
           trigger: container.current,
-          start: "top 70%",
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play reverse play reverse",
         }
       });
     }
@@ -66,35 +68,35 @@ const Schedule = () => {
         className="schedule-bg absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${scheduleBg})` }}
       >
-        <div className="absolute inset-0 bg-[#1a1614]/80"></div> {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/70"></div> {/* Dark overlay for readability */}
       </div>
       
       <div className="relative z-10 max-w-5xl mx-auto">
-        <h2 className="text-[#c5a059] text-6xl md:text-8xl font-serif text-center mb-24 drop-shadow-2xl">
+        <h2 className="text-amber-500 text-6xl md:text-8xl font-serif text-center mb-24 drop-shadow-2xl">
             Schedule
         </h2>
         
         {loading ? (
           <div className="flex justify-center items-center h-48">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[#c5a059]"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-amber-500"></div>
           </div>
         ) : days.length === 0 ? (
-          <div className="text-center text-[#f0e6d2]/70 text-xl font-serif">
+          <div className="text-center text-white/70 text-xl font-serif">
             No upcoming schedules.
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {days.map((day, index) => (
-              <div key={day._id || index} className="schedule-card bg-[#2c2520]/80 backdrop-blur-md border border-[#c5a059]/30 p-8 rounded-3xl shadow-2xl hover:-translate-y-2 transition-transform duration-500">
-                <h3 className="text-[#f0e6d2] text-3xl font-serif mb-6 border-b border-[#c5a059]/30 pb-4">
+              <div key={day._id || index} className="schedule-card bg-neutral-900/80 backdrop-blur-md border border-amber-500/30 p-8 rounded-3xl shadow-2xl hover:-translate-y-2 transition-transform duration-500">
+                <h3 className="text-white text-3xl font-serif mb-6 border-b border-amber-500/30 pb-4">
                     {day.date}
                 </h3>
                 
                 <div className="space-y-6">
                   {day.events && day.events.map((event, i) => (
                     <div key={event._id || i} className="group">
-                      <p className="text-[#c5a059] text-sm font-bold tracking-widest mb-1 group-hover:drop-shadow-md transition-all">{event.time}</p>
-                      <p className="text-[#f0e6d2] text-xl font-serif">{event.title}</p>
+                      <p className="text-amber-400 text-sm font-bold tracking-widest mb-1 shadow-black group-hover:drop-shadow-md transition-all">{event.time}</p>
+                      <p className="text-white text-xl font-serif">{event.title}</p>
                     </div>
                   ))}
                 </div>
