@@ -18,6 +18,7 @@ import ManageAppointments from './admin/ManageAppointments.jsx';
 import ManageBlogPosts from "./admin/ManageBlogPosts.jsx";
 import PrivateRoute from './components/PrivateRoute.jsx';
 import PublicRoute from './components/PublicRoute.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 import Lenis from 'lenis';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
   return (
     <div className="w-full min-h-screen bg-brand-beige overflow-x-hidden">
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* ── Public pages ── */}
           <Route path="/"            element={<Home />} />

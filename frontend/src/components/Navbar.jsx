@@ -60,42 +60,74 @@ const Navbar = () => {
     const targetId = item.toLowerCase();
 
     if (item === 'Sermons') {
-        navigate('/sermons');
+        if (location.pathname === '/sermons') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/sermons');
+        }
         return;
     }
 
     if (item === 'Ministries') {
-        navigate('/ministries');
+        if (location.pathname === '/ministries') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/ministries');
+        }
         return;
     }
 
     if (item === 'About') {
-        navigate('/about');
+        if (location.pathname === '/about') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/about');
+        }
         return;
     }
 
     if (item === 'Choir') {
-        navigate('/choir');
+        if (location.pathname === '/choir') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/choir');
+        }
         return;
     }
 
     if (item === 'Contact') {
-        navigate('/contact');
+        if (location.pathname === '/contact') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/contact');
+        }
         return;
     }
 
     if (item === 'Appointment') {
-        navigate('/appointment');
+        if (location.pathname === '/appointment') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/appointment');
+        }
         return;
     }
 
     if (item === 'Prayer Request') {
-        navigate('/prayer');
+        if (location.pathname === '/prayer') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/prayer');
+        }
         return;
     }
 
     if (item === 'Announcements') {
-        navigate('/announcements');
+        if (location.pathname === '/announcements') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            navigate('/announcements');
+        }
         return;
     }
 

@@ -61,6 +61,7 @@ const Footer = () => {
         },
       });
 
+      /*
       // Animate Accessibility Quote Lines
       gsap.from(".access-line", {
         y: 30,
@@ -73,6 +74,7 @@ const Footer = () => {
           start: "top 80%",
         },
       });
+      */
     },
     { scope: container },
   );

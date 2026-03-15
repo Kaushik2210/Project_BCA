@@ -57,6 +57,8 @@ const Sermons = () => {
   }, []);
 
   useGSAP(() => {
+    if (loading) return;
+
     // Parallax Effect: Move odd and even columns at different speeds
     // Left Column (Odd indices in 0-based grid if 2 columns) -> Index 0, 2
     // Right Column (Even indices) -> Index 1, 3
@@ -98,7 +100,7 @@ const Sermons = () => {
       }
     });
 
-  }, { scope: container });
+  }, { scope: container, dependencies: [loading] });
 
   return (
     <div ref={container} id="sermons" className="relative w-full py-20 overflow-hidden">

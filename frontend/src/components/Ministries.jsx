@@ -75,6 +75,9 @@ const Ministries = () => {
       });
     });
 
+    // Refresh ScrollTrigger to ensure correct placement after layout
+    ScrollTrigger.refresh();
+
   }, { scope: container });
 
   return (
@@ -87,7 +90,7 @@ const Ministries = () => {
       <div className="min-h-screen md:h-screen w-full flex flex-col justify-center px-4 md:px-8 relative py-20 md:py-0">
         
         {/* Massive Editorial Header */}
-        <h2 className="text-transparent text-[15vw] md:text-[12vw] font-serif font-black text-left mb-8 uppercase tracking-tighter absolute top-0 md:top-0 left-0 z-0 opacity-10 select-none pointer-events-none"
+        <h2 className="text-transparent text-[15vw] md:text-[12vw] font-serif font-black text-left mb-8 uppercase tracking-tighter absolute top-0 md:top-0 left-0 z-0 opacity-20 select-none pointer-events-none"
             style={{ WebkitTextStroke: '2px #c5a059' }}>
           Ministries
         </h2>
