@@ -44,19 +44,27 @@ const Schedule = () => {
     });
 
     if (!loading && days.length > 0) {
-      gsap.from(".schedule-card", {
-        y: 80,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play reverse play reverse",
+      // Refresh ScrollTrigger to ensure accurate trigger points after dynamic content is added
+      ScrollTrigger.refresh();
+
+      gsap.fromTo(".schedule-card", 
+        { 
+          y: 80, 
+          opacity: 0 
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
         }
-      });
+      );
     }
 
   }, { scope: container, dependencies: [days, loading] });

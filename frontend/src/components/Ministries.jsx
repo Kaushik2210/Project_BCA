@@ -5,7 +5,7 @@ import glassBg from '../assets/ministries-stained-glass.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,7 +96,7 @@ const Ministries = () => {
         </h2>
         
         {/* Desktop Fixed Texts Overlay */}
-        <div className="absolute top-8 left-4 md:top-10 md:left-8 z-10 w-full md:w-auto text-center md:text-left pointer-events-none">
+        <div className="absolute top-8 left-4 md:top-10 md:left-8 z-30 w-full md:w-auto text-center md:text-left pointer-events-none">
            <h2 className="text-brand-dark text-5xl md:text-8xl font-serif uppercase tracking-widest drop-shadow-2xl">
              Ministries
            </h2>
@@ -107,12 +107,12 @@ const Ministries = () => {
                   "Discover the vibrant community and the dedicated individuals serving at Resurrection Baptist Church."
               </p>
               <div className="mt-6 md:pl-4">
-                <button 
-                  onClick={() => navigate('/ministries')}
+                <Link 
+                  to="/ministries"
                   className="text-brand-red text-lg font-bold uppercase tracking-[0.2em] hover:text-white transition-colors border-b border-brand-red pb-2 hover:border-white inline-block cursor-pointer"
                 >
                   View All Ministries &rarr;
-                </button>
+                </Link>
               </div>
            </div>
         </div>
@@ -126,12 +126,12 @@ const Ministries = () => {
                   "Discover the vibrant community and the dedicated individuals serving at Resurrection Baptist Church."
               </p>
               <div className="mt-8">
-                <button 
-                  onClick={() => navigate('/ministries')}
+                <Link 
+                  to="/ministries"
                   className="text-brand-red text-lg font-bold uppercase tracking-[0.2em] hover:text-white transition-colors border-b border-brand-red pb-2 hover:border-white inline-block"
                 >
                   View All Ministries &rarr;
-                </button>
+                </Link>
               </div>
            </div>
 
