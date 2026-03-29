@@ -28,8 +28,31 @@ const PrayerPage = () => {
     e.preventDefault();
     setError("");
 
-    if (!formData.name.trim() || !formData.description.trim()) {
+    const nameStr = formData.name.trim();
+    const descStr = formData.description.trim();
+
+    if (!nameStr || !descStr) {
       setError("Please provide both your name and your prayer request.");
+      return;
+    }
+
+    if (nameStr.length < 3) {
+      setError("Name must be at least 3 characters long.");
+      return;
+    }
+
+    if (/\d/.test(nameStr)) {
+      setError("Name should not contain any numbers.");
+      return;
+    }
+
+    if (descStr.length < 10) {
+      setError("Prayer request must be at least 10 characters long.");
+      return;
+    }
+
+    if (descStr.length > 200) {
+      setError("Prayer request cannot exceed 200 characters.");
       return;
     }
 
@@ -184,6 +207,7 @@ const PrayerPage = () => {
                       type="text"
                       name="name"
                       required
+                      minLength="3"
                       value={formData.name}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 bg-[#1a1614] border border-[#c5a059]/30 text-[#f0e6d2] rounded-md focus:ring-2 focus:ring-[#c5a059] focus:border-transparent outline-none transition-colors"
@@ -198,12 +222,17 @@ const PrayerPage = () => {
                     <textarea
                       name="description"
                       required
+                      minLength="10"
+                      maxLength="200"
                       rows="6"
                       value={formData.description}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 bg-[#1a1614] border border-[#c5a059]/30 text-[#f0e6d2] rounded-md focus:ring-2 focus:ring-[#c5a059] focus:border-transparent outline-none resize-none transition-colors"
-                      placeholder="Share your prayer needs here..."
+                      placeholder="Share your prayer needs here... (10 to 200 characters)"
                     ></textarea>
+                    <p className={`text-xs text-right mt-1 ${formData.description.length > 200 ? 'text-red-400' : 'text-[#f0e6d2]/50'}`}>
+                      {formData.description.length}/200
+                    </p>
                   </div>
 
                   <button

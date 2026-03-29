@@ -52,15 +52,37 @@ const ContactPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { name, email, message } = formData;
-        if (!name.trim() || !email.trim() || !message.trim()) {
+        const nameStr = name.trim();
+        const msgStr = message.trim();
+
+        if (!nameStr || !email.trim() || !msgStr) {
             setStatus('Please fill in all fields.');
+            return;
+        }
+
+        if (nameStr.length < 3) {
+            setStatus('Name must be at least 3 characters long.');
+            return;
+        }
+
+        if (/\d/.test(nameStr)) {
+            setStatus('Name should not contain any numbers.');
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setStatus('Please enter a valid email address.');
+            return;
+        }
+
+        if (msgStr.length < 10) {
+            setStatus('Message must be at least 10 characters long.');
+            return;
+        }
+
+        if (msgStr.length > 500) {
+            setStatus('Message cannot exceed 500 characters.');
             return;
         }
 
@@ -77,7 +99,7 @@ const ContactPage = () => {
             return;
         }
 
-        setStatus('Submitted successfully!');
+        setStatus('Thank you! Submitted successfully!');
         setTimeout(() => {
             setFormData({ name: '', email: '', message: '' });
             setStatus('');
@@ -166,6 +188,7 @@ const ContactPage = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required 
+                                        minLength="3"
                                         className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300"
                                         placeholder="John Doe"
                                     />
@@ -191,10 +214,15 @@ const ContactPage = () => {
                                         value={formData.message}
                                         onChange={handleChange}
                                         required 
+                                        minLength="10"
+                                        maxLength="500"
                                         rows="4"
                                         className="w-full bg-transparent border-b border-brand-red/30 py-3 text-brand-dark placeholder:text-brand-dark/30 focus:outline-none focus:border-brand-red transition-colors duration-300 resize-none"
-                                        placeholder="How can we help you?"
+                                        placeholder="How can we help you? (10 to 500 characters)"
                                     ></textarea>
+                                    <p className={`text-xs text-right mt-1 font-sans ${formData.message.length > 500 ? 'text-brand-red' : 'text-brand-dark/50'}`}>
+                                        {formData.message.length}/500
+                                    </p>
                                 </div>
                                 
                                 <button 
