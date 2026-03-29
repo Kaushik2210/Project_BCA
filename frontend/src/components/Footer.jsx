@@ -146,16 +146,18 @@ const Footer = () => {
           <h4 className="text-brand-dark text-xl font-sans uppercase tracking-widest mb-4">
             Email
           </h4>
-          <p className="text-brand-red font-serif hover:text-brand-dark transition-colors cursor-pointer">
+          <a href="mailto:jonahchowri95@gmail.com" className="text-brand-red font-serif hover:text-brand-dark transition-colors cursor-pointer block">
             jonahchowri95@gmail.com
-          </p>
+          </a>
         </div>
 
         <div className="mb-8 md:mb-0">
           <h4 className="text-brand-dark text-xl font-sans uppercase tracking-widest mb-4">
             Phone
           </h4>
-          <p className="text-brand-red font-serif">+91-90084 69800</p>
+          <a href="tel:+919008469800" className="text-brand-red font-serif hover:text-brand-dark transition-colors cursor-pointer block">
+            +91-90084 69800
+          </a>
         </div>
 
         <div className="max-w-xs text-right">
