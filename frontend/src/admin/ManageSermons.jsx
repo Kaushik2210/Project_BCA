@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SermonModal from '../components/SermonModal.jsx';
+import { getToken } from "../utils/auth.js";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -21,7 +22,7 @@ const ManageSermons = () => {
   const [showSermonModal, setShowSermonModal]     = useState(false);
   const [showViewModal, setShowViewModal]         = useState(false);
 
-  const token = localStorage.getItem('admin_token');
+  const token = getToken();
 
   /* ── fetch ── */
   const fetchSermons = async () => {

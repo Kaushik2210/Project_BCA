@@ -1,6 +1,6 @@
 import { postContact,getContact,markAsReplied } from "../controllers/contact.controller.js";
 import express from "express";
-import requireAuth from "../middleware/authMiddleware.js";
+import {requireAuth} from "../middleware/authMiddleware.js";
 import { RateLimiter } from "../middleware/rateLimiter.js";
 
 const contactRouter=express.Router();

@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { Admin } from "../models/admin.model.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+
 
 // JWT-based auth. 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -12,18 +16,35 @@ export const login = asyncHandler(async (req, res) => {
   const adminPass = process.env.ADMIN_PASSWORD;
  
   if (!username || !password) {
-    return res.status(400).json({ message: 'username and password required' });
+    return res.status(400).json(new ApiError(400,"Username and password is required").toJSON());
   }
 
-  if (username !== adminUser || password !== adminPass) {
-    return res.status(401).json({ message: 'Invalid credentials' });
+  //check if it is super-admin
+  if(username==adminUser && password==adminPass){
+    const payload = { username,role:'super-admin' };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    const expires = Date.now() + 1000 * 60 * 60; 
+    return res.status(200).json(new ApiResponse(200,{ token, expires },"Logged in successfully"));
   }
 
-  const payload = { username };
-  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
-  const expires = Date.now() + 1000 * 60 * 60; 
+  //check if normal admin
+  const admin=await Admin.findOne({username});
 
-  return res.status(200).json({ token, expires });
+  if(!admin){
+    return res.status(404).json(new ApiError(404,"username or password is wrong").toJSON());
+  }
+
+  const isMatch=await admin.comparePassword(password);
+  
+  if(isMatch){
+    const payload = { username,role:'admin' };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    const expires = Date.now() + 1000 * 60 * 60; 
+    return res.status(200).json(new ApiResponse(200,{ token, expires },"Logged in successfully"));
+  }else{
+    return res.status(404).json(new ApiError(404,"username or password is wrong").toJSON());
+  }
+
 });
 
 export const verifyToken = (token) => {

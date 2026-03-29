@@ -1,7 +1,7 @@
 import { Router } from "express";
 import storage from "../utils/multer.js"
 import { getSermons, postSermon, editSermon, deleteSermon } from "../controllers/sermon.controller.js";
-import requireAuth from "../middleware/authMiddleware.js";
+import {requireAuth} from "../middleware/authMiddleware.js";
 
 const sermonsRouter = Router();
 

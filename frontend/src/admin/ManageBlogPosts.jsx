@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
+import { getToken } from "../utils/auth.js";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -106,7 +107,7 @@ const ManageBlogPosts = () => {
   const [filterCategory, setFilterCategory] = useState('all');
   const [coverPreviewError, setCoverPreviewError] = useState(false);
 
-  const token = localStorage.getItem('admin_token');
+  const token = getToken();
   const authHeaders = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     'Content-Type': 'application/json',

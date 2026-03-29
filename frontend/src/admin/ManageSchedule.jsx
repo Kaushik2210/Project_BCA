@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getToken } from "../utils/auth.js";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -214,7 +215,7 @@ const ManageSchedule = () => {
   const [deleteTarget, setDeleteTarget] = useState(null); // { _id, date }
   const [search, setSearch]           = useState('');
 
-  const token = localStorage.getItem('admin_token');
+  const token = getToken();
   const authHeaders = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     'Content-Type': 'application/json',

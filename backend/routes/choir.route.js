@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getEvents, createEvent, updateEvent, deleteEvent } from '../controllers/choir.controller.js';
-import requireAuth from "../middleware/authMiddleware.js";
+import {requireAuth} from "../middleware/authMiddleware.js";
 
 
 const choirRouter=Router();

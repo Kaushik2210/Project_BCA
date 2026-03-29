@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ChoirModal from '../components/ChoirModal.jsx';
+import { getToken } from "../utils/auth.js";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -20,7 +21,7 @@ const ManageChoirSchedule = () => {
   const [editingChoir, setEditingChoir]   = useState(null);
   const [showModal, setShowModal]         = useState(false);
 
-  const token = localStorage.getItem('admin_token');
+  const token = getToken();
 
   /* ── fetch ── */
   const fetchChoirEvents = async () => {

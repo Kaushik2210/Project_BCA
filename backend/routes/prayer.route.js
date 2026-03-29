@@ -1,6 +1,6 @@
 import { createPrayer,getPrayers,markAsPrayed,deletePrayer } from "../controllers/prayer.controller.js";
 import express from "express";
-import requireAuth from "../middleware/authMiddleware.js";
+import {requireAuth} from "../middleware/authMiddleware.js";
 
 const prayerRouter=express.Router();
 
