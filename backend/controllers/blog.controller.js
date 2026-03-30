@@ -4,6 +4,8 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiError.js";
 import { blogSchema } from "../schema/blog.schema.js";
 import mongoose from "mongoose";
+import { notificationQueue } from "../utils/queue.js";
+import { Newsletter } from "../models/newsletter.model.js";
 
 
 //pagination
@@ -76,6 +78,33 @@ const postBlog = asyncHandler(async (req, res) => {
     tags: Array.isArray(tags) ? tags : [],
     status: status || 'draft',
   });
+  
+  if(status=='published'){
+      const subscribers=await Newsletter.find();
+      const jobs=subscribers.map(subscriber=>({
+        name:"send-email",
+        data:{
+            email:subscriber.email,
+            subject:"New Blog Published: "+newBlog.title,   
+            title:newBlog.title,
+            excerpt:newBlog.excerpt,
+        }
+    }))
+
+    await notificationQueue.addBulk(jobs.map(job=>({
+        ...job,
+        opts:{
+            attempts:3,
+            backoff:{
+                type:"exponential",
+                delay:5000
+            },
+            removeOnComplete:true,
+        }
+    })));
+    console.log(`Added ${jobs.length} email jobs to the queue for blog "${newBlog.title}"`);
+
+  }
 
   return res.status(201).json(new ApiResponse(201, newBlog, "Blog created successfully"));
 });
@@ -106,6 +135,10 @@ const editBlog = asyncHandler(async (req, res) => {
   if (coverImage!== undefined) blog.coverImage=coverImage;
   if (tags!== undefined) blog.tags=tags;
   if (status!== undefined) blog.status=status;
+
+  // Currently no email is sent on status change from draft to published during edit, 
+  // because it can lead to multiple emails for the same blog if edited multiple times. 
+  // This can be enhanced in the future by tracking status changes and only sending email on the first transition to published.
 
   const updatedBlog = await blog.save();
   return res.status(200).json(new ApiResponse(200, updatedBlog, "Blog updated successfully"));
