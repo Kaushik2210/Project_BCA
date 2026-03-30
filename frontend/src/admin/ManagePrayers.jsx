@@ -147,14 +147,20 @@ const ManagePrayers = () => {
   /* ── add prayer ── */
   const handleAddPrayer = async (e) => {
     e.preventDefault();
-    if (!formName.trim()) { setFormError('Name is required.'); return; }
+    const tName = formName.trim();
+    const tDesc = formDesc.trim();
+
+    if (!tName) { setFormError('Name is required.'); return; }
+    if (tName.length < 2 || tName.length > 60) { setFormError('Name must be between 2 and 60 characters.'); return; }
+    if (tDesc && (tDesc.length < 10 || tDesc.length > 500)) { setFormError('Prayer request must be between 10 and 500 characters.'); return; }
+
     setSubmitting(true);
     setFormError('');
     try {
       const res  = await fetch(`${backendURL}/api/v1/prayers`, {
         method: 'POST',
         headers: authHeaders,
-        body: JSON.stringify({ name: formName.trim(), description: formDesc.trim() }),
+        body: JSON.stringify({ name: tName, description: tDesc }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message ?? 'Failed to create prayer');
@@ -429,10 +435,19 @@ const ManagePrayers = () => {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="Person's name"
-                  className="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800
+                  maxLength="60"
+                  className={`w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800
                              placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-400/30
-                             focus:border-red-400 transition-colors"
+                             focus:border-red-400 transition-colors ${formName.length > 0 && formName.trim().length < 2 ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30' : ''}`}
                 />
+                <div className="flex justify-between mt-1 px-1">
+                  {formName.length > 0 && formName.trim().length < 2 ? (
+                    <span className="text-[10px] text-red-500">Minimum 2 characters required</span>
+                  ) : <span></span>}
+                  <span className={`text-[10px] ${formName.length >= 60 ? 'text-red-500' : 'text-gray-400'}`}>
+                    {formName.length}/60
+                  </span>
+                </div>
               </div>
 
               <div>
@@ -444,10 +459,19 @@ const ManagePrayers = () => {
                   value={formDesc}
                   onChange={(e) => setFormDesc(e.target.value)}
                   placeholder="Describe the prayer need…"
-                  className="w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800
+                  maxLength="500"
+                  className={`w-full border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm text-gray-800
                              placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-400/30
-                             focus:border-red-400 transition-colors resize-none"
+                             focus:border-red-400 transition-colors resize-none ${formDesc.length > 0 && formDesc.trim().length < 10 ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30' : ''}`}
                 />
+                <div className="flex justify-between mt-1 px-1">
+                  {formDesc.length > 0 && formDesc.trim().length < 10 ? (
+                    <span className="text-[10px] text-red-500">Minimum 10 characters required</span>
+                  ) : <span></span>}
+                  <span className={`text-[10px] ${formDesc.length >= 500 ? 'text-red-500' : 'text-gray-400'}`}>
+                    {formDesc.length}/500
+                  </span>
+                </div>
               </div>
 
               <div className="flex gap-3 pt-1">

@@ -165,12 +165,29 @@ const ManageBlogPosts = () => {
 
   /* ── save (create or update) ── */
   const handleSave = async (publishNow = false) => {
-    if (!form.title.trim())   return alert('Title is required.');
-    if (!form.content.trim() || form.content === '<p><br></p>') return alert('Content is required.');
+    const tTitle = form.title.trim();
+    const tContent = form.content.trim();
+    const tAuthor = form.author?.trim() || '';
+    const tExcerpt = form.excerpt?.trim() || '';
+    const tTags = form.tags?.trim() || '';
+    const tCover = form.coverImage?.trim() || '';
+
+    if (!tTitle) return alert('Title is required.');
+    if (tTitle.length < 5 || tTitle.length > 100) return alert('Title must be between 5 and 100 characters.');
+    if (!tContent || tContent === '<p><br></p>') return alert('Content is required.');
+    
+    if (tAuthor && tAuthor.length > 50) return alert('Author name cannot exceed 50 characters.');
+    if (tExcerpt && tExcerpt.length > 300) return alert('Excerpt cannot exceed 300 characters.');
+    if (tTags && tTags.length > 100) return alert('Tags cannot exceed 100 total characters.');
+    if (tCover && tCover.length > 500) return alert('Cover image URL cannot exceed 500 characters.');
 
     const payload = {
       ...form,
-      tags:   form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+      title: tTitle,
+      author: tAuthor,
+      excerpt: tExcerpt,
+      coverImage: tCover,
+      tags: tTags.split(',').map((t) => t.trim()).filter(Boolean),
       status: publishNow ? 'published' : form.status,
     };
 
@@ -446,11 +463,20 @@ const ManageBlogPosts = () => {
           <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
             <FormField label="Post Title" required>
               <input
-                className={inputCls + ' text-lg font-medium'}
+                className={`${inputCls} text-lg font-medium ${form.title.length > 0 && form.title.trim().length < 5 ? 'border-red-500 focus:border-red-500' : ''}`}
                 placeholder="Enter a compelling title…"
+                maxLength="100"
                 value={form.title}
                 onChange={(e) => setField('title', e.target.value)}
               />
+              <div className="flex justify-between mt-1 px-1">
+                {form.title.length > 0 && form.title.trim().length < 5 ? (
+                  <span className="text-[10px] text-red-500">Minimum 5 characters required</span>
+                ) : <span></span>}
+                <span className={`text-[10px] ${form.title.length >= 100 ? 'text-red-500' : 'text-gray-400'}`}>
+                  {form.title.length}/100
+                </span>
+              </div>
             </FormField>
           </div>
 
@@ -461,12 +487,16 @@ const ManageBlogPosts = () => {
                 rows={3}
                 className={inputCls + ' resize-none'}
                 placeholder="A short summary shown in post listings…"
+                maxLength="300"
                 value={form.excerpt}
                 onChange={(e) => setField('excerpt', e.target.value)}
               />
-              <p className="text-xs text-gray-400 mt-1">
-                {form.excerpt.length} / 300 characters recommended
-              </p>
+              <div className="flex justify-between mt-1 px-1">
+                <span className="text-[10px] text-gray-400">Recommended length</span>
+                <span className={`text-[10px] ${(form.excerpt?.length || 0) >= 300 ? 'text-red-500' : 'text-gray-400'}`}>
+                  {form.excerpt?.length || 0}/300
+                </span>
+              </div>
             </FormField>
           </div>
 
@@ -555,19 +585,31 @@ const ManageBlogPosts = () => {
               <input
                 className={inputCls}
                 placeholder="Author name"
+                maxLength="50"
                 value={form.author}
                 onChange={(e) => setField('author', e.target.value)}
               />
+              <div className="flex justify-end mt-1 px-1">
+                <span className={`text-[10px] ${(form.author?.length || 0) >= 50 ? 'text-red-500' : 'text-gray-400'}`}>
+                  {form.author?.length || 0}/50
+                </span>
+              </div>
             </FormField>
 
             <FormField label="Tags">
               <input
                 className={inputCls}
                 placeholder="faith, prayer, community"
+                maxLength="100"
                 value={form.tags}
                 onChange={(e) => setField('tags', e.target.value)}
               />
-              <p className="text-xs text-gray-400 mt-1">Comma-separated</p>
+              <div className="flex justify-between mt-1 px-1">
+                <span className="text-[10px] text-gray-400">Comma-separated</span>
+                <span className={`text-[10px] ${(form.tags?.length || 0) >= 100 ? 'text-red-500' : 'text-gray-400'}`}>
+                  {form.tags?.length || 0}/100
+                </span>
+              </div>
             </FormField>
           </div>
 
@@ -579,12 +621,18 @@ const ManageBlogPosts = () => {
               <input
                 className={inputCls}
                 placeholder="https://example.com/image.jpg"
+                maxLength="500"
                 value={form.coverImage}
                 onChange={(e) => {
                   setField('coverImage', e.target.value);
                   setCoverPreviewError(false);
                 }}
               />
+              <div className="flex justify-end mt-1 px-1">
+                <span className={`text-[10px] ${(form.coverImage?.length || 0) >= 500 ? 'text-red-500' : 'text-gray-400'}`}>
+                  {form.coverImage?.length || 0}/500
+                </span>
+              </div>
             </FormField>
 
             {form.coverImage && !coverPreviewError && (
