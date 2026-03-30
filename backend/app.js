@@ -43,7 +43,10 @@ if(!global.workerInitialized){
         })
     },{
         connection:{
-            url:process.env.REDIS_URL
+            url:process.env.REDIS_URL,
+            tls:{
+                rejectUnauthorized:false
+            }
         },
         concurrency:2,
         limiter:{
