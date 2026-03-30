@@ -11,6 +11,8 @@ import {appointmentRouter} from "./routes/appointment.route.js"
 import { scheduleRouter } from "./routes/schedule.route.js";
 import { slotRouter } from "./routes/slot.route.js";
 import { adminRouter } from "./routes/admin.route.js";
+import { Worker } from "bullmq";
+import {sendEmail} from "./utils/sendEmail.js";
 import cors from 'cors';
 
 
@@ -27,6 +29,28 @@ setInterval(()=>{
     console.log('Self-ping sent to prevent downtime');
 }, 840000); // 14 minutes
 
+// Worker to process email notifications from the queue
+if(!global.workerInitialized){
+    global.workerInitialized=true;
+    const worker=new Worker("notificationQueue",async(job)=>{
+        const {email,subject,excerpt,title}=job.data;
+        await sendEmail({
+            to:email,
+            subject,
+            excerpt,
+            title
+        })
+    },{
+        connection:{
+            url:process.env.REDIS_URL
+        },
+        concurrency:2,
+        limiter:{
+            max:10,
+            duration:5000
+        }
+    })
+}
 
 
 app.get('/ping',(req,res)=>{
