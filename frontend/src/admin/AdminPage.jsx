@@ -75,7 +75,7 @@ const AdminPage = () => {
           <p className="text-sm text-red-200 mt-1">Church Dashboard</p>
         </div>
  
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <nav data-lenis-prevent className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
           {NAV_ITEMS.map(({ key, label }) => {
             /* Only super-admin can see Admin Accounts */
             if (key === 'admins' && role !== 'super-admin') return null;
@@ -140,7 +140,7 @@ const AdminPage = () => {
         </header>
  
         {/* Section content */}
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <main data-lenis-prevent className="flex-1 overflow-y-auto p-6 bg-gray-50">
           {activeSection === 'sermons'      && <ManageSermons />}
           {activeSection === 'choir'        && <ManageChoirSchedule />}
           {activeSection === 'schedule'     && <ManageSchedule />}

@@ -39,13 +39,27 @@ const ScheduleModal = ({ initial, onClose, onSave, saving }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!date.trim()) { setFormError('Date label is required.'); return; }
-    const validEvents = events.filter((ev) => ev.time.trim() || ev.title.trim());
+    const trimmedDate = date.trim();
+    if (!trimmedDate) { setFormError('Date label is required.'); return; }
+    if (trimmedDate.length < 3 || trimmedDate.length > 30) { setFormError('Date label must be between 3 and 30 characters.'); return; }
+    
+    const validEvents = events.filter((ev) => ev.time?.trim() || ev.title?.trim());
     if (validEvents.length === 0) { setFormError('Add at least one event.'); return; }
-    const incomplete = validEvents.find((ev) => !ev.time.trim() || !ev.title.trim());
-    if (incomplete) { setFormError('Each event needs both a time and a title.'); return; }
+    
+    for (let i = 0; i < validEvents.length; i++) {
+        const ev = validEvents[i];
+        const trimmedTitle = ev.title?.trim() || '';
+        const trimmedTime = ev.time?.trim() || '';
+        
+        if (!trimmedTime || !trimmedTitle) { setFormError(`Event #${i + 1} needs both a time and a title.`); return; }
+        if (trimmedTitle.length < 3 || trimmedTitle.length > 50) { setFormError(`Event #${i + 1} title must be between 3 and 50 characters.`); return; }
+        
+        const [hours] = trimmedTime.split(':').map(Number);
+        if (hours < 6) { setFormError(`Event #${i + 1} cannot be scheduled between midnight and 6:00 AM.`); return; }
+    }
+
     setFormError('');
-    onSave({ date: date.trim().toUpperCase(), events: validEvents });
+    onSave({ date: trimmedDate.toUpperCase(), events: validEvents.map(e => ({...e, title: e.title.trim(), time: e.time.trim()})) });
   };
 
   const inputCls = `w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800
@@ -69,8 +83,9 @@ const ScheduleModal = ({ initial, onClose, onSave, saving }) => {
           </button>
         </div>
 
-        {/* Body */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 px-6 py-5 overflow-y-auto flex-1">
+        {/* Scrollable Body */}
+        <div data-lenis-prevent className="overflow-y-auto p-6 flex-1" style={{ maxHeight: 'calc(90vh - 145px)' }}>
+          <form id="schedule-form" onSubmit={handleSubmit} className="flex flex-col gap-5">
 
           {formError && (
             <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
@@ -84,9 +99,10 @@ const ScheduleModal = ({ initial, onClose, onSave, saving }) => {
               Date Label <span className="text-red-500">*</span>
             </label>
             <input
-              className={inputCls}
+              className={`${inputCls} ${date.length > 0 && date.trim().length < 3 ? 'border-red-500 focus:border-red-500' : ''}`}
               placeholder='e.g. JANUARY 17 or EVERY SUNDAY'
               value={date}
+              maxLength="30"
               onChange={(e) => setDate(e.target.value)}
             />
             <p className="text-xs text-gray-400 mt-1">Will be stored in uppercase automatically.</p>
@@ -112,22 +128,32 @@ const ScheduleModal = ({ initial, onClose, onSave, saving }) => {
               {events.map((ev, idx) => (
                 <div key={idx} className="flex gap-2 items-start bg-gray-50 rounded-xl p-3 border border-gray-200">
                   {/* Time */}
-                  <div className="w-32 flex-shrink-0">
+                  <div className="w-36 flex-shrink-0">
                     <input
-                      className={inputCls}
-                      placeholder="e.g. 9:00 AM"
+                      type="time"
+                      className={`${inputCls} ${ev.time && Number(ev.time.split(':')[0]) < 6 ? 'border-red-500 text-red-500 focus:ring-red-400/30 focus:border-red-500' : ''}`}
+                      min="06:00"
                       value={ev.time}
                       onChange={(e) => setEventField(idx, 'time', e.target.value)}
                     />
+                    {ev.time && Number(ev.time.split(':')[0]) < 6 && (
+                      <p className="text-[10px] text-red-500 mt-1 leading-tight">Must be after 6 AM</p>
+                    )}
                   </div>
                   {/* Title */}
                   <div className="flex-1">
                     <input
-                      className={inputCls}
+                      className={`${inputCls} ${ev.title.length > 0 && ev.title.trim().length < 3 ? 'border-red-500 focus:ring-red-400/30 focus:border-red-500' : ''}`}
                       placeholder="Event title"
                       value={ev.title}
+                      maxLength="50"
                       onChange={(e) => setEventField(idx, 'title', e.target.value)}
                     />
+                    <div className="flex justify-end mt-1">
+                      <span className={`text-[10px] ${ev.title.length > 50 ? 'text-red-500' : 'text-gray-400'}`}>
+                        {ev.title.length}/50
+                      </span>
+                    </div>
                   </div>
                   {/* Remove */}
                   {events.length > 1 && (
@@ -143,29 +169,31 @@ const ScheduleModal = ({ initial, onClose, onSave, saving }) => {
               ))}
             </div>
           </div>
+          </form>
+        </div>
 
-          {/* Actions */}
-          <div className="flex gap-3 pt-1 flex-shrink-0">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={saving}
-              className="flex-1 border border-gray-300 text-gray-700 hover:border-gray-400
-                         rounded-xl py-2.5 text-sm font-medium transition-all disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 bg-green-600 hover:bg-green-700 disabled:opacity-50
-                         disabled:cursor-not-allowed text-white rounded-xl py-2.5
-                         text-sm font-semibold transition-colors shadow-sm"
-            >
-              {saving ? 'Saving…' : initial ? 'Update' : 'Create'}
-            </button>
-          </div>
-        </form>
+        {/* Actions - Sticking to Bottom */}
+        <div className="flex gap-3 px-6 py-4 bg-gray-50 border-t border-gray-200 flex-shrink-0 rounded-b-2xl">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={saving}
+            className="flex-1 border border-gray-300 bg-white text-gray-700 hover:border-gray-400
+                       rounded-xl py-2.5 text-sm font-medium transition-all disabled:opacity-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            form="schedule-form"
+            disabled={saving}
+            className="flex-1 bg-green-600 hover:bg-green-700 disabled:opacity-50
+                       disabled:cursor-not-allowed text-white rounded-xl py-2.5
+                       text-sm font-semibold transition-colors shadow-sm"
+          >
+            {saving ? 'Saving…' : initial ? 'Update' : 'Create'}
+          </button>
+        </div>
       </div>
     </div>
   );
