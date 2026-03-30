@@ -13,12 +13,28 @@ const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
   const [type, setType] = useState(event?.type || 'practice');
   const [date, setDate] = useState(initialDate);   // yyyy-mm-dd string
   const [time, setTime] = useState(event?.time || '');
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
 
-    if (!date || !time) {
-      alert('Please select both date and time');
+    const trimmedTitle = title.trim();
+
+    if (!trimmedTitle || !date || !time || !type) {
+      setError('All fields are required');
+      return;
+    }
+
+    if (trimmedTitle.length < 3 || trimmedTitle.length > 50) {
+      setError('Title must be between 3 and 50 characters');
+      return;
+    }
+
+    // Time validation (prevent 00:00 to 05:59)
+    const [hours] = time.split(':').map(Number);
+    if (hours < 6) {
+      setError('Events cannot be scheduled between midnight and 6:00 AM');
       return;
     }
 
@@ -84,28 +100,47 @@ const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
       onClose()
     }catch (err) {
       console.error(err);
-      alert('Error saving event: ' + err.message);
+      setError('Error saving event: ' + err.message);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
+    <div className="fixed inset-0 flex items-center justify-center bg-white/50 z-50 p-4">
       <div className="bg-brand-beige rounded-xl p-8 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
         <h2 className="text-2xl font-bold mb-6 text-brand-red">
           {event ? 'Edit Choir Event' : 'Add Choir Event'}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
           <div>
-            <label className="block mb-1 font-semibold text-white">Title</label>
+            <div className="flex justify-between mb-1">
+              <label className="block font-semibold text-white">Title *</label>
+              <span className={`text-xs ${title.length > 50 ? 'text-red-500' : 'text-gray-300'}`}>
+                {title.length}/50
+              </span>
+            </div>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand-red"
+              maxLength="50"
+              className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 text-white ${
+                title.length > 0 && title.trim().length < 3
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-gray-300 focus:ring-brand-red'
+              }`}
               required
-              placeholder="Event title"
+              placeholder="Event title (3-50 characters)"
             />
+            {title.length > 0 && title.trim().length < 3 && (
+              <p className="text-xs text-red-500 mt-1">Title must be at least 3 characters</p>
+            )}
           </div>
 
           <div>
@@ -134,14 +169,22 @@ const ChoirModal = ({ event, onAdd, onUpdate, onClose }) => {
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold text-white">Time</label>
+            <label className="block mb-1 font-semibold text-white">Time *</label>
             <input
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-brand-red"
+              className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 ${
+                time && Number(time.split(':')[0]) < 6 
+                  ? 'border-red-500 focus:ring-red-500 text-red-500' 
+                  : 'border-gray-300 focus:ring-brand-red'
+              }`}
               required
+              min="06:00"
             />
+            {time && Number(time.split(':')[0]) < 6 && (
+              <p className="text-xs text-red-500 mt-1">Please select a time after 6:00 AM</p>
+            )}
           </div>
 
           <div className="flex justify-end gap-4 mt-8">
