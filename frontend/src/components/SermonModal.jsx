@@ -40,8 +40,19 @@ const SermonModal = ({sermon = null,onClose,onSuccess}) => {
     e.preventDefault();
 
     // Validation
-    if (!formData.title.trim() || !formData.description.trim()) {
+    const title = formData.title.trim();
+    const description = formData.description.trim();
+
+    if (!title || !description) {
       setError('Title and description are required');
+      return;
+    }
+    if (title.length < 3 || title.length > 50) {
+      setError('Title must be between 3 and 50 characters');
+      return;
+    }
+    if (description.length < 10 || description.length > 500) {
+      setError('Description must be between 10 and 500 characters');
       return;
     }
     if (!isEdit && !audioFile) {
@@ -149,34 +160,60 @@ const SermonModal = ({sermon = null,onClose,onSuccess}) => {
 
           {/* Title */}
           <div>
-            <label className="block text-sm font-semibold text-black mb-2">
-              Title *
-            </label>
+            <div className="flex justify-between mb-2">
+              <label className="block text-sm font-semibold text-black">
+                Title *
+              </label>
+              <span className={`text-xs ${formData.title.length > 50 ? 'text-red-500' : 'text-gray-500'}`}>
+                {formData.title.length}/50
+              </span>
+            </div>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              placeholder="Sermon title"
+              maxLength="50"
+              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 text-black ${
+                formData.title.length > 0 && formData.title.trim().length < 3
+                  ? 'border-red-400 focus:ring-red-500'
+                  : 'border-gray-300 focus:ring-blue-500'
+              }`}
+              placeholder="Sermon title (3-50 characters)"
               required
             />
+            {formData.title.length > 0 && formData.title.trim().length < 3 && (
+              <p className="text-xs text-red-500 mt-1">Title must be at least 3 characters</p>
+            )}
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-semibold text-black mb-2">
-              Description *
-            </label>
+            <div className="flex justify-between mb-2">
+              <label className="block text-sm font-semibold text-black">
+                Description *
+              </label>
+              <span className={`text-xs ${formData.description.length > 500 ? 'text-red-500' : 'text-gray-500'}`}>
+                {formData.description.length}/500
+              </span>
+            </div>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleInputChange}
               rows="4"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              placeholder="Sermon description"
+              maxLength="500"
+              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 text-black ${
+                formData.description.length > 0 && formData.description.trim().length < 10
+                  ? 'border-red-400 focus:ring-red-500'
+                  : 'border-gray-300 focus:ring-blue-500'
+              }`}
+              placeholder="Sermon description (10-500 characters)"
               required
             />
+            {formData.description.length > 0 && formData.description.trim().length < 10 && (
+              <p className="text-xs text-red-500 mt-1">Description must be at least 10 characters</p>
+            )}
           </div>
 
           {/* Audio File */}
