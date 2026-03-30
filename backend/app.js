@@ -12,7 +12,8 @@ import { scheduleRouter } from "./routes/schedule.route.js";
 import { slotRouter } from "./routes/slot.route.js";
 import { adminRouter } from "./routes/admin.route.js";
 import { Worker } from "bullmq";
-import {sendEmail} from "./utils/sendEmail.js";
+import {sendEmail} from "./utils/emailClient.js";
+
 import cors from 'cors';
 
 
