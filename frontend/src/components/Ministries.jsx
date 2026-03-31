@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 gsap.registerPlugin(ScrollTrigger);
 
 const Ministries = () => {
+  // container is the outer pinning element, slider is the inner track that moves horizontally
   const container = useRef();
   const slider = useRef();
   const navigate = useNavigate();
@@ -21,28 +22,32 @@ const Ministries = () => {
   ];
 
   useGSAP(() => {
+    // gsap.matchMedia allows us to write responsive animations (different logic for desktop vs mobile)
     let mm = gsap.matchMedia();
 
-    // Desktop: Horizontal Scroll
+    // Desktop: Horizontal Scroll Logic
     mm.add("(min-width: 768px)", () => {
+      // Calculate how far the inner slider needs to move to show all cards
       const getScrollAmount = () => {
           return slider.current.scrollWidth - window.innerWidth;
       };
 
+      // Transforms the vertical scroll event into a horizontal translation (x-axis)
       const tween = gsap.to(slider.current, {
-        x: () => -getScrollAmount(),
+        x: () => -getScrollAmount(), // move left by the total hidden width
         ease: "none",
         scrollTrigger: {
           trigger: container.current,
-          start: "top top",
-          end: () => `+=${getScrollAmount()}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
+          start: "top top", // trigger when section reaches top of screen
+          end: () => `+=${getScrollAmount()}`, // pin it for exactly the distance we need to scroll horizontally
+          pin: true, // pin the container so it stops vertical scrolling
+          scrub: 1, // link animation strictly to scrollbar
+          invalidateOnRefresh: true, // recalculate if window resizes
         }
       });
 
-      // Simple zoom-in scroll effect for images on desktop (NO inner parallax)
+      // Simple zoom-in scroll effect for images on desktop
+      // Uses `containerAnimation` to trigger based on the horizontal slider tween rather than raw vertical scroll
       gsap.utils.toArray(".ministry-img").forEach((img) => {
           gsap.from(img, {
               scale: 1.2,
@@ -50,25 +55,26 @@ const Ministries = () => {
               duration: 1,
               scrollTrigger: {
                   trigger: img.closest('.ministry-card'),
-                  start: "left right-=100",
+                  start: "left right-=100", // Start when left edge of card enters 100px from right of screen
                   toggleActions: "play none none reverse",
-                  containerAnimation: tween
+                  containerAnimation: tween // Links this trigger to the horizontal movement
               }
           });
       });
     });
 
     // Mobile: Vertical Scroll Effects
+    // On phones, we don't pin. We just let them scroll down normally and fade cards in.
     mm.add("(max-width: 767px)", () => {
       gsap.utils.toArray(".ministry-card").forEach((card) => {
         gsap.from(card, {
-          y: 40,
+          y: 40, // Start slightly lower
           opacity: 0,
           duration: 0.8,
           ease: "power2.out",
           scrollTrigger: {
             trigger: card,
-            start: "top bottom-=50",
+            start: "top bottom-=50", // Trigger when top of card is 50px near bottom of screen
             toggleActions: "play none none reverse"
           }
         });

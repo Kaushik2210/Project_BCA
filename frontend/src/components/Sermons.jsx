@@ -5,12 +5,18 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const Sermons = () => {
+  // Reference to the main container for GSAP scoping
   const container = useRef();
-  const [sermons, setSermons] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
+  // State variables for managing data fetching lifecycle
+  const [sermons, setSermons] = useState([]); // Stores the fetched sermons
+  const [loading, setLoading] = useState(true); // Tracks if the fetch is still in progress
+  const [error, setError] = useState(null); // Stores any error that occurs during fetch
+  
+  // Base URL for API requests, falls back to localhost if environment variable is missing
   const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
+  // Sub-component used explicitly to display a single sermon's data cleanly
   const SermonCard = ({ sermon, className }) => {
     const date = sermon?.createdAt ? new Date(sermon.createdAt).toLocaleDateString() : '';
     return (
@@ -34,16 +40,24 @@ const Sermons = () => {
     );
   };
 
+  // React hook to run the fetch operation side-effect
   useEffect(() => {
-    let mounted = true;
+    let mounted = true; // Boolean flag to prevent state updates if the component unmounts mid-fetch
+    
+    // Async function containing the fetch logic
     const fetchSermons = async () => {
       setLoading(true);
       setError(null);
       try {
+        // Fetch up to 4 sermons using pagination parameters
         const res = await fetch(`${backendUrl}/api/v1/sermons?limit=4&page=1`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        
         const body = await res.json();
+        // Handle varying API response structures gracefully
         const data = body?.data?.sermons || body?.sermons || [];
+        
+        // Update state with up to 4 sermons, but only if the component is still visible
         if (mounted) setSermons(data.slice(0, 4));
       } catch (err) {
         if (mounted) setError(err.message || 'Failed to load sermons');
@@ -52,33 +66,32 @@ const Sermons = () => {
       }
     };
 
-    fetchSermons();
+    fetchSermons(); // Execute the fetch
+    
+    // Cleanup function runs on unmount
     return () => { mounted = false; };
-  }, []);
+  }, []); // Run effect only once on mount
 
+  // GSAP animation definitions
   useGSAP(() => {
-    if (loading) return;
+    if (loading) return; // Wait until DOM elements actually exist
 
     // Parallax Effect: Move odd and even columns at different speeds
-    // Left Column (Odd indices in 0-based grid if 2 columns) -> Index 0, 2
-    // Right Column (Even indices) -> Index 1, 3
+    // This creates an uneven scrolling effect where one side moves faster, adding depth
     
-    // Actually, simpler to just select by class or child index
-    // Let's make the second column move faster/slower than scroll
-    
-    // Column 1
+    // Column 1 (Odd items) moves upward at scrub speed 1
     gsap.to(".sermon-col-1", {
       y: -50,
       ease: "none",
       scrollTrigger: {
-        trigger: ".sermon-grid",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1
+        trigger: ".sermon-grid", // Links animation to the grid container
+        start: "top bottom",     // Starts when top of grid hits bottom of screen
+        end: "bottom top",       // Ends when bottom of grid leaves top of screen
+        scrub: 1                 // Links animation specifically to the user's scrollbar
       }
     });
 
-    // Column 2 - moves faster upwards (y: -150) creating parallax depth
+    // Column 2 (Even items) moves exactly the same but we could change the `y` here to make it move faster
     gsap.to(".sermon-col-2", {
       y: -50, 
       ease: "none",

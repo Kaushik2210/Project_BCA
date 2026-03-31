@@ -4,34 +4,39 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Safely access backend URL from environment variables, fallback for local dev
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const Schedule = () => {
+  // Reference for scoping GSAP animations
   const container = useRef();
   
+  // Local state to store the schedule data and loading status
   const [days, setDays] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch data natively from express backend upon component mount
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
         const res = await fetch(`${backendURL}/api/v1/schedule`);
         const data = await res.json();
         if (res.ok) {
-          setDays(data.data);
+          setDays(data.data); // Update state with the days array when successful
         }
       } catch (error) {
         console.error('Failed to fetch schedules:', error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Make sure we stop loading whether it succeeds or fails
       }
     };
 
     fetchSchedule();
-  }, []);
+  }, []); // Empty dependency array ensures this runs exactly once on mount
 
   useGSAP(() => {
-    // Parallax background movement
+    // Background Parallax movement
+    // Moves the background image up slightly slower than the scroll speed
     gsap.to(".schedule-bg", {
       yPercent: 30,
       ease: "none",
@@ -39,34 +44,35 @@ const Schedule = () => {
         trigger: container.current,
         start: "top top",
         end: "bottom top",
-        scrub: true
+        scrub: true // ties animation to scrollbar
       }
     });
 
+    // Only run the card reveal animation if we've finished loading and actually have days to show
     if (!loading && days.length > 0) {
-      // Refresh ScrollTrigger to ensure accurate trigger points after dynamic content is added
+      // Refresh ScrollTrigger to recalculate exact trigger start/end heights since content height changed
       ScrollTrigger.refresh();
 
+      // Card Fade-up animation
       gsap.fromTo(".schedule-card", 
         { 
           y: 80, 
-          opacity: 0 
+          opacity: 0 // Starting state: further down and invisible
         },
         {
           y: 0,
-          opacity: 1,
+          opacity: 1, // End state: normal position and fully visible
           duration: 1.2,
-          stagger: 0.15,
+          stagger: 0.15, // Delay each card by 0.15s for ripple effect
           ease: "power3.out",
           scrollTrigger: {
             trigger: container.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
+            start: "top 85%", // Starts animating when the top of the container hits 85% of view height
+            toggleActions: "play none none reverse", // Play going down, reverse going up
           }
         }
       );
-    }
-
+    } // the dependency array below ensures the useGSAP hook re-runs its effects if `days` or `loading` change
   }, { scope: container, dependencies: [days, loading] });
 
   return (
