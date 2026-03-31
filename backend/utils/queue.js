@@ -3,11 +3,21 @@ import {Queue} from "bullmq";
 const notificationQueue=new Queue("notificationQueue",{
     connection:{
         url:process.env.REDIS_URL,
-        tls:{
-            rejectUnauthorized:false
-        }
+        // tls:{
+        //     rejectUnauthorized:false
+        // }
     }
 })
 
-export {notificationQueue};
+const appointmentQueue=new Queue("appointmentQueue",{
+    connection:{
+        url:process.env.REDIS_URL,
+        // tls:{
+        //     rejectUnauthorized:false
+        // }
+    }
+})
+
+
+export {notificationQueue, appointmentQueue};
 

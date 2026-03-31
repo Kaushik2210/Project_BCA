@@ -12,7 +12,7 @@ import { scheduleRouter } from "./routes/schedule.route.js";
 import { slotRouter } from "./routes/slot.route.js";
 import { adminRouter } from "./routes/admin.route.js";
 import { Worker } from "bullmq";
-import {sendEmail} from "./utils/emailClient.js";
+import {sendEmail,sendAppointmentEmail} from "./utils/emailClient.js";
 
 import cors from 'cors';
 
@@ -44,9 +44,33 @@ if(!global.workerInitialized){
     },{
         connection:{
             url:process.env.REDIS_URL,
-            tls:{
-                rejectUnauthorized:false
-            }
+            // tls:{
+            //     rejectUnauthorized:false
+            // }
+        },
+        concurrency:2,
+        limiter:{
+            max:10,
+            duration:5000
+        }
+    })
+
+    const workerAppointment=new Worker("appointmentQueue",async(job)=>{
+        const {email,subject,meetLink,name,date,startTime}=job.data;
+        await sendAppointmentEmail({
+            to:email,
+            subject,
+            meetLink,
+            name,
+            date,
+            startTime
+        })
+    },{
+        connection:{
+            url:process.env.REDIS_URL,
+            // tls:{
+            //     rejectUnauthorized:false
+            // }
         },
         concurrency:2,
         limiter:{

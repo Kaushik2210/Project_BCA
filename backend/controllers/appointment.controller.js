@@ -4,6 +4,8 @@ import { Appointment } from "../models/appointment.model.js";
 import {asyncHandler} from "../utils/asyncHandler.js";
 import { Slot } from "../models/slot.model.js";
 import { bookAppointmentSchema } from "../schema/appointment.schema.js";
+import { appointmentQueue } from "../utils/queue.js";
+import { createMeetLink } from "../utils/googleScheduling.js";
 
 const bookAppointment = asyncHandler(async (req, res) => {
     const validation = bookAppointmentSchema.safeParse(req.body);
@@ -47,7 +49,9 @@ const getAppointments = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, appointments, "Appointments retrieved successfully"));
 
 });
+
 const updateAppointmentStatus=asyncHandler(async(req,res)=>{
+    console.log("Updating appointment status...");
     const {id}=req.params;
     const {status}=req.body;
 
@@ -71,7 +75,40 @@ const updateAppointmentStatus=asyncHandler(async(req,res)=>{
         }
     }
 
+    if(status==="confirmed"){
+        const slot=await Slot.findById(appointment.slotId);
+
+        if(slot){
+            slot.isBooked=true;
+            slot.appointmentId=appointment._id;
+            await slot.save();
+
+            if(appointment.appointmentMode==="virtual"){
+                const date=slot.date.toISOString().split("T")[0];
+                const startTime= new Date(`${date}T${slot.startTime}:00`).toISOString();
+                const endTime= new Date(`${date}T${slot.endTime}:00`).toISOString();
+                const meetLink=await createMeetLink(date,startTime,endTime,appointment.email);
+                console.log("Meet link created:", meetLink);
+                const options={month:'short',day:'numeric',year:'numeric'}
+                const dateFormatted=new Date(slot.date).toLocaleDateString("en-US",options);
+                const startTimeFormatted=new Date()
+                startTimeFormatted.setHours(slot.startTime.split(":")[0])
+                startTimeFormatted.setMinutes(slot.startTime.split(":")[1])
+                const TimeFormatted=startTimeFormatted.toLocaleTimeString("en-US",{hour:'2-digit',minute:'2-digit'});
+                appointmentQueue.add("send-email",{
+                    email:appointment.email,
+                    name:appointment.name,
+                    subject:"Appointment with the pastor confirmed",
+                    date:dateFormatted,
+                    startTime:TimeFormatted,
+                    meetLink:meetLink,
+                })
+            }
+        }
+    }
+
     appointment.status=status;
+
     await appointment.save();
 
     return res.status(200).json(new ApiResponse(200,"Appointment status updated successfully",appointment));
