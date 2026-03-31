@@ -72,6 +72,12 @@ const AppointmentPage = () => {
   const validateForm = () => {
     const errors = {};
     if (!formData.name.trim()) errors.name = 'Name is required';
+
+    const nameRegex = /^[a-zA-Z\s]+$/;
+
+    if(formData.name && !nameRegex.test(formData.name)){
+      errors.name="Name should only contain letters and spaces"
+    }
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
