@@ -1,12 +1,26 @@
+// Import Router from Express.
 import { Router } from "express";
-import { createAdmin,updateAdmin,deleteAdmin,getAdmin } from "../controllers/admin.controller.js";
-import { requireAuth,authorize } from "../middleware/authMiddleware.js";
+// Import all admin CRUD controller functions.
+import { createAdmin, updateAdmin, deleteAdmin, getAdmin } from "../controllers/admin.controller.js";
+// Import both auth middlewares: requireAuth checks JWT, authorize checks role permissions.
+import { requireAuth, authorize } from "../middleware/authMiddleware.js";
 
-const adminRouter=Router();
+// Create the admin router.
+const adminRouter = Router();
 
-adminRouter.get("/",requireAuth,authorize(["super-admin"]),getAdmin);
-adminRouter.post("/",requireAuth,authorize(["super-admin"]),createAdmin);
-adminRouter.put("/",requireAuth,authorize(["super-admin"]),updateAdmin);
-adminRouter.delete("/",requireAuth,authorize(["super-admin"]),deleteAdmin);
+// ALL routes below are DOUBLE PROTECTED:
+// 1. `requireAuth` — verifies the JWT token is valid.
+// 2. `authorize(["super-admin"])` — checks the token's role is "super-admin".
+// This means ONLY the super-admin can manage other admin accounts.
 
-export {adminRouter};
+// GET all admins.
+adminRouter.get("/", requireAuth, authorize(["super-admin"]), getAdmin);
+// CREATE a new admin.
+adminRouter.post("/", requireAuth, authorize(["super-admin"]), createAdmin);
+// UPDATE an admin's password.
+adminRouter.put("/", requireAuth, authorize(["super-admin"]), updateAdmin);
+// DELETE an admin.
+adminRouter.delete("/", requireAuth, authorize(["super-admin"]), deleteAdmin);
+
+// Export the router.
+export { adminRouter };

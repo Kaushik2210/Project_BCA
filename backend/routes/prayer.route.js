@@ -1,12 +1,20 @@
-import { createPrayer,getPrayers,markAsPrayed,deletePrayer } from "../controllers/prayer.controller.js";
+// Import prayer controller functions.
+import { createPrayer, getPrayers, markAsPrayed, deletePrayer } from "../controllers/prayer.controller.js";
 import express from "express";
-import {requireAuth} from "../middleware/authMiddleware.js";
+// Import auth middleware.
+import { requireAuth } from "../middleware/authMiddleware.js";
 
-const prayerRouter=express.Router();
+// Create the prayer router.
+const prayerRouter = express.Router();
 
-prayerRouter.get("/",requireAuth,getPrayers);
-prayerRouter.post("/",createPrayer);
-prayerRouter.delete("/",requireAuth,deletePrayer);
-prayerRouter.put("/:id/pray",requireAuth,markAsPrayed);
+// PROTECTED: GET all prayer requests (admin only).
+prayerRouter.get("/", requireAuth, getPrayers);
+// PUBLIC: POST a new prayer request (anyone on the website can submit).
+prayerRouter.post("/", createPrayer);
+// PROTECTED: DELETE prayer requests in bulk (admin only).
+prayerRouter.delete("/", requireAuth, deletePrayer);
+// PROTECTED: PUT to mark a prayer as "prayed for" by its ID.
+prayerRouter.put("/:id/pray", requireAuth, markAsPrayed);
 
-export {prayerRouter};
+// Export the router.
+export { prayerRouter };

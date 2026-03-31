@@ -1,7 +1,20 @@
+// Import React hooks for state management, lifecycle, and memoized callbacks.
 import React, { useState, useEffect, useCallback } from 'react';
+// Import auth utility for JWT token retrieval.
 import { getToken } from "../utils/auth.js";
 
+// Backend URL from Vite environment variables.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// =========================================================================
+// ManagePrayers — Admin module for managing prayer requests submitted by
+// church members. Features:
+//   - View prayer requests in a table with expandable messages
+//   - Filter by status (pending/prayed) and search by name/message
+//   - Bulk actions: mark as prayed, delete multiple selected items
+//   - Individual status toggle and deletion
+//   - Optimistic UI updates for smooth user experience
+// =========================================================================
 
 /* ─── HELPERS ─────────────────────────────────────────────────────────────── */
 const fmtDate = (iso) => {

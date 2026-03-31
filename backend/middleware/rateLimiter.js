@@ -1,14 +1,18 @@
+// Import express-rate-limit — a middleware that limits the number of requests from a single IP address.
+// This prevents abuse like spam form submissions or brute-force attacks.
 import rateLimit from "express-rate-limit";
 
-const RateLimiter=rateLimit({
-    windowMs:15*60*1000, //15 minutes
-    max:60, //limit each IP to 60 requests per windowMs
+// Configure the rate limiter with specific rules.
+const RateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,  // Time window: 15 minutes (in milliseconds)
+    max: 60,                     // Maximum 60 requests per IP within the 15-minute window
     message: {
-        status: 429,
+        status: 429,             // HTTP 429 = "Too Many Requests"
         message: "Too many contact form submissions from this IP, please try again later.",
     },
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    standardHeaders: true,       // Include rate limit info in standard `RateLimit-*` response headers
+    legacyHeaders: false,        // Disable deprecated `X-RateLimit-*` headers
 })
 
-export {RateLimiter};
+// Export the configured rate limiter middleware.
+export { RateLimiter };

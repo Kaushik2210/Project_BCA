@@ -1,7 +1,20 @@
+// Import React hooks for state management, lifecycle, and memoized callbacks.
 import React, { useState, useEffect, useCallback } from 'react';
+// Import auth utility for JWT token retrieval.
 import { getToken } from "../utils/auth.js";
 
+// Backend URL from Vite environment variables.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// =========================================================================
+// ManageContacts — Admin module for viewing and replying to contact form
+// submissions from website visitors. Features:
+//   - Table view of all contact messages with search
+//   - Detail drawer showing full message, contact info, and timestamps
+//   - Reply functionality (sends email response via backend)
+//   - Mark as read/unread status tracking
+//   - Delete with confirmation dialog
+// =========================================================================
 
 /* ─── HELPERS ─────────────────────────────────────────────────────────────── */
 const fmtDate = (iso) => {

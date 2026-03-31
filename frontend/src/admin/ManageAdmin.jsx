@@ -1,10 +1,25 @@
+// Import React hooks for state management, lifecycle effects, and memoized callbacks.
 import React, { useState, useEffect, useCallback } from 'react';
 
+// Backend URL from Vite environment variables.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
+// =========================================================================
+// ManageAdmin.jsx — Super-admin-only module for managing admin accounts.
+// Features:
+//   - View all admin accounts in a table with avatar initials
+//   - Create new admin accounts (username + password)
+//   - Edit existing admin usernames
+//   - Change admin passwords (separate modal mode)
+//   - Delete admin accounts with confirmation dialog
+//   - Search/filter by username
+//   - 403 Access Denied handling (only super-admins can access this)
+// =========================================================================
+
 /* ═══════════════════════════════════════════════════════════════════════════
-   HELPERS
+   HELPERS — Utility functions for date formatting and avatar initials
 ═══════════════════════════════════════════════════════════════════════════ */
+// fmtDate: Converts an ISO date string to a human-readable format (e.g., "15 Mar, 2026").
 const fmtDate = (iso) => {
   if (!iso) return '—';
   return new Date(iso).toLocaleDateString('en-US', {
@@ -12,6 +27,7 @@ const fmtDate = (iso) => {
   });
 };
 
+// getInitial: Extracts the first character of a username for avatar display.
 const getInitial = (u = '') => u.charAt(0).toUpperCase();
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -31,7 +47,11 @@ const SkeletonRow = () => (
 );
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MODAL — shared for Create + Edit + Change Password
+   MODAL — Shared for Create + Edit + Change Password.
+   The `mode` prop determines which fields are shown:
+   - 'create': username + password + confirm
+   - 'edit': username only (password changed via separate action)
+   - 'password': new password + confirm only
 ═══════════════════════════════════════════════════════════════════════════ */
 const Modal = ({ mode, target, onClose, onSave, saving }) => {
   /* mode: 'create' | 'edit' | 'password' */
@@ -197,7 +217,8 @@ const Modal = ({ mode, target, onClose, onSave, saving }) => {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DELETE CONFIRM
+   DELETE CONFIRM — Modal dialog that requires explicit user confirmation
+   before permanently deleting an admin account.
 ═══════════════════════════════════════════════════════════════════════════ */
 const DeleteConfirm = ({ username, onCancel, onConfirm, deleting }) => (
   <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
@@ -229,18 +250,23 @@ const DeleteConfirm = ({ username, onCancel, onConfirm, deleting }) => (
 );
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MAIN COMPONENT
+   MAIN COMPONENT — ManageAdmins
+   The root component that renders the admin list table, search, stats,
+   and conditionally mounts the create/edit/password modal and delete dialog.
 ═══════════════════════════════════════════════════════════════════════════ */
 const ManageAdmins = () => {
+  // State for the list of admin accounts.
   const [admins, setAdmins]             = useState([]);
   const [loading, setLoading]           = useState(true);
   const [error, setError]               = useState(null);
-  const [saving, setSaving]             = useState(false);
-  const [deleting, setDeleting]         = useState(false);
-  const [search, setSearch]             = useState('');
+  const [saving, setSaving]             = useState(false);    // Disables modal buttons during save.
+  const [deleting, setDeleting]         = useState(false);    // Disables delete dialog during deletion.
+  const [search, setSearch]             = useState('');       // Search filter by username.
 
-  // modal state: null | { mode: 'create'|'edit'|'password', target?: admin }
+  // modal state: null when closed, or an object { mode, target } that controls which modal to show.
+  // mode: 'create' | 'edit' | 'password'. target: the admin object being edited.
   const [modal, setModal]               = useState(null);
+  // The admin account pending deletion (triggers the delete confirmation dialog).
   const [deleteTarget, setDeleteTarget] = useState(null);
 
   const token = localStorage.getItem('admin_token');

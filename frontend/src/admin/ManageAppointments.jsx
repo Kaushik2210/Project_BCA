@@ -1,11 +1,23 @@
+// Import React hooks: useState (state), useEffect (side effects), useCallback (memoized functions).
 import React, { useState, useEffect, useCallback } from 'react';
+// Import authentication helper to get the JWT token from localStorage.
 import { getToken } from "../utils/auth.js";
 
+// Backend API URL — reads from Vite environment variables with a fallback for local development.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
+// =========================================================================
+// ManageAppointments.jsx — Admin module for the Pastoral Appointment system.
+// Architecture: Three tabbed sub-components:
+//   1. AppointmentManager — View/filter/update appointment statuses
+//   2. SlotGenerator — Create available time slots for a specific date
+//   3. SlotViewer — Browse existing slots by date
+// =========================================================================
+
 /* ═══════════════════════════════════════════════════════════════════════════
-   HELPERS
+   HELPERS — Utility functions for date/time formatting
 ═══════════════════════════════════════════════════════════════════════════ */
+// fmtDate: Converts an ISO date string (e.g., "2026-03-15T00:00:00Z") to "15 Mar, 2026" format.
 const fmtDate = (iso) => {
   if (!iso) return '—';
   return new Date(iso).toLocaleDateString('en-US', {
@@ -13,18 +25,20 @@ const fmtDate = (iso) => {
   });
 };
 
+// fmt12: Converts 24-hour time string "14:30" to 12-hour format "2:30 PM".
 const fmt12 = (t) => {
   if (!t) return '';
-  const [h, m] = t.split(':').map(Number);
+  const [h, m] = t.split(':').map(Number);  // Split "14:30" → [14, 30]
   const ampm = h >= 12 ? 'PM' : 'AM';
-  const hh   = h > 12 ? h - 12 : h === 0 ? 12 : h;
+  const hh   = h > 12 ? h - 12 : h === 0 ? 12 : h;  // Convert 0→12, 13→1, etc.
   return `${hh}:${String(m).padStart(2, '0')} ${ampm}`;
 };
 
+// todayISO: Returns today's date as "YYYY-MM-DD" string for date input defaults.
 const todayISO = () => new Date().toISOString().split('T')[0];
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CONSTANTS
+   CONSTANTS — Status/mode configuration objects with Tailwind CSS classes
 ═══════════════════════════════════════════════════════════════════════════ */
 const APT_STATUS = {
   pending: {
@@ -53,8 +67,11 @@ const APT_MODE = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SHARED MICRO-COMPONENTS
+   SHARED MICRO-COMPONENTS — Small reusable UI elements used across all tabs.
+   These follow the "Presentational Component" pattern: they only receive
+   props and render UI. No state, no API calls.
 ═══════════════════════════════════════════════════════════════════════════ */
+// StatusBadge: Displays a colored pill (pending=amber, confirmed=green, cancelled=red).
 const StatusBadge = ({ status }) => {
   const s = APT_STATUS[status] ?? APT_STATUS.pending;
   return (
@@ -97,7 +114,11 @@ const SkeletonRow = () => (
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TAB 1 — SLOT GENERATOR
+   Allows admins to create available appointment time slots for a specific date.
+   Features: Quick presets (morning/afternoon/full day), dynamic row add/remove,
+   validation (start < end time), and POST to /api/v1/slots.
 ═══════════════════════════════════════════════════════════════════════════ */
+// Factory function that creates a blank slot row object.
 const emptySlotRow = () => ({ startTime: '', endTime: '' });
 
 const SlotGenerator = () => {
@@ -316,9 +337,12 @@ const SlotGenerator = () => {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DETAIL DRAWER
+   DETAIL DRAWER — Sidebar panel that shows full appointment details.
+   Appears when a table row is clicked. Shows name, email, phone, slot time,
+   message, and provides buttons to change the appointment status.
 ═══════════════════════════════════════════════════════════════════════════ */
 const DetailDrawer = ({ apt, onClose, onStatusChange, updating }) => {
+  // apt.slotId is populated by MongoDB's .populate() — contains the full slot object.
   const slot = apt.slotId;
 
   return (
@@ -395,15 +419,20 @@ const DetailDrawer = ({ apt, onClose, onStatusChange, updating }) => {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TAB 2 — APPOINTMENTS
+   The main appointments list with filtering by status/mode, search,
+   status updates (confirm/cancel/reset), and a detail drawer sidebar.
+   Uses optimistic UI updates — the local state is updated immediately
+   after a successful API call without re-fetching the entire list.
 ═══════════════════════════════════════════════════════════════════════════ */
 const AppointmentManager = () => {
+  // State: appointments list, loading/error indicators, and selected item.
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading]           = useState(true);
   const [error, setError]               = useState(null);
-  const [updating, setUpdating]         = useState(false);
-  const [selected, setSelected]         = useState(null);
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [filterMode, setFilterMode]     = useState('all');
+  const [updating, setUpdating]         = useState(false);    // Disables buttons during status update.
+  const [selected, setSelected]         = useState(null);     // Currently selected appointment for drawer.
+  const [filterStatus, setFilterStatus] = useState('all');    // Filter by: all/pending/confirmed/cancelled.
+  const [filterMode, setFilterMode]     = useState('all');    // Filter by: all/in-person/virtual.
   const [search, setSearch]             = useState('');
 
   const token = localStorage.getItem('admin_token');
@@ -683,8 +712,11 @@ const AppointmentManager = () => {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    TAB 3 — SLOT VIEWER
+   Displays all generated slots for a selected date. Auto-fetches when
+   the date picker changes. Shows total/available/booked slot counts.
 ═══════════════════════════════════════════════════════════════════════════ */
 const SlotViewer = () => {
+  // Default the date picker to today.
   const [date, setDate]     = useState(todayISO());
   const [slots, setSlots]   = useState(null);   // null = not fetched yet
   const [loading, setLoading] = useState(false);
@@ -858,7 +890,11 @@ const SlotViewer = () => {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ROOT — TABBED SHELL
+   The top-level exported component. Renders a tab bar and conditionally
+   mounts one of the three sub-components: AppointmentManager, SlotGenerator,
+   or SlotViewer based on the active tab state.
 ═══════════════════════════════════════════════════════════════════════════ */
+// Tab configuration array — each tab has a key (for state matching) and a display label.
 const TABS = [
   { key: 'appointments', label: '📅 Appointments'  },
   { key: 'slots',        label: '🕐 Slot Generator' },
@@ -866,6 +902,7 @@ const TABS = [
 ];
 
 const ManageAppointments = () => {
+  // Active tab state — controls which sub-component is rendered.
   const [tab, setTab] = useState('appointments');
 
   return (

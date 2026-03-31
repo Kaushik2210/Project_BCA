@@ -1,7 +1,17 @@
+// Import React hooks for state management, lifecycle, and memoized callbacks.
 import React, { useState, useEffect, useCallback } from 'react';
+// Import auth utility for JWT token retrieval.
 import { getToken } from "../utils/auth.js";
 
+// Backend URL from Vite environment variables.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// =========================================================================
+// ManageSchedule — Admin module for managing weekly church schedule blocks.
+// Each schedule block has a date/day label and an array of events.
+// Features: CRUD operations via REST API, modal-based form editing
+// (via ScheduleModal component), skeleton loading, and delete confirmation.
+// =========================================================================
 
 /* ─── SKELETON ────────────────────────────────────────────────────────────── */
 const SkeletonCard = () => (

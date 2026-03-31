@@ -1,11 +1,29 @@
+// Import React hooks for state management, lifecycle, and memoization.
 import React, { useState, useEffect, useCallback } from 'react';
+// Import ReactQuill — a React wrapper around the Quill.js rich text editor.
+// Quill provides a WYSIWYG (What You See Is What You Get) editing experience.
 import ReactQuill from 'react-quill-new';
+// Import Quill's default "snow" theme CSS for the editor toolbar and formatting.
 import 'react-quill-new/dist/quill.snow.css';
+// Import auth utility to get the JWT token for authenticated API requests.
 import { getToken } from "../utils/auth.js";
 
+// Backend URL from Vite environment variables.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
+// =========================================================================
+// ManageBlogPosts — Admin module for creating, editing, and publishing
+// blog/announcement posts. Features:
+//   - Rich text editor (Quill) with full formatting toolbar
+//   - Draft/Published status management
+//   - Cover image URL preview with error handling
+//   - Category + tag management
+//   - List/Create/Edit view toggles (single-page app pattern)
+// =========================================================================
+
 /* ─── QUILL CONFIG ────────────────────────────────────────────────────────── */
+// QUILL_MODULES: Controls which toolbar buttons are available in the editor.
+// Organized as arrays of arrays — each inner array creates a toolbar group.
 const QUILL_MODULES = {
   toolbar: [
     [{ header: [1, 2, 3, false] }],
@@ -20,6 +38,8 @@ const QUILL_MODULES = {
   ],
 };
 
+// QUILL_FORMATS: Whitelist of formatting types the editor will accept.
+// If a format isn't listed here, Quill will strip it out when pasting content.
 const QUILL_FORMATS = [
   'header', 'bold', 'italic', 'underline', 'strike',
   'color', 'background',
@@ -29,6 +49,7 @@ const QUILL_FORMATS = [
 ];
 
 /* ─── CONSTANTS ───────────────────────────────────────────────────────────── */
+// Predefined blog post categories — used in the category dropdown select.
 const CATEGORIES = [
   'Sermon Notes',
   'Devotional',
@@ -40,6 +61,7 @@ const CATEGORIES = [
   'Other',
 ];
 
+// EMPTY_FORM: Default form state used when creating a new post or resetting.
 const EMPTY_FORM = {
   title: '',
   category: CATEGORIES[0],
@@ -94,17 +116,27 @@ const selectCls = `${inputCls} cursor-pointer`;
 
 /* ─── MAIN COMPONENT ──────────────────────────────────────────────────────── */
 const ManageBlogPosts = () => {
-  const [view, setView]           = useState('list');   // 'list' | 'create' | 'edit'
+  // View state: toggles between 'list' (default), 'create', and 'edit'.
+  // This is the "single-page app" pattern — no routing needed.
+  const [view, setView]           = useState('list');
+  // Array of blog post objects fetched from the backend.
   const [posts, setPosts]         = useState([]);
+  // Loading and error states for the initial fetch.
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState(null);
+  // Saving state — disables buttons during create/update API calls.
   const [saving, setSaving]       = useState(false);
+  // The post currently being edited (null when creating a new post).
   const [editingPost, setEditingPost] = useState(null);
+  // The form data object — tracks all input field values.
   const [form, setForm]           = useState(EMPTY_FORM);
+  // ID of the post pending deletion (used for the confirm modal).
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  // Filter/search state for the list view.
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterCategory, setFilterCategory] = useState('all');
+  // Tracks if the cover image URL failed to load a preview.
   const [coverPreviewError, setCoverPreviewError] = useState(false);
 
   const token = getToken();
@@ -114,6 +146,8 @@ const ManageBlogPosts = () => {
   };
 
   /* ── fetch posts ── */
+  // Fetches all blog posts (including drafts) from the admin-only endpoint.
+  // useCallback ensures the function reference is stable (prevents unnecessary re-renders).
   const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
@@ -164,6 +198,8 @@ const ManageBlogPosts = () => {
   };
 
   /* ── save (create or update) ── */
+  // handleSave: Validates form data and sends a POST (create) or PUT (update) request.
+  // `publishNow` param overrides the status to 'published' when the "Publish Now" button is clicked.
   const handleSave = async (publishNow = false) => {
     const tTitle = form.title.trim();
     const tContent = form.content.trim();
@@ -220,6 +256,7 @@ const ManageBlogPosts = () => {
   };
 
   /* ── delete ── */
+  // Sends a DELETE request and removes the post from local state (optimistic UI update).
   const handleDelete = async (id) => {
     try {
       const res = await fetch(`${backendURL}/api/v1/blogs/${id}`, {
@@ -235,6 +272,8 @@ const ManageBlogPosts = () => {
   };
 
   /* ── filtered list ── */
+  // Client-side filtering: applies status, category, and search filters to the posts array.
+  // This runs on every render, filtering the full list without additional API calls.
   const visiblePosts = posts.filter((p) => {
     const matchStatus   = filterStatus   === 'all' || p.status   === filterStatus;
     const matchCategory = filterCategory === 'all' || p.category === filterCategory;

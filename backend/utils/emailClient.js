@@ -1,18 +1,26 @@
+// Import the Mailgun.js SDK — a library for sending emails via the Mailgun API service.
 import Mailgun from "mailgun.js";
+// Import FormData — required by Mailgun.js for constructing multipart email payloads.
 import FormData from "form-data";
+// Import dotenv to load environment variables.
 import dotenv from "dotenv";
 dotenv.config();
 
+// Create a new Mailgun instance, passing the FormData constructor.
 const mailgun = new Mailgun(FormData);
 
+// Initialize the Mailgun client with API credentials from environment variables.
 const mg = mailgun.client({
-  username: "api",
-  key: process.env.MAILGUN_API_KEY,
+  username: "api",                        // Mailgun requires "api" as the username
+  key: process.env.MAILGUN_API_KEY,       // Your Mailgun API key from .env
 });
 
+// The verified Mailgun domain for sending emails.
 const DOMAIN = process.env.MAILGUN_DOMAIN;
 
-// Clean HTML Template
+// ---- HTML EMAIL TEMPLATE ----
+// This is the email template sent to newsletter subscribers when a new blog post is published.
+// It uses placeholder tokens ({{title}}, {{excerpt}}, {{blog_url}}) that are replaced with actual data.
 const htmlTemplate = `<!DOCTYPE html>
 <html>
 <head>
@@ -102,40 +110,49 @@ const htmlTemplate = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// Utility to clean text (prevents encoding issues)
+// Utility function to clean text strings by replacing special/smart characters with standard ASCII equivalents.
+// This prevents encoding issues in email clients that don't support Unicode properly.
 const clean = (str = "") =>
   str
-    .replace(/[’]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/…/g, "...")
-    .replace(/–/g, "-");
+    .replace(/['\u2019]/g, "'")      // Replace smart single quotes with regular apostrophe
+    .replace(/["\u201C\u201D]/g, '"') // Replace smart double quotes with regular double quotes
+    .replace(/\u2026/g, "...")        // Replace ellipsis character with three dots
+    .replace(/\u2013/g, "-");         // Replace en-dash with regular hyphen
 
-// Replace placeholders safely
+// Function that takes blog data and injects it into the HTML template, replacing all placeholders.
 const buildHtml = ({ title, excerpt, blogUrl }) => {
   return htmlTemplate
-    .replaceAll("{{title}}", clean(title))
-    .replaceAll("{{excerpt}}", clean(excerpt))
-    .replaceAll("{{blog_url}}", blogUrl);
+    .replaceAll("{{title}}", clean(title))      // Replace all {{title}} placeholders
+    .replaceAll("{{excerpt}}", clean(excerpt))  // Replace all {{excerpt}} placeholders
+    .replaceAll("{{blog_url}}", blogUrl);        // Replace all {{blog_url}} placeholders
 };
 
+// ---- MAIN EMAIL SENDING FUNCTION ----
+// This function is called by the BullMQ Worker (in app.js) for each email job in the queue.
 const sendEmail = async ({ to, subject, excerpt, title }) => {
   try {
-    const blogUrl ="https://resurrectionbaptistchurch.vercel.app";
+    // The URL of the deployed frontend website.
+    const blogUrl = "https://resurrectionbaptistchurch.vercel.app";
+    // Build the final HTML email by injecting the blog data into the template.
     const html = buildHtml({ title, excerpt, blogUrl });
 
+    // Use the Mailgun client to create and send the email message.
     const response = await mg.messages.create(DOMAIN, {
-      from: `Church Blog <no-reply@${DOMAIN}>`,
-      to,
-      subject,
-      html,
-      text: `New blog published: ${title}\nRead here: ${blogUrl}`, // fallback
+      from: `Church Blog <no-reply@${DOMAIN}>`,  // Sender address (no-reply)
+      to,                                          // Recipient email address
+      subject,                                     // Email subject line
+      html,                                        // The rendered HTML email body
+      text: `New blog published: ${title}\nRead here: ${blogUrl}`, // Plain-text fallback for email clients that don't support HTML
     });
 
+    // Log the Mailgun message ID on success.
     console.log("Email sent:", response.id);
   } catch (error) {
+    // Log the error and re-throw so BullMQ can retry the job.
     console.error("Error sending email:", error);
     throw error;
   }
 };
 
+// Export the sendEmail function.
 export { sendEmail };

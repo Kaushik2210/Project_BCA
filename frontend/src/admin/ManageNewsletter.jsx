@@ -1,7 +1,19 @@
+// Import React hooks for state management, lifecycle, and memoized callbacks.
 import React, { useState, useEffect, useCallback } from 'react';
+// Import auth utility for JWT token retrieval.
 import { getToken } from "../utils/auth.js";
 
+// Backend URL from Vite environment variables.
 const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// =========================================================================
+// ManageNewsletter — Admin module for managing newsletter email subscribers.
+// Features:
+//   - View all subscribers in a table with search/filter
+//   - Copy all email addresses to clipboard (CSV-style, for email clients)
+//   - Delete subscribers with confirmation
+//   - Subscriber count stats
+// =========================================================================
 
 /* ─── HELPERS ─────────────────────────────────────────────────────────────── */
 const fmtDate = (iso) => {
