@@ -13,6 +13,8 @@ import { Slot } from "../models/slot.model.js";
 
 // Import the Zod validation schema that enforces rules on appointment booking data.
 import { bookAppointmentSchema } from "../schema/appointment.schema.js";
+import { appointmentQueue } from "../utils/queue.js";
+import { createMeetLink } from "../utils/googleScheduling.js";
 
 // =========================================================================
 // @desc    Book a new appointment
@@ -80,6 +82,14 @@ const getAppointments = asyncHandler(async (req, res) => {
   // Return the fully populated appointment list.
   return res.status(200).json(new ApiResponse(200, appointments, "Appointments retrieved successfully"));
 });
+<<<<<<< HEAD
+=======
+
+const updateAppointmentStatus=asyncHandler(async(req,res)=>{
+    console.log("Updating appointment status...");
+    const {id}=req.params;
+    const {status}=req.body;
+>>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
 
 // =========================================================================
 // @desc    Update an appointment's status (pending → confirmed or cancelled)
@@ -118,9 +128,46 @@ const updateAppointmentStatus = asyncHandler(async (req, res) => {
         }
     }
 
+<<<<<<< HEAD
     // Update the appointment's status field.
     appointment.status = status;
     // Save the updated appointment to the database.
+=======
+    if(status==="confirmed"){
+        const slot=await Slot.findById(appointment.slotId);
+
+        if(slot){
+            slot.isBooked=true;
+            slot.appointmentId=appointment._id;
+            await slot.save();
+
+            if(appointment.appointmentMode==="virtual"){
+                const date=slot.date.toISOString().split("T")[0];
+                const startTime= new Date(`${date}T${slot.startTime}:00`).toISOString();
+                const endTime= new Date(`${date}T${slot.endTime}:00`).toISOString();
+                const meetLink=await createMeetLink(date,startTime,endTime,appointment.email);
+                console.log("Meet link created:", meetLink);
+                const options={month:'short',day:'numeric',year:'numeric'}
+                const dateFormatted=new Date(slot.date).toLocaleDateString("en-US",options);
+                const startTimeFormatted=new Date()
+                startTimeFormatted.setHours(slot.startTime.split(":")[0])
+                startTimeFormatted.setMinutes(slot.startTime.split(":")[1])
+                const TimeFormatted=startTimeFormatted.toLocaleTimeString("en-US",{hour:'2-digit',minute:'2-digit'});
+                appointmentQueue.add("send-email",{
+                    email:appointment.email,
+                    name:appointment.name,
+                    subject:"Appointment with the pastor confirmed",
+                    date:dateFormatted,
+                    startTime:TimeFormatted,
+                    meetLink:meetLink,
+                })
+            }
+        }
+    }
+
+    appointment.status=status;
+
+>>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
     await appointment.save();
 
     // Return the updated appointment.

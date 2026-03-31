@@ -153,6 +153,127 @@ const sendEmail = async ({ to, subject, excerpt, title }) => {
     throw error;
   }
 };
+const appointmentHtmlTemplate=(name,date,time,meetingLink)=>{
+  return `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Confirmation</title>
+  </head>
 
+<<<<<<< HEAD
 // Export the sendEmail function.
 export { sendEmail };
+=======
+  <body style="margin:0; padding:0; background-color:#f4f4f4; font-family: Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4">
+    <tr>
+      <td align="center">
+
+        <!-- Container -->
+        <table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:20px 0; border-radius:8px; overflow:hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td align="center" style="padding:20px;">
+              <h1 style="margin:0; color:#333;">Resurrection Baptist Church</h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding:20px; color:#555; font-size:15px; line-height:1.6;">
+
+              <p>Dear <strong>${name || "Beloved"}</strong>,</p>
+
+              <p>Greetings in Christ!</p>
+
+              <p>
+                Your appointment with the pastor has been successfully scheduled.
+                Please find the details below:
+              </p>
+
+              <!-- Appointment Details -->
+              <table width="100%" cellpadding="10" cellspacing="0" style="background:#f9f9f9; border-left:4px solid #4CAF50; margin:15px 0;">
+                <tr>
+                  <td>
+                    <strong>Date:</strong> ${date}<br>
+                    <strong>Time:</strong> ${time}<br>
+                  </td>
+                </tr>
+              </table>
+
+              <p>
+                You can join the meeting using the link below at the scheduled time:
+              </p>
+
+              <!-- Button -->
+              <table align="center" cellpadding="0" cellspacing="0" style="margin:20px auto;">
+                <tr>
+                  <td align="center" bgcolor="#4CAF50" style="padding:12px 20px; border-radius:5px;">
+                    <a href="${meetingLink}" style="color:#ffffff; text-decoration:none; font-weight:bold;">
+                      Join Google Meet
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p>
+                If you are unable to attend, kindly inform us in advance.
+              </p>
+
+              <p>
+                We look forward to connecting with you. May this meeting be a blessing to you.
+              </p>
+
+              <p>
+                Blessings,<br>
+                <strong>Resurrection Baptist Church</strong><br>
+                +91 9008469800<br>
+                <a href="https://resurrectionbaptistchurch.vercel.app">Visit Website</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:15px; font-size:13px; color:#999;">
+              <p style="margin:5px 0;">You are receiving this email because you booked an appointment with us.</p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+`
+}
+
+const sendAppointmentEmail = async ({ to, subject, meetLink,date,startTime,name }) =>{
+  const emailContent=appointmentHtmlTemplate(name,date,startTime,meetLink);
+  try {
+
+    const response = await mg.messages.create(DOMAIN, {
+      from: `Church Appointment <no-reply@${DOMAIN}>`,
+      to,
+      subject,
+      html:emailContent,
+    });
+
+    console.log("Email sent:", response.id);
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error;
+  }
+}
+
+export { sendEmail,sendAppointmentEmail };
+>>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82

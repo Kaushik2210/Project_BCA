@@ -15,6 +15,11 @@ import { appointmentRouter } from "./routes/appointment.route.js";
 import { scheduleRouter } from "./routes/schedule.route.js";
 import { slotRouter } from "./routes/slot.route.js";
 import { adminRouter } from "./routes/admin.route.js";
+<<<<<<< HEAD
+=======
+import { Worker } from "bullmq";
+import {sendEmail,sendAppointmentEmail} from "./utils/emailClient.js";
+>>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
 
 // Import BullMQ Worker class to process background email jobs from the Redis queue.
 import { Worker } from "bullmq";
@@ -65,6 +70,7 @@ if(!global.workerInitialized){
             excerpt,
             title
         })
+<<<<<<< HEAD
     }, {
         // Redis connection configuration (same URL as the Queue).
         connection: {
@@ -72,6 +78,38 @@ if(!global.workerInitialized){
             tls: {
                 rejectUnauthorized: false   // Accept self-signed SSL certificates
             }
+=======
+    },{
+        connection:{
+            url:process.env.REDIS_URL,
+            // tls:{
+            //     rejectUnauthorized:false
+            // }
+        },
+        concurrency:2,
+        limiter:{
+            max:10,
+            duration:5000
+        }
+    })
+
+    const workerAppointment=new Worker("appointmentQueue",async(job)=>{
+        const {email,subject,meetLink,name,date,startTime}=job.data;
+        await sendAppointmentEmail({
+            to:email,
+            subject,
+            meetLink,
+            name,
+            date,
+            startTime
+        })
+    },{
+        connection:{
+            url:process.env.REDIS_URL,
+            // tls:{
+            //     rejectUnauthorized:false
+            // }
+>>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
         },
         concurrency: 2,   // Process up to 2 emails simultaneously
         limiter: {

@@ -2,6 +2,7 @@
 // BullMQ allows us to process tasks asynchronously in the background (e.g., sending emails).
 import { Queue } from "bullmq";
 
+<<<<<<< HEAD
 // Create a new queue named "notificationQueue".
 // This queue will hold email notification jobs that get processed by a Worker (defined in app.js).
 const notificationQueue = new Queue("notificationQueue", {
@@ -19,3 +20,26 @@ const notificationQueue = new Queue("notificationQueue", {
 
 // Export the queue so controllers can add jobs to it (e.g., when a blog is published).
 export { notificationQueue };
+=======
+const notificationQueue=new Queue("notificationQueue",{
+    connection:{
+        url:process.env.REDIS_URL,
+        // tls:{
+        //     rejectUnauthorized:false
+        // }
+    }
+})
+
+const appointmentQueue=new Queue("appointmentQueue",{
+    connection:{
+        url:process.env.REDIS_URL,
+        // tls:{
+        //     rejectUnauthorized:false
+        // }
+    }
+})
+
+
+export {notificationQueue, appointmentQueue};
+
+>>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
