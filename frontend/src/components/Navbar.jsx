@@ -1,18 +1,26 @@
 import React, { useRef, useState, useEffect } from 'react';
+// Importing GSAP animation libraries
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { FiMenu, FiX } from 'react-icons/fi';
 
+// Registering ScrollTrigger so GSAP knows how to link animations to window scroll
 gsap.registerPlugin(ScrollTrigger);
 
+// Importing routing hooks from React Router
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  // References the <nav> element for GSAP targeting
   const navRef = useRef();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+
+  // state variables for UI interactivity
+  const [isScrolled, setIsScrolled] = useState(false); // Changes navbar background
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Toggles mobile menu overlay
+  const [isServicesOpen, setIsServicesOpen] = useState(false); // Toggles dropdown
+
+  // Hooks to get current path and programmatically redirect to other pages
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,7 +30,7 @@ const Navbar = () => {
     { name: 'Appointment', path: '/appointment' }
   ];
 
-  // Prevent scrolling when mobile menu is open
+  // This effect ensures the background doesn't scroll when the mobile menu is active
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -31,7 +39,9 @@ const Navbar = () => {
     }
   }, [isMobileMenuOpen]);
 
+  // GSAP Animation Logic
   useGSAP(() => {
+    // Defines an animation timeline for hiding the navbar (-100% Y translation)
     const showNav = gsap.fromTo(navRef.current, {
       yPercent: -100,
       paused: true,
@@ -43,17 +53,22 @@ const Navbar = () => {
       paused: true
     }).progress(1);
 
+    // Creates a scroll listener that triggers the hide/show animation
     ScrollTrigger.create({
-      start: "top top",
+      start: "top top", // Starts triggering as soon as you scroll
       end: 99999,
       onUpdate: (self) => {
+          // If scrolling UP (-1), show navbar. If scrolling DOWN, hide navbar.
           self.direction === -1 ? showNav.play() : showNav.reverse();
+          
+          // Checks if passed 50 pixels scrolled, which changes the translucent background state
           setIsScrolled(self.scroll() > 50);
       }
     });
     
   }, { scope: navRef });
 
+  // Centralized navigation handler to manage route changes and smooth scrolling on page anchors
   const handleNavClick = (e, item) => {
     e.preventDefault();
     setIsMobileMenuOpen(false); // Close mobile menu when an item is clicked
