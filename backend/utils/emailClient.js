@@ -163,10 +163,6 @@ const appointmentHtmlTemplate=(name,date,time,meetingLink)=>{
     <title>Appointment Confirmation</title>
   </head>
 
-<<<<<<< HEAD
-// Export the sendEmail function.
-export { sendEmail };
-=======
   <body style="margin:0; padding:0; background-color:#f4f4f4; font-family: Arial, sans-serif;">
 
   <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4">
@@ -276,4 +272,3 @@ const sendAppointmentEmail = async ({ to, subject, meetLink,date,startTime,name 
 }
 
 export { sendEmail,sendAppointmentEmail };
->>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82

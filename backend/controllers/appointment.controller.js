@@ -1,17 +1,8 @@
-// Import custom error and response formatting classes.
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
-
-// Import the Appointment Mongoose model for the 'appointments' collection.
 import { Appointment } from "../models/appointment.model.js";
-
-// Import the async handler wrapper.
 import { asyncHandler } from "../utils/asyncHandler.js";
-
-// Import the Slot model to manage appointment time slots.
 import { Slot } from "../models/slot.model.js";
-
-// Import the Zod validation schema that enforces rules on appointment booking data.
 import { bookAppointmentSchema } from "../schema/appointment.schema.js";
 import { appointmentQueue } from "../utils/queue.js";
 import { createMeetLink } from "../utils/googleScheduling.js";
@@ -82,14 +73,6 @@ const getAppointments = asyncHandler(async (req, res) => {
   // Return the fully populated appointment list.
   return res.status(200).json(new ApiResponse(200, appointments, "Appointments retrieved successfully"));
 });
-<<<<<<< HEAD
-=======
-
-const updateAppointmentStatus=asyncHandler(async(req,res)=>{
-    console.log("Updating appointment status...");
-    const {id}=req.params;
-    const {status}=req.body;
->>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
 
 // =========================================================================
 // @desc    Update an appointment's status (pending → confirmed or cancelled)
@@ -128,11 +111,6 @@ const updateAppointmentStatus = asyncHandler(async (req, res) => {
         }
     }
 
-<<<<<<< HEAD
-    // Update the appointment's status field.
-    appointment.status = status;
-    // Save the updated appointment to the database.
-=======
     if(status==="confirmed"){
         const slot=await Slot.findById(appointment.slotId);
 
@@ -167,12 +145,11 @@ const updateAppointmentStatus = asyncHandler(async (req, res) => {
 
     appointment.status=status;
 
->>>>>>> d56c173a084be0303d84b1ef9433ddb271c59a82
     await appointment.save();
 
     // Return the updated appointment.
     return res.status(200).json(new ApiResponse(200, "Appointment status updated successfully", appointment));
-})
+});
 
 // Export all three controller functions.
-export { bookAppointment, getAppointments, updateAppointmentStatus };
+export { bookAppointment, getAppointments, updateAppointmentStatus }

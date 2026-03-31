@@ -17,13 +17,6 @@ import { slotRouter } from "./routes/slot.route.js";
 import { adminRouter } from "./routes/admin.route.js";
 import { Worker } from "bullmq";
 import {sendEmail,sendAppointmentEmail} from "./utils/emailClient.js";
-
-// Import BullMQ Worker class to process background email jobs from the Redis queue.
-import { Worker } from "bullmq";
-// Import the email sending utility function.
-import { sendEmail } from "./utils/emailClient.js";
-
-// Import CORS middleware — allows the frontend (on a different port/domain) to make API requests to this backend.
 import cors from 'cors';
 
 // Create the Express application instance.
