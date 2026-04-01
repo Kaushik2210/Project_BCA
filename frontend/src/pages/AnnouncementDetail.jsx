@@ -150,7 +150,7 @@ const AnnouncementDetail = () => {
             <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <article className="content-article bg-[#14110f]/60 p-8 md:p-12 rounded-2xl shadow-2xl border border-[#c5a059]/10">
                  <div
-                  className="prose prose-lg prose-invert max-w-none text-[#f0e6d2]/90 leading-relaxed font-sans"
+                  className="prose prose-lg prose-invert max-w-none text-[#f0e6d2]/90 leading-relaxed font-sans break-words whitespace-pre-wrap"
                   dangerouslySetInnerHTML={{ __html: blog.content }}
                   />
               </article>
