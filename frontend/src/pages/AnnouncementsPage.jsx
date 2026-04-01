@@ -54,6 +54,12 @@ const AnnouncementsPage = () => {
     fetchBlogs(1);
   }, []);
 
+  const decodeHTML = (html) => {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  };
+
   useGSAP(
     () => {
       // Hero text animation
@@ -196,7 +202,7 @@ const AnnouncementsPage = () => {
                       </h2>
                       <div className="w-12 h-0.5 bg-[#c5a059]/40 mb-4 transition-all duration-300 group-hover:w-full"></div>
                       <p className="text-[#f0e6d2]/80 leading-relaxed flex-grow line-clamp-4">
-                        {blog.content.replace(/<[^>]*>/g, '')}
+                        {decodeHTML(blog.content.replace(/<[^>]*>/g, ''))}
                       </p>
                       
                       <div className="mt-8 pt-4 border-t border-[#c5a059]/10 flex items-center text-[#c5a059] font-medium group-hover:text-white transition-colors">
